@@ -14,9 +14,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ProductsListFragment productsListFragment = new ProductsListFragment();
+        LoginFragment loginFragment = new LoginFragment();
+
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.mainactivity_fragment_container, productsListFragment);
+        transaction.add(R.id.mainactivity_fragment_container, loginFragment);
         transaction.commit();
     }
 }
