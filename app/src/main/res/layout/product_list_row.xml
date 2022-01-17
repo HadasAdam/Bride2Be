@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/dirtyWhite">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="379dp"
+        android:layout_height="380dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/lightTurquoise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/productlistrow_image"
+        android:layout_width="378dp"
+        android:layout_height="310dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/productlistrow_productName"
+        android:layout_width="211dp"
+        android:layout_height="29dp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/productlistrow_price"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productlistrow_image" />
+
+    <TextView
+        android:id="@+id/productlistrow_City"
+        android:layout_width="151dp"
+        android:layout_height="24dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+        app:layout_constraintStart_toStartOf="@+id/productlistrow_productName"
+        app:layout_constraintTop_toBottomOf="@+id/productlistrow_productName" />
+
+    <TextView
+        android:id="@+id/productlistrow_price"
+        android:layout_width="45dp"
+        android:layout_height="27dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/productrow_coin"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/productlistrow_productName"
+        app:layout_constraintTop_toBottomOf="@+id/productlistrow_image" />
+
+    <ImageView
+        android:id="@+id/productlistrow_whishlistsign"
+        android:layout_width="43dp"
+        android:layout_height="33dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/productrow_coin"
+        app:layout_constraintTop_toBottomOf="@+id/productlistrow_image"
+        app:srcCompat="@drawable/heart_unchecked" />
+
+    <TextView
+        android:id="@+id/productrow_coin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ProductListFragment_coinILS"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/productlistrow_whishlistsign"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/productlistrow_price"
+        app:layout_constraintTop_toBottomOf="@+id/productlistrow_image" />
+</androidx.constraintlayout.widget.ConstraintLayout>
