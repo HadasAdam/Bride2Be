@@ -3,18 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/drawable-v24/myBorder.xml" value="0.28125" />
-        <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/drawable/myborder.xml" value="0.29739583333333336" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/activity_main.xml" value="0.3546195652173913" />
-        <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_add_new_product.xml" value="0.25" />
-        <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_edit_product.xml" value="0.33" />
-        <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_edit_profile.xml" value="0.22" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_items_list.xml" value="0.3546195652173913" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_login.xml" value="0.290625" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_product_details.xml" value="0.3546195652173913" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_products_list.xml" value="0.33" />
-        <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_sign_up.xml" value="0.25" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/product_list_row.xml" value="0.5" />
+        <entry key="app/src/main/res/drawable-v24/myBorder.xml" value="0.3875" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3351449275362319" />
+        <entry key="app/src/main/res/layout/fragment_add_new_product.xml" value="0.3351449275362319" />
+        <entry key="app/src/main/res/layout/fragment_edit_product.xml" value="0.3351449275362319" />
+        <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.3351449275362319" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.3351449275362319" />
+        <entry key="app/src/main/res/layout/fragment_products_list.xml" value="0.3351449275362319" />
+        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_user_profile.xml" value="0.3351449275362319" />
+        <entry key="app/src/main/res/layout/product_list_row.xml" value="0.165" />
       </map>
     </option>
   </component>

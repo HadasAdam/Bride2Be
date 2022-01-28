@@ -20,11 +20,12 @@ public class MainActivity extends AppCompatActivity {
         EditProductFragment editProductFragment = new EditProductFragment();
         UserProfileFragment userProfileFragment = new UserProfileFragment();
         EditProfileFragment editProfileFragment = new EditProfileFragment();
+        SignUpFragment signUpFragment = new SignUpFragment();
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.mainactivity_fragment_container, editProfileFragment);
+        transaction.add(R.id.mainactivity_fragment_container, signUpFragment);
         transaction.commit();
     }
 }

@@ -10,4 +10,13 @@
     <string name="LoginFragment_submit_button">TAKE ME IN!</string>
     <string name="LoginFragment_dont_you_have_user">Don`t you have a user?</string>
     <string name="LoginFragment_join_us_now_button">JOIN US NOW!</string>
+    <string name="signUpFrg_firstNameET">First Name</string>
+    <string name="signUpFrg_lastNameET">Last Name</string>
+    <string name="signUpFrg_emailET">Email</string>
+    <string name="signUpFrg_passwordET">Password</string>
+    <string name="signUpFrg_phoneNumberET">Phone Number</string>
+    <string name="signUpFrg_cityET">City</string>
+    <string name="signUpFrg_submitBTN">TAKE ME IN!</string>
+    <string name="SignUpFrg_title">Sign Up</string>
+
 </resources>
