@@ -7,13 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".AddNewProductFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <Button
         android:id="@+id/ChooseProductImageNewProductBtn"
         android:layout_width="300dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
         android:text="Choose picture from gallery"
         android:textSize="12sp"
+        android:visibility="visible"
         app:backgroundTint="@color/darkTurquoise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,8 +28,8 @@
 
     <ImageView
         android:id="@+id/ProductImageNewProductIV"
-        android:layout_width="317dp"
-        android:layout_height="228dp"
+        android:layout_width="320dp"
+        android:layout_height="220dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/border"
         android:src="@android:drawable/picture_frame"
@@ -33,8 +40,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="317dp"
-        android:layout_height="82dp"
+        android:layout_width="320dp"
+        android:layout_height="65dp"
         android:background="@color/lightTurquoise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,8 +49,8 @@
 
         <EditText
             android:id="@+id/ProductNameNewProductET"
-            android:layout_width="90dp"
-            android:layout_height="39dp"
+            android:layout_width="84dp"
+            android:layout_height="30dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/border"
@@ -51,6 +58,7 @@
             android:gravity="center"
             android:inputType="textPersonName"
             android:text="Flip Flops"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,7 +70,7 @@
             android:baselineAligned="false"
             android:gravity="center"
             android:text="Yavne"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ProductNameNewProductET" />
 
@@ -73,20 +81,20 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="ILS"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/ProductPriceNewProductET"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_width="42dp"
+            android:layout_height="37dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:background="@drawable/border"
             android:ems="10"
             android:gravity="center"
             android:inputType="numberDecimal"
+            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/textView10"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="100" />
@@ -94,22 +102,21 @@
 
     <EditText
         android:id="@+id/ProductDescriptionNewProductET"
-        android:layout_width="302dp"
-        android:layout_height="113dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
         android:background="@drawable/border"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:text="Product description:"
         android:textColor="@color/grayishBlue"
         android:textSize="20sp"
@@ -123,9 +130,10 @@
         android:id="@+id/CancelNewProductBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
         android:text="Cancel"
         app:backgroundTint="@color/darkTurquoise"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/SaveNewProductBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -135,9 +143,10 @@
         android:id="@+id/SaveNewProductBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
         android:text="Save"
         app:backgroundTint="@color/darkTurquoise"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/CancelNewProductBtn"

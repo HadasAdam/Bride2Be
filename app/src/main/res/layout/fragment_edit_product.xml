@@ -5,13 +5,14 @@
     android:id="@+id/frameLayout5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_edit_product_scene"
     tools:context=".EditProductFragment">
 
     <Button
         android:id="@+id/ChooseProductImageEditProductBtn"
         android:layout_width="300dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
         android:text="Choose picture from gallery"
         android:textSize="12sp"
         app:backgroundTint="@color/darkTurquoise"
@@ -21,8 +22,8 @@
 
     <ImageView
         android:id="@+id/ProductImageEditProductIV"
-        android:layout_width="325dp"
-        android:layout_height="226dp"
+        android:layout_width="320dp"
+        android:layout_height="220dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/border"
         android:src="@android:drawable/picture_frame"
@@ -33,8 +34,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="317dp"
-        android:layout_height="85dp"
+        android:layout_width="320dp"
+        android:layout_height="65dp"
         android:background="@color/lightTurquoise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,8 +43,8 @@
 
         <EditText
             android:id="@+id/ProductNameEditProductET"
-            android:layout_width="90dp"
-            android:layout_height="39dp"
+            android:layout_width="74dp"
+            android:layout_height="32dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/border"
@@ -51,6 +52,7 @@
             android:gravity="center"
             android:inputType="textPersonName"
             android:text="Flip Flops"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,7 +64,7 @@
             android:baselineAligned="false"
             android:gravity="center"
             android:text="Yavne"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ProductNameEditProductET" />
 
@@ -76,6 +78,7 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="numberDecimal"
+            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/textView14"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="100" />
@@ -87,7 +90,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="ILS"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,7 +100,7 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:text="Product description:"
         android:textColor="@color/grayishBlue"
         android:textSize="20sp"
@@ -109,24 +112,23 @@
 
     <EditText
         android:id="@+id/ProductDescriptionEditProductET"
-        android:layout_width="302dp"
-        android:layout_height="113dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
         android:background="@drawable/border"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <Button
         android:id="@+id/CancelEditProductBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="Cancel"
         app:backgroundTint="@color/darkTurquoise"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/SaveEditProductBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,9 +138,9 @@
         android:id="@+id/SaveEditProductBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="Save"
         app:backgroundTint="@color/darkTurquoise"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/DeleteEditProductBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/CancelEditProductBtn"
@@ -148,9 +150,9 @@
         android:id="@+id/DeleteEditProductBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="Delete"
         app:backgroundTint="@color/darkTurquoise"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/SaveEditProductBtn"

@@ -3,6 +3,7 @@ package com.example.bride2be;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,10 +86,20 @@ public class AddNewProductFragment extends Fragment {
     }
 
     private void AbortNewProduct() { // cancel new product and get back to user profile
+        //cancel changes
+
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
+        fragmentTransaction.commit();
 
     }
 
     private void AddNewProduct() { // save the new product. need to check that user enters all attributes
+        //save changes and drop notice to user (new product created)
+
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
+        fragmentTransaction.commit();
 
     }
 
