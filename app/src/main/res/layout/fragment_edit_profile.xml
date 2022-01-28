@@ -111,7 +111,7 @@
     <EditText
         android:id="@+id/StreetEditProfileET"
         android:layout_width="107dp"
-        android:layout_height="39dp"
+        android:layout_height="44dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
