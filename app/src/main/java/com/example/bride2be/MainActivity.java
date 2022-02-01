@@ -6,6 +6,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.math.BigDecimal;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,5 +33,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.mainactivity_fragment_container, userProfileFragment);
         transaction.commit();
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://bride2be-database-default-rtdb.europe-west1.firebasedatabase.app");
+        DatabaseReference myRef = database.getReference("users");
+        DatabaseReference usersx = myRef.child("x");
+        usersx.child("name").setValue("liam");
+        usersx.child("family").setValue("golan");
     }
 }
