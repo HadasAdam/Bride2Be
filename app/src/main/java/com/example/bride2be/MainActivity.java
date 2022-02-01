@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         EditProductFragment editProductFragment = new EditProductFragment();
         UserProfileFragment userProfileFragment = new UserProfileFragment();
         EditProfileFragment editProfileFragment = new EditProfileFragment();
+        SignUpFragment signUpFragment = new SignUpFragment();
+        WishlistFragment wishlistFragment = new WishlistFragment();
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
