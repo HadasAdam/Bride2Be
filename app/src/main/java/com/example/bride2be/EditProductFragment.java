@@ -3,6 +3,7 @@ package com.example.bride2be;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,15 +88,31 @@ public class EditProductFragment extends Fragment {
         return view;
     }
 
-    private void AbortEditProduct() { // cancel changes and get back to products view
+    private void AbortEditProduct() { // cancel changes and get back to profile
+        //cancel
+
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
+        fragmentTransaction.commit();
+
 
     }
 
-    private void SaveProductChanges() { // save changes in the product and get back to products view
+    private void SaveProductChanges() { // save changes in the product and get back to profile
+        //save and drop notice to user (saved changes)
+
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
+        fragmentTransaction.commit();
 
     }
 
-    private void DeleteProduct() { // delete the product and get back to products view
+    private void DeleteProduct() { // delete the product and get back to profile
+        //delete and drop notice to user (product deleted)
+
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
+        fragmentTransaction.commit();
 
     }
 

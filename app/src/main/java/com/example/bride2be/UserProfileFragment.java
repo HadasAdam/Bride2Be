@@ -3,6 +3,7 @@ package com.example.bride2be;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,15 +84,25 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void UserLogOut() { // log out
+        //logout the user
+
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+        fragmentTransaction.commit();
 
     }
 
     private void EditUserProfile() { // go to edit profile screen
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new EditProfileFragment());
+        fragmentTransaction.commit();
 
     }
 
     private void addNewProduct() { // add new product by the user
-
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new AddNewProductFragment());
+        fragmentTransaction.commit();
     }
 
 }
