@@ -4,15 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.firestore.FieldValue;
+import com.google.type.DateTime;
+
 import java.io.Serializable;
+import java.security.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 public class User implements Serializable {
-
+    final public static String COLLECTION_NAME = "users";
     @PrimaryKey
     @NonNull
-    private Long id;
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
@@ -22,10 +29,10 @@ public class User implements Serializable {
     private String city;
     private String street;
     private ArrayList<Product> wishlist = new ArrayList<>();
+    Long updateDate = new Long(0);
 
-    public User(Long id, String firstName, String lastName, String email, String phoneNumber,
+    public User(String firstName, String lastName, String email, String phoneNumber,
                 String passwordHash, String country, String city, String street){
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -37,11 +44,11 @@ public class User implements Serializable {
     }
 
     @NonNull
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull Long id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -115,6 +122,45 @@ public class User implements Serializable {
 
     public void setWishlist(ArrayList<Product> wishlist) {
         this.wishlist = wishlist;
+    }
+
+    public Long getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Long updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public Map<String, Object> toJson() {
+        Map<String, Object> json = new HashMap<String, Object>();
+        json.put("firstName", firstName);
+        json.put("lastName", lastName);
+        json.put("email", email);
+        json.put("phoneNumber", phoneNumber);
+        json.put("passwordHash", passwordHash);
+        json.put("country", "Israel");
+        json.put("city", city);
+        json.put("street", street);
+        json.put("lastUpdate", updateDate);
+        return json;
+    }
+
+    public static User create(Map<String, Object> json) {
+        String firstName = (String) json.get("firstName");
+        String lastName = (String) json.get("lastName");
+        String email = (String)json.get("email");
+        String phoneNumber = (String)json.get("phoneNumber");
+        String passwordHash = (String)json.get("passwordHash");
+        String country = (String)json.get("country");
+        String city = (String)json.get("city");
+        String street = (String)json.get("street");
+
+        int lastUpdate = DateTime.getDefaultInstance().getSeconds();
+        User user = new User(firstName,lastName,email, phoneNumber, passwordHash, country,
+                city, street);
+        user.setUpdateDate((long)lastUpdate);
+        return user;
     }
 
 }

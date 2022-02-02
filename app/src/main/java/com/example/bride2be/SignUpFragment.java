@@ -83,17 +83,25 @@ public class SignUpFragment extends Fragment {
         passwordET = view.findViewById(R.id.signUpFrg_passwordET);
         submitBtn = view.findViewById(R.id.signUpFrg_submitBTN);
         submitBtn.setOnClickListener(v -> onClickSubmitButton());
+        submitBtn.setEnabled(true);
         return view;
     }
 
     public void onClickSubmitButton()
     {
-        User user = new User(133L, firstNameET.toString(), lastNameET.toString(),
+        submitBtn.setEnabled(false);
+        int id = Model.instance.getAllUsers().size();
+        User user = new User(firstNameET.toString(), lastNameET.toString(),
                 emailAddressET.toString(), phoneNumberET.toString(), GeneralUtils.md5(passwordET.toString()),
                 "Israel", cityET.toString(), "none");
+        user.setId(""+id);
         if(checkNewUserInputs(user))
         {
-            Model.instance.addUser(user);
+            Model.instance.addUser(user, new Model.AddUserListener(){
+                @Override
+                public void onComplete() {
+                }
+            });
             Log.d("TAG", "User with email: " + user.getEmail() + " was added to database.");
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
@@ -109,7 +117,16 @@ public class SignUpFragment extends Fragment {
     {
         if (GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), user.getEmail()) != null)
             return false;
-        // TODO: check phone number and email too. and check there are no digits in first/last name.
+        if (GeneralUtils.isEmailValid(user.getEmail()))
+            return false;
+        if (GeneralUtils.isFirstNameValid(user.getFirstName()))
+            return false;
+        if (GeneralUtils.isLastNameValid(user.getLastName()))
+            return false;
+        if(GeneralUtils.isPhoneValid(user.getPhoneNumber()))
+            return false;
+        if(GeneralUtils.isPasswordValid(passwordET.toString()))
+            return false;
         return true;
     }
 }

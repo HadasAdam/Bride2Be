@@ -9,17 +9,17 @@ import java.io.Serializable;
 
 @Entity
 public class Product implements Serializable {
+    final public static String COLLECTION_NAME = "products";
     @PrimaryKey
     @NonNull
-    private Long id;
+    private String id;
     private String title;
     private String description;
     private Double price;
     private Picture picture;
     private User uploader;
 
-    public Product(Long id, String title, String description, Double price, Picture picture, User uploader){
-        this.id = id;
+    public Product(String title, String description, Double price, Picture picture, User uploader){
         this.title = title;
         this.description = description;
         this.price = price;
@@ -28,11 +28,11 @@ public class Product implements Serializable {
     }
 
     @NonNull
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull Long id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
