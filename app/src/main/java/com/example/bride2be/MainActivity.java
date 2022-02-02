@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.mainactivity_fragment_container, userProfileFragment);
+        transaction.add(R.id.mainactivity_fragment_container, loginFragment);
         transaction.commit();
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://bride2be-database-default-rtdb.europe-west1.firebasedatabase.app");
         DatabaseReference myRef = database.getReference("users");

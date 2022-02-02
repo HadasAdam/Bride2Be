@@ -4,24 +4,74 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Model {
+
     public static final Model instance = new Model();
-    private List<Product> data = new LinkedList<Product>();
+    private ModelFirebase modelFirebase = new ModelFirebase();
+    private ModelSQL modelSQL = new ModelSQL();
+    private List<Product> productList = new LinkedList<Product>();
+    private List<User> userList = new LinkedList<>();
 
     private Model(){
-        for(long i = 0L; i < 100L; i++){
-            Product s = new Product(i, "White Dress", "none", 34.3D, null,
+        for(long i = 0L; i < 20L; i++){
+            Product product = new Product(i, "White Dress", "none", 34.3D, null,
                     new User(i+2L,"Hadas", "Adam","hadasadam@gmail.com",
                             "0402345432", "hhj293423", "Israel",
                             "Rishon Lezion","Nilus 3"));
-            data.add(s);
+            productList.add(product);
+        }
+
+        for(long i = 0L; i < 10L; i++){
+            User user = new User(i, "Johnny", "Levis",
+                    "johnny" + i + "@gmail.com", "0502233412",
+                    "0832c1202da8d382318e329a7c133ea0", "Israel", "Holon",
+                    "Moshe Dayan 23");
+            userList.add(user);
         }
     }
 
     public List<Product> getAllProducts(){
-        return data;
+        return productList;
+    }
+
+    public List<User> getAllUsers(){
+        return userList;
     }
 
     public void addProduct(Product product){
-        data.add(product);
+        productList.add(product);
     }
+
+    public void addUser(User user){
+        userList.add(user);
+    }
+
+    public interface GetAllProductsListener {
+        void onComplete(List<Product> products);
+    }
+
+
+    public interface AddProductListener {
+        void onComplete();
+    }
+
+
+    public interface GetAllUsersListener {
+        void onComplete(List<User> users);
+    }
+
+
+    public interface AddUserListener {
+        void onComplete();
+    }
+
+    public void getAllUsers(final GetAllUsersListener listener)
+    {
+        modelFirebase.getAllUsers(listener);
+    }
+
+    public void addUser(final User user, final AddUserListener listener)
+    {
+        modelFirebase.addUser(user, listener);
+    }
+
 }
