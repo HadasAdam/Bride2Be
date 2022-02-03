@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
@@ -26,7 +27,7 @@ public class SignUpFragment extends Fragment {
     EditText lastNameET;
     EditText emailAddressET;
     EditText phoneNumberET;
-    EditText cityET;
+    Spinner citySpinner;
     EditText passwordET;
     Button submitBtn;
 
@@ -77,7 +78,7 @@ public class SignUpFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         emailAddressET = view.findViewById(R.id.signUpFrg_emailET);
         phoneNumberET = view.findViewById(R.id.signUpFrg_phoneNumberET);
-        cityET = view.findViewById(R.id.signUpFrg_cityET);
+        citySpinner = view.findViewById(R.id.signUpFrg_cityET);
         firstNameET = view.findViewById(R.id.signUpFrg_firstNameET);
         lastNameET = view.findViewById(R.id.signUpFrg_lastNameET);
         passwordET = view.findViewById(R.id.signUpFrg_passwordET);
@@ -93,7 +94,7 @@ public class SignUpFragment extends Fragment {
         int id = Model.instance.getAllUsers().size();
         User user = new User(firstNameET.toString(), lastNameET.toString(),
                 emailAddressET.toString(), phoneNumberET.toString(), GeneralUtils.md5(passwordET.toString()),
-                "Israel", cityET.toString(), "none");
+                "Israel", citySpinner.getSelectedItem().toString(), "none");
         user.setId(""+id);
         if(checkNewUserInputs(user))
         {
