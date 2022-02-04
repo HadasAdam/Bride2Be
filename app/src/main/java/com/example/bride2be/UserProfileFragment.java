@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.SupportMapFragment;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link UserProfileFragment#newInstance} factory method to
@@ -86,8 +88,13 @@ public class UserProfileFragment extends Fragment {
     private void UserLogOut() { // log out
         //logout the user
 
+//        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+//        fragmentTransaction.commit();
+
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, mapFragment);
         fragmentTransaction.commit();
 
     }

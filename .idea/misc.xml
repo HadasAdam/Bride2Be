@@ -9,6 +9,9 @@
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_product_details.xml" value="0.3546195652173913" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_products_list.xml" value="0.33" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/product_list_row.xml" value="0.5" />
+        <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/layout/fragment_edit_product.xml" value="0.31875" />
+        <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/layout/fragment_login.xml" value="0.2625" />
+        <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/layout/fragment_product_details.xml" value="0.25" />
         <entry key="app/src/main/res/drawable-v24/border.xml" value="0.29270833333333335" />
         <entry key="app/src/main/res/drawable-v24/myBorder.xml" value="0.3875" />
         <entry key="app/src/main/res/drawable/border.xml" value="0.2713541666666667" />
@@ -17,8 +20,13 @@
         <entry key="app/src/main/res/layout/fragment_edit_product.xml" value="0.3351449275362319" />
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.3351449275362319" />
+        <entry key="app/src/main/res/layout/fragment_map.xml" value="0.2630208333333333" />
+        <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.24895833333333334" />
+        <entry key="app/src/main/res/layout/fragment_maps_activity_current_place.xml" value="0.13171225937183384" />
         <entry key="app/src/main/res/layout/fragment_products_list.xml" value="0.3351449275362319" />
+        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.2630208333333333" />
         <entry key="app/src/main/res/layout/fragment_user_profile.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_wishlist.xml" value="0.2630208333333333" />
         <entry key="app/src/main/res/layout/product_list_row.xml" value="0.3351449275362319" />
       </map>
     </option>
