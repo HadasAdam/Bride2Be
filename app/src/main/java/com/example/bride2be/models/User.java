@@ -33,6 +33,7 @@ public class User implements Serializable {
 
     public User(String firstName, String lastName, String email, String phoneNumber,
                 String passwordHash, String country, String city, String street){
+        this.id = IdGenerator.instance.getUserId();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -41,6 +42,8 @@ public class User implements Serializable {
         this.country = country;
         this.city = city;
         this.street = street;
+
+        this.updateDate = (long)DateTime.getDefaultInstance().getSeconds();
     }
 
     @NonNull
@@ -134,6 +137,7 @@ public class User implements Serializable {
 
     public Map<String, Object> toJson() {
         Map<String, Object> json = new HashMap<String, Object>();
+        json.put("id", id);
         json.put("firstName", firstName);
         json.put("lastName", lastName);
         json.put("email", email);
@@ -142,7 +146,7 @@ public class User implements Serializable {
         json.put("country", "Israel");
         json.put("city", city);
         json.put("street", street);
-        json.put("lastUpdate", updateDate);
+        json.put("updateDate", updateDate);
         return json;
     }
 

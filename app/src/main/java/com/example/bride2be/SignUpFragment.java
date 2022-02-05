@@ -16,6 +16,8 @@ import android.widget.Spinner;
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SignUpFragment#newInstance} factory method to
@@ -30,6 +32,7 @@ public class SignUpFragment extends Fragment {
     Spinner citySpinner;
     EditText passwordET;
     Button submitBtn;
+    ArrayList<String> problemsInUserInfo = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,9 +95,9 @@ public class SignUpFragment extends Fragment {
     {
         submitBtn.setEnabled(false);
         int id = Model.instance.getAllUsers().size();
-        User user = new User(firstNameET.toString(), lastNameET.toString(),
-                emailAddressET.toString(), phoneNumberET.toString(), GeneralUtils.md5(passwordET.toString()),
-                "Israel", citySpinner.getSelectedItem().toString(), "none");
+        User user = new User(firstNameET.getText().toString(), lastNameET.getText().toString(),
+                emailAddressET.getText().toString(), phoneNumberET.getText().toString(), GeneralUtils.md5(passwordET.getText().toString()),
+                "Israel", "Ashdod"/*citySpinner.getSelectedItem().getText().toString()*/, "none");
         user.setId(""+id);
         if(checkNewUserInputs(user))
         {
@@ -110,24 +113,37 @@ public class SignUpFragment extends Fragment {
         }
         else
         {
+            submitBtn.setEnabled(true);
             Log.d("TAG", "Unable to add user with email: " + user.getEmail() + " to database.");
         }
     }
 
     private boolean checkNewUserInputs(User user)
     {
-        if (GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), user.getEmail()) != null)
+        if (GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), user.getEmail()) != null){
+            Log.d("TAG", "A user with this email already exists.");
             return false;
-        if (GeneralUtils.isEmailValid(user.getEmail()))
+        }
+        if (!GeneralUtils.isEmailValid(user.getEmail())){
+            Log.d("TAG", "Email address is not valid.");
             return false;
-        if (GeneralUtils.isFirstNameValid(user.getFirstName()))
+        }
+        if (!GeneralUtils.isFirstNameValid(user.getFirstName())){
+            Log.d("TAG", "First name is not valid.");
             return false;
-        if (GeneralUtils.isLastNameValid(user.getLastName()))
+        }
+        if (!GeneralUtils.isLastNameValid(user.getLastName())){
+            Log.d("TAG", "Last name is not valid.");
             return false;
-        if(GeneralUtils.isPhoneValid(user.getPhoneNumber()))
+        }
+        if(!GeneralUtils.isPhoneValid(user.getPhoneNumber())){
+            Log.d("TAG", "Phone number is not valid.");
             return false;
-        if(GeneralUtils.isPasswordValid(passwordET.toString()))
+        }
+        if(!GeneralUtils.isPasswordValid(user.getPhoneNumber())){
+            Log.d("TAG", "Password is not valid.");
             return false;
+        }
         return true;
     }
 }
