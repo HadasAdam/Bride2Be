@@ -9,3 +9,4 @@
     <option name="TOOL
 # Project exclude paths
 /.gradle/
+/local.properties
