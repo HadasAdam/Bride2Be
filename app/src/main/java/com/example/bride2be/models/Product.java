@@ -5,34 +5,42 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.type.DateTime;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 public class Product implements Serializable {
+    final public static String COLLECTION_NAME = "products";
     @PrimaryKey
     @NonNull
-    private Long id;
+    private String id;
     private String title;
     private String description;
     private Double price;
-    private Picture picture;
-    private User uploader;
+    private String picture;
+    private String uploaderId;
+    private Long updateDate;
 
-    public Product(Long id, String title, String description, Double price, Picture picture, User uploader){
-        this.id = id;
+
+    public Product(String title, String description, Double price, String picture, String uploaderId){
+        this.id = IdGenerator.instance.getProductId();
         this.title = title;
         this.description = description;
         this.price = price;
         this.picture = picture;
-        this.uploader = uploader;
+        this.uploaderId = uploaderId;
+        this.updateDate = (long)DateTime.getDefaultInstance().getSeconds();
     }
 
     @NonNull
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(@NonNull Long id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -60,19 +68,52 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public Picture getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(Picture picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
-    public User getUploader() {
-        return uploader;
+    public String getUploaderId() {
+        return uploaderId;
     }
 
-    public void setUploader(User uploader) {
-        this.uploader = uploader;
+    public void setUploader(String uploaderId) {
+        this.uploaderId = uploaderId;
+    }
+
+    public Long getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Long updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public Map<String, Object> toJson() {
+        Map<String, Object> json = new HashMap<String, Object>();
+        json.put("id", id);
+        json.put("title", title);
+        json.put("description", description);
+        json.put("price", price);
+        json.put("picture", picture);
+        json.put("uploaderId", uploaderId);
+        json.put("updateDate", updateDate);
+        return json;
+    }
+
+    public static Product create(Map<String, Object> json) {
+        String title = (String) json.get("title");
+        String description = (String) json.get("description");
+        String price = (String) json.get("price");
+        String picture = (String)json.get("picture");
+        String uploaderId = (String)json.get("uploaderId");
+
+        int lastUpdate = DateTime.getDefaultInstance().getSeconds();
+        Product product = new Product(title, description, Double.parseDouble(price), picture, uploaderId);
+        product.setUpdateDate((long)lastUpdate);
+        return product;
     }
 }

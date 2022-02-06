@@ -15,6 +15,8 @@ import android.widget.EditText;
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LoginFragment#newInstance} factory method to
@@ -77,7 +79,6 @@ public class LoginFragment extends Fragment {
         passwordET = view.findViewById(R.id.login_frg_password_et);
         signUpButton.setOnClickListener(v -> onSignUpButton());
         submitButton.setOnClickListener(v -> onClickSubmitButton());
-
         return view;
     }
 
