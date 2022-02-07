@@ -98,7 +98,7 @@ public class SignUpFragment extends Fragment {
         int id = Model.instance.getAllUsers().size();
         User user = new User(firstNameET.getText().toString(), lastNameET.getText().toString(),
                 emailAddressET.getText().toString(), phoneNumberET.getText().toString(), GeneralUtils.md5(passwordET.getText().toString()),
-                "Israel", "Ashdod"/*citySpinner.getSelectedItem().getText().toString()*/, "none");
+                "Israel", "Ashdod"/*TODO: citySpinner.getSelectedItem().getText().toString()*/, "none");
         user.setId(""+id);
         if(checkNewUserInputs(user))
         {

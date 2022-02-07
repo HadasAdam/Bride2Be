@@ -1,10 +1,5 @@
 package com.example.bride2be.models;
 
-import android.util.Log;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,9 +10,11 @@ public class Model {
     private ModelSQL modelSQL = new ModelSQL();
     private List<Product> productList = new LinkedList<Product>();
     private List<User> userList = new LinkedList<>();
+    private List<City> cities = new LinkedList<>();
     private User loggedInUser = null;
 
     private Model(){
+        initializeCities();
         initializeLocalData();
     }
 
@@ -27,7 +24,7 @@ public class Model {
         for(long i = 0L; i < 10L; i++){
             User user = new User("Johnny", "Levis",
                     "johnny" + i + "@gmail.com", "0502233412",
-                    "0832c1202da8d382318e329a7c133ea0", "Israel", "Holon",
+                    "0832c1202da8d382318e329a7c133ea0", "Israel", cities.get(3).getName(),
                     "Moshe Dayan 23");
             userList.add(user);
         }
@@ -37,6 +34,25 @@ public class Model {
             productList.add(product);
         }
     }
+
+    private void initializeCities()
+    {
+        cities.add(new City("Ashdod",0d,0d));
+        cities.add(new City("Beer Sheva",0d,0d));
+        cities.add(new City("Haifa",0d,0d));
+        cities.add(new City("Holon",0d,0d));
+        cities.add(new City("Jerusalem",0d,0d));
+        cities.add(new City("Rehovot",0d,0d));
+        cities.add(new City("Rishon Lezion",0d,0d));
+        cities.add(new City("Yavne",0d,0d));
+    }
+
+    public List<City> getCities()
+    {
+        return this.cities;
+    }
+
+    /**************************************   Logging in   **************************************/
 
     public User getLoggedInUser() {
         return loggedInUser;
@@ -49,6 +65,7 @@ public class Model {
     public void logOut() {
         this.loggedInUser = null;
     }
+
 
     /**************************************   PRODUCTS   **************************************/
 
