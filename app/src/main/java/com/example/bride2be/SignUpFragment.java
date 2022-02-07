@@ -88,6 +88,7 @@ public class SignUpFragment extends Fragment {
         submitBtn = view.findViewById(R.id.signUpFrg_submitBTN);
         submitBtn.setOnClickListener(v -> onClickSubmitButton());
         submitBtn.setEnabled(true);
+        Model.instance.logOut();
         return view;
     }
 
@@ -104,6 +105,7 @@ public class SignUpFragment extends Fragment {
             Model.instance.addUser(user, new Model.AddUserListener(){
                 @Override
                 public void onComplete() {
+                    Model.instance.setLoggedInUser(user);
                 }
             });
             Log.d("TAG", "User with email: " + user.getEmail() + " was added to database.");

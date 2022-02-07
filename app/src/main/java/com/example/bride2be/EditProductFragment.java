@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.bride2be.models.Model;
+import com.example.bride2be.models.Product;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +33,7 @@ public class EditProductFragment extends Fragment {
     Button CancelEditProduct;
     Button SaveEditProduct;
     Button DeleteEditProduct;
+    Product productToEdit;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,6 +90,20 @@ public class EditProductFragment extends Fragment {
         CancelEditProduct.setOnClickListener(v -> AbortEditProduct());
         SaveEditProduct.setOnClickListener(v -> SaveProductChanges());
         DeleteEditProduct.setOnClickListener(v -> DeleteProduct());
+
+        if(!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
+        {
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+            fragmentTransaction.commit();
+        }
+
+        ProductName.setText(productToEdit.getTitle());
+        ProductPrice.setText(String.valueOf(productToEdit.getPrice()));
+        // TODO: USER LOCATION
+        ProductDescription.setText(productToEdit.getDescription());
+        // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
+
         return view;
     }
 
@@ -98,8 +117,19 @@ public class EditProductFragment extends Fragment {
 
     }
 
-    private void SaveProductChanges() { // save changes in the product and get back to profile
-        //save and drop notice to user (saved changes)
+    private void SaveProductChanges() {
+
+        productToEdit.setTitle(ProductName.getText().toString());
+        productToEdit.setDescription(ProductDescription.toString());
+        productToEdit.setPrice(Double.valueOf(ProductPrice.getText().toString()));
+        // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
+
+        Model.instance.updateProduct(productToEdit, new Model.UpdateProductListener() {
+            @Override
+            public void onComplete() {
+                Log.d("TAG", "Product with id: " + productToEdit.getId() + " was updated.");
+            }
+        });
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
@@ -107,8 +137,16 @@ public class EditProductFragment extends Fragment {
 
     }
 
-    private void DeleteProduct() { // delete the product and get back to profile
-        //delete and drop notice to user (product deleted)
+    private void DeleteProduct() {
+        if(productToEdit != null)
+        {
+            Model.instance.deleteProduct(productToEdit, new Model.DeleteProductListener() {
+                @Override
+                public void onComplete() {
+                    Log.d("TAG", "Product with id: " + productToEdit.getId() + " was deleted.");
+                }
+            });
+        }
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
