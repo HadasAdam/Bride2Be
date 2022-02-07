@@ -15,8 +15,6 @@ import android.widget.EditText;
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
 
-import java.util.List;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LoginFragment#newInstance} factory method to
@@ -28,6 +26,7 @@ public class LoginFragment extends Fragment {
     EditText passwordET;
     Button submitButton;
     Button signUpButton;
+    User userWantsToLogIn;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,6 +78,8 @@ public class LoginFragment extends Fragment {
         passwordET = view.findViewById(R.id.login_frg_password_et);
         signUpButton.setOnClickListener(v -> onSignUpButton());
         submitButton.setOnClickListener(v -> onClickSubmitButton());
+        userWantsToLogIn = null;
+        Model.instance.logOut();
         return view;
     }
 
@@ -88,6 +89,7 @@ public class LoginFragment extends Fragment {
         String password = passwordET.getText().toString();
         if (checkLoginCredentials(emailAddress, password))
         {
+            Model.instance.setLoggedInUser(userWantsToLogIn);
             Log.d("TAG", "User with email: " + emailAddress + " was found in database.");
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
@@ -109,7 +111,7 @@ public class LoginFragment extends Fragment {
 
     private boolean checkLoginCredentials(String emailAddress, String givenPassword)
     {
-        User user = GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), emailAddress);
-        return (user != null && user.getPasswordHash().equals(GeneralUtils.md5(givenPassword)));
+        userWantsToLogIn = GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), emailAddress);
+        return (userWantsToLogIn != null && userWantsToLogIn.getPasswordHash().equals(GeneralUtils.md5(givenPassword)));
     }
 }

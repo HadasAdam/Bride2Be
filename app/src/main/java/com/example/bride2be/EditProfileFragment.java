@@ -5,12 +5,16 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.bride2be.models.Model;
+import com.example.bride2be.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,14 +23,14 @@ import android.widget.TextView;
  */
 public class EditProfileFragment extends Fragment {
 
-    TextView UserName;
+    TextView UserFirstName;
     EditText UserEmail;
     EditText UserPhoneNumber;
-    EditText UserCity;
+    EditText UserCity; // TODO: SHOULD BE A SPINNER, NOT AN EDITTEXT
     EditText UserStreet;
     Button CancelEditProfile;
     Button SaveEditProfile;
-
+    User userToEdit = Model.instance.getLoggedInUser();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,8 +75,8 @@ public class EditProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
-        UserName = view.findViewById(R.id.UserNameEditProfileTV);
-        UserEmail = view.findViewById(R.id.EmailEditProfileET);
+        UserFirstName = view.findViewById(R.id.UserNameEditProfileTV);
+        UserEmail = view.findViewById(R.id.EmailEditProfileET); // TODO: FIRST NAME AND LAST NAME SEPARATELY!
         UserPhoneNumber = view.findViewById(R.id.PhoneNumEditProfileET);
         UserCity = view.findViewById(R.id.CityEditProfileET);
         UserStreet = view.findViewById(R.id.StreetEditProfileET);
@@ -80,6 +84,20 @@ public class EditProfileFragment extends Fragment {
         SaveEditProfile = view.findViewById(R.id.SaveEditProfileBtn);
         CancelEditProfile.setOnClickListener(v -> AbortProfileEdit());
         SaveEditProfile.setOnClickListener(v -> SaveChangesInProfile());
+        if(userToEdit == null)
+        {
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+            fragmentTransaction.commit();
+        }
+
+        UserFirstName.setText(userToEdit.getFirstName());
+        // TODO: LAST NAME ???
+        UserEmail.setText(userToEdit.getEmail());
+        UserPhoneNumber.setText(userToEdit.getPhoneNumber());
+        // TODO: USER CITY ???
+        UserStreet.setText(userToEdit.getStreet());
+
         return view;
     }
 
@@ -89,11 +107,23 @@ public class EditProfileFragment extends Fragment {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
         fragmentTransaction.commit();
-
     }
 
-    private void SaveChangesInProfile() { // save changes and then get back to user profile
-        //save changes and drop notice to user (saved changes)
+    private void SaveChangesInProfile() {
+
+        userToEdit.setFirstName(UserFirstName.getText().toString());
+        // TODO: userToEdit.setLastName();
+        userToEdit.setEmail(UserEmail.getText().toString());
+        userToEdit.setPhoneNumber(UserPhoneNumber.getText().toString());
+        // TODO: userToEdit.setCity();
+        userToEdit.setStreet(UserStreet.getText().toString());
+
+        Model.instance.updateUser(userToEdit, new Model.UpdateUserListener() {
+            @Override
+            public void onComplete() {
+                Log.d("TAG","User with id: " + userToEdit.getId() + " was updated.");
+            }
+        });
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());

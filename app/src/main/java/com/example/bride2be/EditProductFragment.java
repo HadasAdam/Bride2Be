@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.bride2be.models.Model;
+import com.example.bride2be.models.Product;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EditProductFragment#newInstance} factory method to
@@ -29,6 +32,7 @@ public class EditProductFragment extends Fragment {
     Button CancelEditProduct;
     Button SaveEditProduct;
     Button DeleteEditProduct;
+    Product productToEdit;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,6 +89,20 @@ public class EditProductFragment extends Fragment {
         CancelEditProduct.setOnClickListener(v -> AbortEditProduct());
         SaveEditProduct.setOnClickListener(v -> SaveProductChanges());
         DeleteEditProduct.setOnClickListener(v -> DeleteProduct());
+
+        if(!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
+        {
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+            fragmentTransaction.commit();
+        }
+
+        ProductName.setText(productToEdit.getTitle());
+        ProductPrice.setText(String.valueOf(productToEdit.getPrice()));
+        // TODO: USER LOCATION
+        ProductDescription.setText(productToEdit.getDescription());
+        // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
+
         return view;
     }
 
@@ -99,7 +117,11 @@ public class EditProductFragment extends Fragment {
     }
 
     private void SaveProductChanges() { // save changes in the product and get back to profile
-        //save and drop notice to user (saved changes)
+
+        productToEdit.setTitle(ProductName.getText().toString());
+        productToEdit.setDescription(ProductDescription.toString());
+        productToEdit.setPrice(Double.valueOf(ProductPrice.getText().toString()));
+        // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());

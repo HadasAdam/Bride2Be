@@ -15,6 +15,7 @@ public class Model {
     private ModelSQL modelSQL = new ModelSQL();
     private List<Product> productList = new LinkedList<Product>();
     private List<User> userList = new LinkedList<>();
+    private User loggedInUser = null;
 
     private Model(){
         initializeLocalData();
@@ -35,6 +36,18 @@ public class Model {
             Product product = new Product("White Dress", "none", 34.3D, null, userList.get(0).getId());
             productList.add(product);
         }
+    }
+
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
+    }
+
+    public void logOut() {
+        this.loggedInUser = null;
     }
 
     /**************************************   PRODUCTS   **************************************/

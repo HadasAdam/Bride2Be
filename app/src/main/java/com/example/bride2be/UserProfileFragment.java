@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.bride2be.models.Model;
+import com.example.bride2be.models.User;
 import com.google.android.gms.maps.SupportMapFragment;
 
 /**
@@ -24,9 +26,10 @@ public class UserProfileFragment extends Fragment {
     TextView UserEmail;
     TextView UserPhoneNumber;
     TextView UserAddress;
-    Button Logout;
-    Button EditProfile;
-    Button AddNew;
+    Button LogoutBtn;
+    Button EditProfileBtn;
+    Button AddNewProductBtn;
+    User loggedInUser;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -76,34 +79,53 @@ public class UserProfileFragment extends Fragment {
         UserEmail = view.findViewById(R.id.UserEmailProfileTV);
         UserPhoneNumber = view.findViewById(R.id.UserPhoneNumProfileTV);
         UserAddress = view.findViewById(R.id.UserAddressProfileTV);
-        Logout = view.findViewById(R.id.LogOutProfileBtn);
-        EditProfile = view.findViewById(R.id.EditProfileBtn);
-        AddNew = view.findViewById(R.id.AddNewProfileBtn);
-        Logout.setOnClickListener(v -> UserLogOut());
-        EditProfile.setOnClickListener(v -> EditUserProfile());
-        AddNew.setOnClickListener(v -> addNewProduct());
+        LogoutBtn = view.findViewById(R.id.LogOutProfileBtn);
+        EditProfileBtn = view.findViewById(R.id.EditProfileBtn);
+        AddNewProductBtn = view.findViewById(R.id.AddNewProfileBtn);
+        LogoutBtn.setOnClickListener(v -> UserLogOut());
+        EditProfileBtn.setOnClickListener(v -> EditUserProfile());
+        AddNewProductBtn.setOnClickListener(v -> addNewProduct());
+        loggedInUser = Model.instance.getLoggedInUser();
+        if(loggedInUser == null)
+        {
+            setVisitorMode();
+        }
         return view;
     }
 
-    private void UserLogOut() { // log out
-        //logout the user
+    private void setVisitorMode()
+    {
+        LogoutBtn.setVisibility(View.GONE);
+        EditProfileBtn.setVisibility(View.GONE);
+        AddNewProductBtn.setVisibility(View.GONE);
+    }
 
-//        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
-//        fragmentTransaction.commit();
+    private void UserLogOut() {
+        Model.instance.logOut();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+        fragmentTransaction.commit();
+    }
 
+    private void openMapFilters()
+    {
         SupportMapFragment mapFragment = SupportMapFragment.newInstance();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, mapFragment);
         fragmentTransaction.commit();
-
     }
 
-    private void EditUserProfile() { // go to edit profile screen
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new EditProfileFragment());
-        fragmentTransaction.commit();
-
+    private void EditUserProfile() {
+        if(loggedInUser != null)
+        {
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new EditProfileFragment());
+            fragmentTransaction.commit();
+        }
+        else
+        {
+            setVisitorMode();
+        }
     }
 
     private void addNewProduct() { // add new product by the user
