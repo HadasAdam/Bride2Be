@@ -101,8 +101,7 @@ public class EditProfileFragment extends Fragment {
         return view;
     }
 
-    private void AbortProfileEdit() { // get back to user profile
-        //clear changes
+    private void AbortProfileEdit() {
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());

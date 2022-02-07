@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,12 +117,19 @@ public class EditProductFragment extends Fragment {
 
     }
 
-    private void SaveProductChanges() { // save changes in the product and get back to profile
+    private void SaveProductChanges() {
 
         productToEdit.setTitle(ProductName.getText().toString());
         productToEdit.setDescription(ProductDescription.toString());
         productToEdit.setPrice(Double.valueOf(ProductPrice.getText().toString()));
         // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
+
+        Model.instance.updateProduct(productToEdit, new Model.UpdateProductListener() {
+            @Override
+            public void onComplete() {
+                Log.d("TAG", "Product with id: " + productToEdit.getId() + " was updated.");
+            }
+        });
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
@@ -129,8 +137,16 @@ public class EditProductFragment extends Fragment {
 
     }
 
-    private void DeleteProduct() { // delete the product and get back to profile
-        //delete and drop notice to user (product deleted)
+    private void DeleteProduct() {
+        if(productToEdit != null)
+        {
+            Model.instance.deleteProduct(productToEdit, new Model.DeleteProductListener() {
+                @Override
+                public void onComplete() {
+                    Log.d("TAG", "Product with id: " + productToEdit.getId() + " was deleted.");
+                }
+            });
+        }
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
