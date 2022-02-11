@@ -3,10 +3,7 @@ package com.example.bride2be;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
-
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -31,13 +28,8 @@ public class MainActivity extends AppCompatActivity  {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.mainactivity_fragment_container, userProfileFragment);
+        transaction.add(R.id.mainactivity_fragment_container, loginFragment);
         transaction.commit();
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://bride2be-database-default-rtdb.europe-west1.firebasedatabase.app");
-//        DatabaseReference myRef = database.getReference("users");
-//        DatabaseReference usersx = myRef.child("x");
-//        usersx.child("name").setValue("liam");
-//        usersx.child("family").setValue("golan");
     }
 
 }

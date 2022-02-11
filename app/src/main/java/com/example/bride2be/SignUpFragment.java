@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,9 +29,10 @@ public class SignUpFragment extends Fragment {
     EditText lastNameET;
     EditText emailAddressET;
     EditText phoneNumberET;
-    EditText cityET;
+    Spinner citySpinner;
     EditText passwordET;
     Button submitBtn;
+    ArrayList<String> problemsInUserInfo = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,23 +81,33 @@ public class SignUpFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         emailAddressET = view.findViewById(R.id.signUpFrg_emailET);
         phoneNumberET = view.findViewById(R.id.signUpFrg_phoneNumberET);
-        cityET = view.findViewById(R.id.signUpFrg_cityET);
+        citySpinner = view.findViewById(R.id.signUpFrg_cityET);
         firstNameET = view.findViewById(R.id.signUpFrg_firstNameET);
         lastNameET = view.findViewById(R.id.signUpFrg_lastNameET);
         passwordET = view.findViewById(R.id.signUpFrg_passwordET);
         submitBtn = view.findViewById(R.id.signUpFrg_submitBTN);
         submitBtn.setOnClickListener(v -> onClickSubmitButton());
+        submitBtn.setEnabled(true);
+        Model.instance.logOut();
         return view;
     }
 
     public void onClickSubmitButton()
     {
-        User user = new User(133L, firstNameET.toString(), lastNameET.toString(),
-                emailAddressET.toString(), phoneNumberET.toString(), GeneralUtils.md5(passwordET.toString()),
-                "Israel", cityET.toString(), "none");
+        submitBtn.setEnabled(false);
+        int id = Model.instance.getAllUsers().size();
+        User user = new User(firstNameET.getText().toString(), lastNameET.getText().toString(),
+                emailAddressET.getText().toString(), phoneNumberET.getText().toString(), GeneralUtils.md5(passwordET.getText().toString()),
+                "Israel", "Ashdod"/*TODO: citySpinner.getSelectedItem().getText().toString()*/, "none");
+        user.setId(""+id);
         if(checkNewUserInputs(user))
         {
-            Model.instance.addUser(user);
+            Model.instance.addUser(user, new Model.AddUserListener(){
+                @Override
+                public void onComplete() {
+                    Model.instance.setLoggedInUser(user);
+                }
+            });
             Log.d("TAG", "User with email: " + user.getEmail() + " was added to database.");
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
@@ -101,15 +115,37 @@ public class SignUpFragment extends Fragment {
         }
         else
         {
+            submitBtn.setEnabled(true);
             Log.d("TAG", "Unable to add user with email: " + user.getEmail() + " to database.");
         }
     }
 
     private boolean checkNewUserInputs(User user)
     {
-        if (GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), user.getEmail()) != null)
+        if (GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), user.getEmail()) != null){
+            Log.d("TAG", "A user with this email already exists.");
             return false;
-        // TODO: check phone number and email too. and check there are no digits in first/last name.
+        }
+        if (!GeneralUtils.isEmailValid(user.getEmail())){
+            Log.d("TAG", "Email address is not valid.");
+            return false;
+        }
+        if (!GeneralUtils.isFirstNameValid(user.getFirstName())){
+            Log.d("TAG", "First name is not valid.");
+            return false;
+        }
+        if (!GeneralUtils.isLastNameValid(user.getLastName())){
+            Log.d("TAG", "Last name is not valid.");
+            return false;
+        }
+        if(!GeneralUtils.isPhoneValid(user.getPhoneNumber())){
+            Log.d("TAG", "Phone number is not valid.");
+            return false;
+        }
+        if(!GeneralUtils.isPasswordValid(user.getPhoneNumber())){
+            Log.d("TAG", "Password is not valid.");
+            return false;
+        }
         return true;
     }
 }

@@ -36,7 +36,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder
     {
         productNameTV.setText(product.getTitle());
         productPriceTV.setText(product.getPrice().toString());
-        publisherCityTV.setText(product.getUploader().getCity());
+        publisherCityTV.setText(product.getUploaderId());
         this.position = position;
     }
 }
