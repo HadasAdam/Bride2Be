@@ -1,10 +1,8 @@
 package com.example.bride2be;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity  {
@@ -25,6 +23,7 @@ public class MainActivity extends AppCompatActivity  {
         SignUpFragment signUpFragment = new SignUpFragment();
         WishlistFragment wishlistFragment = new WishlistFragment();
         MapsFragment mapsFragment = new MapsFragment();
+        ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
