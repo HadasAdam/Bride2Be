@@ -73,7 +73,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container,false);
         signUpButton = view.findViewById(R.id.login_frg_signup_button);
-        submitButton = view.findViewById(R.id.login_frg_submit_button);
+        submitButton = view.findViewById(R.id.nav_edit_pro);
         emailET = view.findViewById(R.id.login_frg_email_et);
         passwordET = view.findViewById(R.id.login_frg_password_et);
         signUpButton.setOnClickListener(v -> onSignUpButton());

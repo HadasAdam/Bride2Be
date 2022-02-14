@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NavGraphFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment"
+        android:textColor="#00838F" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dirtyWhite">
+
+        <Button
+            android:id="@+id/nav_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="edit Profile"
+            android:textSize="20sp"
+            app:backgroundTint="@color/darkTurquoise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="493dp" />
+
+        <Button
+            android:id="@+id/nav_user_pro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="user profile"
+            android:textSize="20sp"
+            app:backgroundTint="@color/darkTurquoise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="560dp" />
+
+        <Button
+            android:id="@+id/nav_add_pro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add product"
+            android:textSize="20sp"
+            app:backgroundTint="@color/darkTurquoise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="290dp" />
+
+        <Button
+            android:id="@+id/nav_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="login"
+            android:textSize="20sp"
+            app:backgroundTint="@color/darkTurquoise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.524"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="95dp" />
+
+        <Button
+            android:id="@+id/nav_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="signup"
+            android:textSize="20sp"
+            app:backgroundTint="@color/darkTurquoise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="161dp" />
+
+        <Button
+            android:id="@+id/nav_wish_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wishlist"
+            android:textSize="20sp"
+            app:backgroundTint="@color/darkTurquoise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="621dp" />
+
+        <Button
+            android:id="@+id/nav_pro_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Procucts list"
+            android:textSize="20sp"
+            app:backgroundTint="@color/darkTurquoise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="353dp" />
+
+        <Button
+            android:id="@+id/nav_pro_de"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Products details"
+            android:textSize="20sp"
+            app:backgroundTint="@color/darkTurquoise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="226dp" />
+
+        <Button
+            android:id="@+id/nav_edit_pro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Product"
+            android:textSize="20sp"
+            app:backgroundTint="@color/darkTurquoise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.527"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="423dp" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Navigaitor Graph"
+            android:textColor="#673AB7"
+            tools:layout_editor_absoluteX="137dp"
+            tools:layout_editor_absoluteY="30dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
