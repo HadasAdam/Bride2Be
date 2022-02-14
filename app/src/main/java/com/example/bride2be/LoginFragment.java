@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,13 +74,31 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container,false);
         signUpButton = view.findViewById(R.id.login_frg_signup_button);
-        submitButton = view.findViewById(R.id.nav_edit_pro);
+        submitButton = view.findViewById(R.id.login_TakeMe_btn);
         emailET = view.findViewById(R.id.login_frg_email_et);
         passwordET = view.findViewById(R.id.login_frg_password_et);
         signUpButton.setOnClickListener(v -> onSignUpButton());
         submitButton.setOnClickListener(v -> onClickSubmitButton());
         userWantsToLogIn = null;
         Model.instance.logOut();
+
+        Button takeMeInBtn = view.findViewById(R.id.login_TakeMe_btn);
+        takeMeInBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_userProfileFragment);
+            }
+
+        });
+
+        Button joinUsBtn = view.findViewById(R.id.login_frg_signup_button);
+        takeMeInBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_signUpFragment);
+            }
+
+        });
         return view;
     }
 

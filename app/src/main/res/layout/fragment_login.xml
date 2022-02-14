@@ -74,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@+id/login_frg_password_et" />
 
         <Button
-            android:id="@+id/nav_edit_pro"
+            android:id="@+id/login_TakeMe_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
@@ -96,7 +96,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nav_edit_pro" />
+            app:layout_constraintTop_toBottomOf="@+id/login_TakeMe_btn" />
 
         <Button
             android:id="@+id/login_frg_signup_button"

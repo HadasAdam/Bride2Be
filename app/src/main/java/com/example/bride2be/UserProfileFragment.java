@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,7 +82,7 @@ public class UserProfileFragment extends Fragment {
         UserAddress = view.findViewById(R.id.UserAddressProfileTV);
         LogoutBtn = view.findViewById(R.id.LogOutProfileBtn);
         EditProfileBtn = view.findViewById(R.id.EditProfileBtn);
-        AddNewProductBtn = view.findViewById(R.id.AddNewProfileBtn);
+        AddNewProductBtn = view.findViewById(R.id.AddNewProduct_btn);
         LogoutBtn.setOnClickListener(v -> UserLogOut());
         EditProfileBtn.setOnClickListener(v -> EditUserProfile());
         AddNewProductBtn.setOnClickListener(v -> addNewProduct());
@@ -90,6 +91,34 @@ public class UserProfileFragment extends Fragment {
         {
             setVisitorMode();
         }
+
+        Button logOutBtn = view.findViewById(R.id.LogOutProfileBtn);
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_loginFragment);
+            }
+
+        });
+
+        Button editProBtn = view.findViewById(R.id.EditProfileBtn);
+        editProBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_editProfileFragment);
+            }
+
+        });
+
+        Button newProBtn = view.findViewById(R.id.AddNewProduct_btn);
+        newProBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_addNewProductFragment);
+            }
+
+        });
+
         return view;
     }
 

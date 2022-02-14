@@ -20,6 +20,18 @@
         android:background="@color/dirtyWhite">
 
         <Button
+            android:id="@+id/nav_edit_pro_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Product"
+            android:textSize="20sp"
+            app:backgroundTint="@color/darkTurquoise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="423dp" />
+
+        <Button
             android:id="@+id/nav_edit_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,18 +122,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="226dp" />
-
-        <Button
-            android:id="@+id/nav_edit_pro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit Product"
-            android:textSize="20sp"
-            app:backgroundTint="@color/darkTurquoise"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.527"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="423dp" />
 
         <EditText
             android:id="@+id/editTextTextPersonName"

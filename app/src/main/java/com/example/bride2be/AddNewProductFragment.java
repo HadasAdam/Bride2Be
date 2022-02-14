@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,11 +81,33 @@ public class AddNewProductFragment extends Fragment {
         ProductImage = view.findViewById(R.id.ProductImageNewProductIV);
         CancelNewProduct = view.findViewById(R.id.CancelNewProductBtn);
         SaveNewProduct = view.findViewById(R.id.SaveNewProductBtn);
+        /*
         CancelNewProduct.setOnClickListener(v -> AbortNewProduct());
         SaveNewProduct.setOnClickListener(v -> AddNewProduct());
+        */
+
+        Button cancelProBtn = view.findViewById(R.id.CancelNewProductBtn);
+        cancelProBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_userProfileFragment);
+            }
+
+        });
+
+        Button saveProBtn = view.findViewById(R.id.SaveNewProductBtn);
+        saveProBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_userProfileFragment);
+            }
+
+        });
+
         return view;
     }
 
+    /*
     private void AbortNewProduct() { // cancel new product and get back to user profile
         //cancel changes
 
@@ -102,5 +125,8 @@ public class AddNewProductFragment extends Fragment {
         fragmentTransaction.commit();
 
     }
+
+     */
+
 
 }

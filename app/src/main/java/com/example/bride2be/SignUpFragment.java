@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,6 +90,17 @@ public class SignUpFragment extends Fragment {
         submitBtn.setOnClickListener(v -> onClickSubmitButton());
         submitBtn.setEnabled(true);
         Model.instance.logOut();
+
+        Button signUpSubBtn = view.findViewById(R.id.signUpFrg_submitBTN);
+        signUpSubBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_userProfileFragment);
+            }
+
+        });
+
+
         return view;
     }
 

@@ -55,7 +55,7 @@ public class NavGraphFragment extends Fragment {
 
         });
 
-        Button editProd = view.findViewById(R.id.nav_edit_pro);
+        Button editProd = view.findViewById(R.id.login_TakeMe_btn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

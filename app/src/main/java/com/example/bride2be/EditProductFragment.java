@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,9 +88,12 @@ public class EditProductFragment extends Fragment {
         CancelEditProduct = view.findViewById(R.id.CancelEditProductBtn);
         SaveEditProduct = view.findViewById(R.id.SaveEditProductBtn);
         DeleteEditProduct = view.findViewById(R.id.DeleteEditProductBtn);
+        /*
         CancelEditProduct.setOnClickListener(v -> AbortEditProduct());
         SaveEditProduct.setOnClickListener(v -> SaveProductChanges());
         DeleteEditProduct.setOnClickListener(v -> DeleteProduct());
+
+         */
 
         if(!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
         {
@@ -104,9 +108,43 @@ public class EditProductFragment extends Fragment {
         ProductDescription.setText(productToEdit.getDescription());
         // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
 
+        Button saveEditProductBtn = view.findViewById(R.id.SaveEditProductBtn);
+        saveEditProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_userProfileFragment);
+            }
+
+        });
+
+        Button delEditProductBtn = view.findViewById(R.id.DeleteEditProductBtn);
+        delEditProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_userProfileFragment);
+            }
+
+        });
+
+        Button cancelEditProductBtn = view.findViewById(R.id.CancelEditProductBtn);
+        cancelEditProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_userProfileFragment);
+            }
+
+        });
+
         return view;
+
+
+
+
+
+
     }
 
+    /*
     private void AbortEditProduct() { // cancel changes and get back to profile
         //cancel
 
@@ -153,5 +191,5 @@ public class EditProductFragment extends Fragment {
         fragmentTransaction.commit();
 
     }
-
+*/
 }

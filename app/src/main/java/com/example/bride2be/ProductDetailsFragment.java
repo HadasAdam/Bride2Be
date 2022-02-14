@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import androidx.room.PrimaryKey;
 
 import android.view.LayoutInflater;
@@ -66,6 +67,16 @@ public class ProductDetailsFragment extends Fragment {
         moveToMyProfilebtn = view.findViewById(R.id.ProductDetailsMyProfileButton);
 
         moveToMyProfilebtn.setOnClickListener(v -> setMoveToMyProfile());
+
+        Button myProfileBtn = view.findViewById(R.id.ProductDetailsMyProfileButton);
+        myProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_userProfileFragment);
+            }
+
+        });
+
         return  view;
     }
 

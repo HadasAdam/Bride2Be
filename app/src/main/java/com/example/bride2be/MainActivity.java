@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity  {
         WishlistFragment wishlistFragment = new WishlistFragment();
         MapsFragment mapsFragment = new MapsFragment();
         ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
+        NavGraphFragment navGraphFragment = new NavGraphFragment();
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();

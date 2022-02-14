@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,6 +85,26 @@ public class EditProfileFragment extends Fragment {
         SaveEditProfile = view.findViewById(R.id.SaveEditProfileBtn);
         CancelEditProfile.setOnClickListener(v -> AbortProfileEdit());
         SaveEditProfile.setOnClickListener(v -> SaveChangesInProfile());
+
+
+        Button cancelEditProfileBtn = view.findViewById(R.id.CancelEditProfileBtn);
+        cancelEditProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_userProfileFragment);
+            }
+
+        });
+
+        Button saveEditProfileBtn = view.findViewById(R.id.SaveEditProfileBtn);
+        saveEditProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navBarFragment_to_userProfileFragment);
+            }
+
+        });
+
         if(userToEdit == null)
         {
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
