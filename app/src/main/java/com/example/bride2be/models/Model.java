@@ -1,5 +1,6 @@
 package com.example.bride2be.models;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Model {
     private ModelSQL modelSQL = new ModelSQL();
     private List<Product> productList = new LinkedList<Product>();
     private List<User> userList = new LinkedList<>();
-    private List<City> cities = new LinkedList<>();
+    private ArrayList<City> cities = new ArrayList<>();
     private User loggedInUser = null;
 
     private Model(){
@@ -37,17 +38,25 @@ public class Model {
 
     private void initializeCities()
     {
-        cities.add(new City("Ashdod",0d,0d));
-        cities.add(new City("Beer Sheva",0d,0d));
-        cities.add(new City("Haifa",0d,0d));
-        cities.add(new City("Holon",0d,0d));
-        cities.add(new City("Jerusalem",0d,0d));
-        cities.add(new City("Rehovot",0d,0d));
-        cities.add(new City("Rishon Lezion",0d,0d));
-        cities.add(new City("Yavne",0d,0d));
+        cities.add(new City("Ashdod",31.799293d, 34.653821d));
+        cities.add(new City("Beer Sheva",31.262376d,34.796737d));
+        cities.add(new City("Haifa",32.807829d, 34.985453d));
+        cities.add(new City("Holon",32.019266d, 34.788493d));
+        cities.add(new City("Jerusalem",31.782785d,35.212797d));
+        cities.add(new City("Rehovot",31.891392d,34.811594d));
+        cities.add(new City("Rishon Lezion",31.958685d,34.751263d));
+        cities.add(new City("Tel Aviv",32.080340d,34.793264d));
+        cities.add(new City("Yavne",31.885384d, 34.731217d));
+        cities.add(new City("Natanya",32.329985d, 34.8540231d));
+        cities.add(new City("Marom Hagolan",33.135012d, 35.775956d));
+        cities.add(new City("Eylat", 29.539523, 34.941682));
+        cities.add(new City("Yam Hamelach", 31.449183, 35.387405));
+        cities.add(new City("Tveria",32.787528d, 35.540971d));
+        cities.add(new City("Ashkelon",31.665704, 34.572476));
+        cities.add(new City("Sderot", 31.519833, 34.595750));
     }
 
-    public List<City> getCities()
+    public ArrayList<City> getCities()
     {
         return this.cities;
     }

@@ -11,16 +11,21 @@ import android.location.Location;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.bride2be.models.City;
+import com.example.bride2be.models.Model;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.bride2be.databinding.ActivityMapsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -58,6 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         getUserLocation();
+        addMarkersToMap(googleMap);
 
     }
     void getUserLocation() {
@@ -74,18 +80,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-        @Override
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            if(requestCode == 0)
-            {
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                        getUserLocation();
-                    }else {
-                        Toast.makeText(MapsActivity.this, "Permission is not ganted", Toast.LENGTH_SHORT).show();
-                    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 0)
+        {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                    getUserLocation();
+                }else {
+                    Toast.makeText(MapsActivity.this, "Permission is not ganted", Toast.LENGTH_SHORT).show();
                 }
             }
         }
+    }
+
+    private void addMarkersToMap(GoogleMap googleMap)
+    {
+        ArrayList<City> cities = Model.instance.getCities();
+
+        for(int i = 0; i < cities.size(); i++)
+        {
+            LatLng cityPosition = new LatLng(cities.get(i).getLat(), cities.get(i).getLng());
+            googleMap.addMarker(new MarkerOptions()
+                    .position(cityPosition)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                    .title(cities.get(i).getName()));
+        }
+
+    }
+
 }
