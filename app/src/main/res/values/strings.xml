@@ -18,5 +18,6 @@
     <string name="signUpFrg_cityET">City</string>
     <string name="signUpFrg_submitBTN">TAKE ME IN!</string>
     <string name="SignUpFrg_title">Sign Up</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>
