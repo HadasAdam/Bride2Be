@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 
 /**
@@ -86,10 +87,10 @@ public class UserProfileFragment extends Fragment {
         EditProfileBtn.setOnClickListener(v -> EditUserProfile());
         AddNewProductBtn.setOnClickListener(v -> addNewProduct());
         loggedInUser = Model.instance.getLoggedInUser();
-        if(loggedInUser == null)
-        {
-            setVisitorMode();
-        }
+//        if(loggedInUser == null)
+//        {
+//            setVisitorMode();
+//        }
         return view;
     }
 
@@ -104,14 +105,6 @@ public class UserProfileFragment extends Fragment {
         Model.instance.logOut();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
-        fragmentTransaction.commit();
-    }
-
-    private void openMapFilters()
-    {
-        SupportMapFragment mapFragment = SupportMapFragment.newInstance();
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, mapFragment);
         fragmentTransaction.commit();
     }
 

@@ -3,7 +3,10 @@ package com.example.bride2be;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -22,14 +25,18 @@ public class MainActivity extends AppCompatActivity  {
         EditProfileFragment editProfileFragment = new EditProfileFragment();
         SignUpFragment signUpFragment = new SignUpFragment();
         WishlistFragment wishlistFragment = new WishlistFragment();
-        MapsFragment mapsFragment = new MapsFragment();
+        MapsActivity mapsActivity = new MapsActivity();
         ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
 
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.mainactivity_fragment_container, loginFragment);
-        transaction.commit();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//        transaction.add(R.id.mainactivity_fragment_container,userProfileFragment );
+//        transaction.commit();
     }
 
+    public void openMapActivity(View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
 }
