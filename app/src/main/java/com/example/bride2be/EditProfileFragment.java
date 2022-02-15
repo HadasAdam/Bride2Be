@@ -9,8 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.bride2be.models.Model;
@@ -26,7 +29,7 @@ public class EditProfileFragment extends Fragment {
     TextView UserFirstName;
     EditText UserEmail;
     EditText UserPhoneNumber;
-    EditText UserCity; // TODO: SHOULD BE A SPINNER, NOT AN EDITTEXT
+    Spinner citySpinner; // TODO: SHOULD BE A SPINNER, NOT AN EDITTEXT
     EditText UserStreet;
     Button CancelEditProfile;
     Button SaveEditProfile;
@@ -78,7 +81,7 @@ public class EditProfileFragment extends Fragment {
         UserFirstName = view.findViewById(R.id.UserNameEditProfileTV);
         UserEmail = view.findViewById(R.id.EmailEditProfileET); // TODO: FIRST NAME AND LAST NAME SEPARATELY!
         UserPhoneNumber = view.findViewById(R.id.PhoneNumEditProfileET);
-        UserCity = view.findViewById(R.id.CityEditProfileET);
+        citySpinner = view.findViewById(R.id.editProfile_citySpinner);
         UserStreet = view.findViewById(R.id.StreetEditProfileET);
         CancelEditProfile = view.findViewById(R.id.CancelEditProfileBtn);
         SaveEditProfile = view.findViewById(R.id.SaveEditProfileBtn);
@@ -92,11 +95,10 @@ public class EditProfileFragment extends Fragment {
         }
 
         UserFirstName.setText(userToEdit.getFirstName());
-        // TODO: LAST NAME ???
         UserEmail.setText(userToEdit.getEmail());
         UserPhoneNumber.setText(userToEdit.getPhoneNumber());
-        // TODO: USER CITY ???
         UserStreet.setText(userToEdit.getStreet());
+        initializeCitySpinner();
 
         return view;
     }
@@ -127,6 +129,41 @@ public class EditProfileFragment extends Fragment {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
         fragmentTransaction.commit();
+    }
+
+    private void initializeCitySpinner()
+    {
+        String[] cities = new String[Model.instance.getCities().size()];
+
+        for(int i = 0; i < Model.instance.getCities().size(); i++)
+        {
+            cities[i] = Model.instance.getCities().get(i).getName();
+        }
+
+        ArrayAdapter<String> dataAdapter;
+        dataAdapter = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item, cities);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        citySpinner.setAdapter(dataAdapter);
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        for (int i = 0; i < dataAdapter.getCount(); i++) {
+            if (citySpinner.getItemAtPosition(i).equals(userToEdit.getCity())) {
+                citySpinner.setSelection(i);
+                break;
+            }
+        }
+
     }
 
 }

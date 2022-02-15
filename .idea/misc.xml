@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/activity_main.xml" value="0.3546195652173913" />
+        <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/adapter_city_spinner.xml" value="0.2526041666666667" />
+        <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_edit_profile.xml" value="0.2526041666666667" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_items_list.xml" value="0.3546195652173913" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_login.xml" value="0.290625" />
         <entry key="..\:/Android/Projects/Bride2Be/app/src/main/res/layout/fragment_product_details.xml" value="0.3546195652173913" />
@@ -14,12 +16,10 @@
         <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/drawable/ic_baseline_account_circle.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/drawable/ic_baseline_location.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/drawable/ic_baseline_search.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/layout/fragment_edit_product.xml" value="0.31875" />
         <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/layout/fragment_login.xml" value="0.2625" />
-        <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/layout/fragment_maps.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/layout/fragment_product_details.xml" value="0.25" />
-        <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/layout/fragment_user_profile.xml" value="0.22604166666666667" />
         <entry key="..\:/Users/inonb/AndroidStudioProjects/android/Bride2Be/app/src/main/res/menu/top_navigation.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/drawable-v24/border.xml" value="0.29270833333333335" />
         <entry key="app/src/main/res/drawable-v24/myBorder.xml" value="0.3875" />

@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity  {
         ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
 
 
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        transaction.add(R.id.mainactivity_fragment_container,userProfileFragment );
-//        transaction.commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.mainactivity_fragment_container, editProfileFragment );
+        transaction.commit();
     }
 
     public void openMapActivity(View view) {

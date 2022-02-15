@@ -9,14 +9,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.bride2be.models.City;
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
 
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,6 +93,7 @@ public class SignUpFragment extends Fragment {
         submitBtn.setOnClickListener(v -> onClickSubmitButton());
         submitBtn.setEnabled(true);
         Model.instance.logOut();
+        initializeCitySpinner();
         return view;
     }
 
@@ -98,7 +103,7 @@ public class SignUpFragment extends Fragment {
         int id = Model.instance.getAllUsers().size();
         User user = new User(firstNameET.getText().toString(), lastNameET.getText().toString(),
                 emailAddressET.getText().toString(), phoneNumberET.getText().toString(), GeneralUtils.md5(passwordET.getText().toString()),
-                "Israel", "Ashdod"/*TODO: citySpinner.getSelectedItem().getText().toString()*/, "none");
+                "Israel", citySpinner.getSelectedItem().toString(), "none");
         user.setId(""+id);
         if(checkNewUserInputs(user))
         {
@@ -146,6 +151,40 @@ public class SignUpFragment extends Fragment {
             Log.d("TAG", "Password is not valid.");
             return false;
         }
+
+        if(citySpinner.getSelectedItem() == null)
+        {
+            Log.d("TAG", "City was not chosen.");
+        }
+
         return true;
     }
+
+    private void initializeCitySpinner()
+    {
+        String[] cities = new String[Model.instance.getCities().size()];
+
+        for(int i = 0; i < Model.instance.getCities().size(); i++)
+        {
+            cities[i] = Model.instance.getCities().get(i).getName();
+        }
+
+        ArrayAdapter<String> dataAdapter;
+        dataAdapter = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item, cities);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        citySpinner.setAdapter(dataAdapter);
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
 }
