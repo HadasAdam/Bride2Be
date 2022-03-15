@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity  {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.mainactivity_fragment_container, editProfileFragment );
+        transaction.add(R.id.mainactivity_fragment_container, addNewProductFragment);
         transaction.commit();
     }
 

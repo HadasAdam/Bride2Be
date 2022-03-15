@@ -1,5 +1,8 @@
 package com.example.bride2be.models;
 
+import android.graphics.Bitmap;
+import android.graphics.Picture;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,6 +62,20 @@ public class Model {
     public ArrayList<City> getCities()
     {
         return this.cities;
+    }
+
+    public String savePictureInStorage(Bitmap picture, String userId) {
+        // TODO: save picture in storage, then return its path.
+        // TODO: make sure to CHECK THE NAME IS UNIQUE, otherwise - it would be OVERWRITTEN!
+
+        return "";
+    }
+
+    public Bitmap getPictureFromStorage(String path)
+    {
+        // TODO: implement
+
+        return null;
     }
 
     /**************************************   Logging in   **************************************/
