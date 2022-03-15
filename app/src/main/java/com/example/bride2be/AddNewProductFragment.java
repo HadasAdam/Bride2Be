@@ -1,10 +1,18 @@
 package com.example.bride2be;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +21,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.bride2be.models.Model;
+import com.example.bride2be.models.Product;
+
+import java.io.IOException;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AddNewProductFragment#newInstance} factory method to
@@ -20,6 +33,8 @@ import android.widget.TextView;
  */
 public class AddNewProductFragment extends Fragment {
 
+    private static final int PICK_IMAGE = 1;
+    Uri imageUri;
     EditText ProductName;
     EditText ProductPrice;
     TextView UserLocation;
@@ -72,6 +87,12 @@ public class AddNewProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_new_product, container, false);
+        if(Model.instance.getLoggedInUser() == null)
+        {
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+            fragmentTransaction.commit();
+        }
         ProductName = view.findViewById(R.id.ProductNameNewProductET);
         ProductPrice = view.findViewById(R.id.ProductPriceNewProductET);
         UserLocation = view.findViewById(R.id.UserLocationNewProductTV);
@@ -82,11 +103,17 @@ public class AddNewProductFragment extends Fragment {
         SaveNewProduct = view.findViewById(R.id.SaveNewProductBtn);
         CancelNewProduct.setOnClickListener(v -> AbortNewProduct());
         SaveNewProduct.setOnClickListener(v -> AddNewProduct());
+
+        ChoosePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImageFromGallery();
+            }
+        });
         return view;
     }
 
-    private void AbortNewProduct() { // cancel new product and get back to user profile
-        //cancel changes
+    private void AbortNewProduct() {
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
@@ -94,13 +121,47 @@ public class AddNewProductFragment extends Fragment {
 
     }
 
-    private void AddNewProduct() { // save the new product. need to check that user enters all attributes
-        //save changes and drop notice to user (new product created)
+    private void AddNewProduct() {
+
+        String picturePath = Model.instance.savePictureInStorage(ProductImage.getDrawingCache(), Model.instance.getLoggedInUser().getId());
+
+        Product currentProduct = new Product(ProductName.getText().toString(), ProductDescription.getText().toString(),
+                Double.valueOf(ProductPrice.getText().toString()), picturePath, Model.instance.getLoggedInUser().getId());
+
+
+        Model.instance.addProduct(currentProduct, new Model.AddProductListener() {
+            @Override
+            public void onComplete() {
+                Log.d("TAG", "New product: '" + ProductName.getText().toString() + "' was saved with picture in path: " + picturePath);
+            }
+        });
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
         fragmentTransaction.commit();
+    }
 
+    private void uploadImageFromGallery()
+    {
+        Intent gallery = new Intent();
+        gallery.setType("image/*");
+        gallery.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(gallery, "Select a picture"), PICK_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK)
+        {
+            imageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                ProductImage.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
