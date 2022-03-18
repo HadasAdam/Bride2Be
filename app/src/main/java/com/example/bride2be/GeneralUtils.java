@@ -72,7 +72,7 @@ public class GeneralUtils {
     }
 
     public static boolean isLastNameValid(String lastName) {
-        return lastName.matches( "[A-Z]+([ '-][a-zA-Z]+)*" );
+        return lastName.matches( "[A-Z][a-z]{1,14}" );
     }
 
     public static boolean isPhoneValid(String phoneNumber) {

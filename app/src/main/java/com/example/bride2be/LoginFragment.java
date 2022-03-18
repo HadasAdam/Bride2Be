@@ -1,5 +1,8 @@
 package com.example.bride2be;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
@@ -27,6 +31,7 @@ public class LoginFragment extends Fragment {
     Button submitButton;
     Button signUpButton;
     User userWantsToLogIn;
+    View view;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,9 +74,8 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_login, container,false);
         signUpButton = view.findViewById(R.id.login_frg_signup_button);
         submitButton = view.findViewById(R.id.login_frg_submit_button);
         emailET = view.findViewById(R.id.login_frg_email_et);
@@ -83,34 +87,48 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    public void onClickSubmitButton()
-    {
+    public void onClickSubmitButton() {
         String emailAddress = emailET.getText().toString();
         String password = passwordET.getText().toString();
-        if (checkLoginCredentials(emailAddress, password))
-        {
+        if (checkLoginCredentials(emailAddress, password)) {
             Model.instance.setLoggedInUser(userWantsToLogIn);
             Log.d("TAG", "User with email: " + emailAddress + " was found in database.");
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
             fragmentTransaction.commit();
-        }
-        else
-        {
+        } else {
             Log.d("TAG", "User with email: " + emailAddress +
                     " was not found in database or put a wrong password.");
+
+            Context context = view.getContext();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+            // set title
+            alertDialogBuilder.setTitle("Wrong Email or Password. Please try to login again");
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Click ok to exit and try again")
+                    .setCancelable(false)
+                    .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
         }
     }
 
-    public void onSignUpButton()
-    {
+    public void onSignUpButton() {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new SignUpFragment());
         fragmentTransaction.commit();
     }
 
-    private boolean checkLoginCredentials(String emailAddress, String givenPassword)
-    {
+    private boolean checkLoginCredentials(String emailAddress, String givenPassword) {
         userWantsToLogIn = GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), emailAddress);
         return (userWantsToLogIn != null && userWantsToLogIn.getPasswordHash().equals(GeneralUtils.md5(givenPassword)));
     }
