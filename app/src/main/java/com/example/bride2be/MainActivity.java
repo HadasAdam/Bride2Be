@@ -7,9 +7,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity  {
 
+    Button mapButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +29,8 @@ public class MainActivity extends AppCompatActivity  {
         WishlistFragment wishlistFragment = new WishlistFragment();
         MapsActivity mapsActivity = new MapsActivity();
         ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
-
-
+        mapButton = findViewById(R.id.button);
+        mapButton.setVisibility(View.GONE);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.mainactivity_fragment_container, addNewProductFragment);

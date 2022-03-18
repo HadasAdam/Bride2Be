@@ -1,29 +1,77 @@
 package com.example.bride2be.models;
 
+import android.net.Uri;
 import android.util.Log;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.common.util.concurrent.SettableFuture;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class ModelFirebase {
+    final static String UPLOADS_FOLDER = "Uploads";
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    StorageReference storageReference;
 
     public ModelFirebase(){
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(false)
                 .build();
         db.setFirestoreSettings(settings);
+        storageReference = FirebaseStorage.getInstance().getReference(UPLOADS_FOLDER);
+    }
+
+    /**************************************   STORAGE   **************************************/
+
+    public String uploadPictureInStorage(String fileExtension, Uri imageUri) {
+        String fileName = System.currentTimeMillis() + "." + fileExtension;
+        StorageReference fileReference = storageReference.child("/" + fileName);
+        fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d("TAG", "Upload Successful.");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("TAG", "Upload Unsuccessful.");
+            }
+        });
+        return fileName;
+    }
+
+    public void loadPictureFromStorage(String path, ImageView imageView)
+    {
+        StorageReference ref = storageReference.child(path);
+        ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri imageUri = task.getResult();
+                    imageView.setImageURI(imageUri);
+                    Log.d("TAG", "Succeeded to load image from storage.");
+                } else {
+                    Log.d("TAG", "Failed to load image from storage.");
+                }
+            }
+        });
     }
 
     /**************************************   USERS   **************************************/

@@ -2,29 +2,28 @@ package com.example.bride2be;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.Product;
-
-import java.io.IOException;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,15 +33,15 @@ import java.io.IOException;
 public class AddNewProductFragment extends Fragment {
 
     private static final int PICK_IMAGE = 1;
+    TextView userLocation;
+    EditText productName;
+    EditText productPrice;
+    EditText productDescription;
+    Button choosePictureButton;
+    Button cancelNewProductButton;
+    Button saveNewProductButton;
+    ImageView productImage;
     Uri imageUri;
-    EditText ProductName;
-    EditText ProductPrice;
-    TextView UserLocation;
-    EditText ProductDescription;
-    Button ChoosePicture;
-    ImageView ProductImage;
-    Button CancelNewProduct;
-    Button SaveNewProduct;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,29 +86,30 @@ public class AddNewProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_new_product, container, false);
-        if(Model.instance.getLoggedInUser() == null)
-        {
-            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
-            fragmentTransaction.commit();
-        }
-        ProductName = view.findViewById(R.id.ProductNameNewProductET);
-        ProductPrice = view.findViewById(R.id.ProductPriceNewProductET);
-        UserLocation = view.findViewById(R.id.UserLocationNewProductTV);
-        ProductDescription = view.findViewById(R.id.ProductDescriptionNewProductET);
-        ChoosePicture = view.findViewById(R.id.ChooseProductImageNewProductBtn);
-        ProductImage = view.findViewById(R.id.ProductImageNewProductIV);
-        CancelNewProduct = view.findViewById(R.id.CancelNewProductBtn);
-        SaveNewProduct = view.findViewById(R.id.SaveNewProductBtn);
-        CancelNewProduct.setOnClickListener(v -> AbortNewProduct());
-        SaveNewProduct.setOnClickListener(v -> AddNewProduct());
+//        if(Model.instance.getLoggedInUser() == null)
+//        {
+//            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+//            fragmentTransaction.commit();
+//        }
+        productName = view.findViewById(R.id.ProductNameNewProductET);
+        productPrice = view.findViewById(R.id.ProductPriceNewProductET);
+        userLocation = view.findViewById(R.id.UserLocationNewProductTV);
+        productDescription = view.findViewById(R.id.ProductDescriptionNewProductET);
+        choosePictureButton = view.findViewById(R.id.ChooseProductImageNewProductBtn);
+        productImage = view.findViewById(R.id.ProductImageNewProductIV);
+        cancelNewProductButton = view.findViewById(R.id.CancelNewProductBtn);
+        saveNewProductButton = view.findViewById(R.id.SaveNewProductBtn);
+        cancelNewProductButton.setOnClickListener(v -> AbortNewProduct());
+        saveNewProductButton.setOnClickListener(v -> AddNewProduct());
 
-        ChoosePicture.setOnClickListener(new View.OnClickListener() {
+        choosePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadImageFromGallery();
             }
         });
+        loadImageFromStorage("1647632732968.jpg", productImage);
         return view;
     }
 
@@ -122,23 +122,28 @@ public class AddNewProductFragment extends Fragment {
     }
 
     private void AddNewProduct() {
+        if(isProductValid())
+        {
+            String picturePath = uploadImageToStorage();
+            if(!picturePath.equals(""))
+            {
+                Product currentProduct = new Product(productName.getText().toString(), productDescription.getText().toString(),
+                        Double.valueOf(productPrice.getText().toString()), picturePath, Model.instance.getLoggedInUser().getId());
+                Model.instance.addProduct(currentProduct, new Model.AddProductListener() {
+                    @Override
+                    public void onComplete() {
+                        Log.d("TAG", "New product: '" + productName.getText().toString() + "' was saved with picture in path: " + picturePath);
 
-        String picturePath = Model.instance.savePictureInStorage(ProductImage.getDrawingCache(), Model.instance.getLoggedInUser().getId());
-
-        Product currentProduct = new Product(ProductName.getText().toString(), ProductDescription.getText().toString(),
-                Double.valueOf(ProductPrice.getText().toString()), picturePath, Model.instance.getLoggedInUser().getId());
-
-
-        Model.instance.addProduct(currentProduct, new Model.AddProductListener() {
-            @Override
-            public void onComplete() {
-                Log.d("TAG", "New product: '" + ProductName.getText().toString() + "' was saved with picture in path: " + picturePath);
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
+                        fragmentTransaction.commit();
+                    }
+                });
             }
-        });
-
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-        fragmentTransaction.commit();
+        }
+        else {
+            Toast.makeText(getContext(), "Product is not valid.", Toast.LENGTH_SHORT);
+        }
     }
 
     private void uploadImageFromGallery()
@@ -152,16 +157,41 @@ public class AddNewProductFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK)
+        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK
+                && data != null && data.getData() != null)
         {
             imageUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
-                ProductImage.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Picasso.with(getActivity()).load(imageUri).into(productImage);
         }
     }
 
+    private String getFileExtension(Uri uri)
+    {
+        ContentResolver cr = getActivity().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(uri));
+    }
+
+    private String uploadImageToStorage()
+    {
+        String filePath = "";
+        if(imageUri != null) {
+            filePath = Model.instance.uploadPictureInStorage(getFileExtension(imageUri), imageUri);
+        }
+        else {
+            Toast.makeText(getActivity() ,"No image selected.", Toast.LENGTH_SHORT).show();
+        }
+        return filePath;
+    }
+
+    private void loadImageFromStorage(String path, ImageView imageView)
+    {
+        Model.instance.loadPictureFromStorage(path, imageView);
+    }
+
+    private boolean isProductValid()
+    {
+        //TODO: add validations to product fields
+        return true;
+    }
 }

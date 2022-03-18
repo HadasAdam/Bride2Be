@@ -1,7 +1,9 @@
 package com.example.bride2be.models;
 
-import android.graphics.Bitmap;
-import android.graphics.Picture;
+import android.net.Uri;
+import android.widget.ImageView;
+
+import com.google.common.util.concurrent.SettableFuture;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -64,18 +66,14 @@ public class Model {
         return this.cities;
     }
 
-    public String savePictureInStorage(Bitmap picture, String userId) {
-        // TODO: save picture in storage, then return its path.
-        // TODO: make sure to CHECK THE NAME IS UNIQUE, otherwise - it would be OVERWRITTEN!
+    /**************************************   Storage   **************************************/
 
-        return "";
+    public String uploadPictureInStorage(String fileExtension, Uri imageUri) {
+        return modelFirebase.uploadPictureInStorage(fileExtension, imageUri);
     }
 
-    public Bitmap getPictureFromStorage(String path)
-    {
-        // TODO: implement
-
-        return null;
+    public void loadPictureFromStorage(String path, ImageView imageView) {
+        modelFirebase.loadPictureFromStorage(path, imageView);
     }
 
     /**************************************   Logging in   **************************************/
