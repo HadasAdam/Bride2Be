@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.bride2be"
     tools:ignore="ExtraText">
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use

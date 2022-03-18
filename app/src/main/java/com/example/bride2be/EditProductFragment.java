@@ -24,15 +24,15 @@ import com.example.bride2be.models.Product;
  */
 public class EditProductFragment extends Fragment {
 
-    EditText ProductName;
-    EditText ProductPrice;
-    TextView UserLocation;
-    EditText ProductDescription;
-    Button ChoosePicture;
+    TextView userLocation;
+    EditText productName;
+    EditText productPrice;
+    EditText productDescription;
+    Button choosePictureButton;
+    Button cancelEditProductButton;
+    Button saveEditProductButton;
+    Button deleteEditProductButton;
     ImageView ProductImage;
-    Button CancelEditProduct;
-    Button SaveEditProduct;
-    Button DeleteEditProduct;
     Product productToEdit;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -78,18 +78,18 @@ public class EditProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_product, container, false);
-        ProductName = view.findViewById(R.id.ProductNameEditProductET);
-        ProductPrice = view.findViewById(R.id.ProductPriceEditProductET);
-        UserLocation = view.findViewById(R.id.UserLocationEditProductTV);
-        ProductDescription = view.findViewById(R.id.ProductDescriptionEditProductET);
-        ChoosePicture = view.findViewById(R.id.ChooseProductImageEditProductBtn);
+        productName = view.findViewById(R.id.ProductNameEditProductET);
+        productPrice = view.findViewById(R.id.ProductPriceEditProductET);
+        userLocation = view.findViewById(R.id.UserLocationEditProductTV);
+        productDescription = view.findViewById(R.id.ProductDescriptionEditProductET);
+        choosePictureButton = view.findViewById(R.id.ChooseProductImageEditProductBtn);
         ProductImage = view.findViewById(R.id.ProductImageEditProductIV);
-        CancelEditProduct = view.findViewById(R.id.CancelEditProductBtn);
-        SaveEditProduct = view.findViewById(R.id.SaveEditProductBtn);
-        DeleteEditProduct = view.findViewById(R.id.DeleteEditProductBtn);
-        CancelEditProduct.setOnClickListener(v -> AbortEditProduct());
-        SaveEditProduct.setOnClickListener(v -> SaveProductChanges());
-        DeleteEditProduct.setOnClickListener(v -> DeleteProduct());
+        cancelEditProductButton = view.findViewById(R.id.CancelEditProductBtn);
+        saveEditProductButton = view.findViewById(R.id.SaveEditProductBtn);
+        deleteEditProductButton = view.findViewById(R.id.DeleteEditProductBtn);
+        cancelEditProductButton.setOnClickListener(v -> AbortEditProduct());
+        saveEditProductButton.setOnClickListener(v -> SaveProductChanges());
+        deleteEditProductButton.setOnClickListener(v -> DeleteProduct());
 
         if(!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
         {
@@ -98,10 +98,10 @@ public class EditProductFragment extends Fragment {
             fragmentTransaction.commit();
         }
 
-        ProductName.setText(productToEdit.getTitle());
-        ProductPrice.setText(String.valueOf(productToEdit.getPrice()));
+        productName.setText(productToEdit.getTitle());
+        productPrice.setText(String.valueOf(productToEdit.getPrice()));
         // TODO: USER LOCATION
-        ProductDescription.setText(productToEdit.getDescription());
+        productDescription.setText(productToEdit.getDescription());
         // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
 
         return view;
@@ -119,9 +119,9 @@ public class EditProductFragment extends Fragment {
 
     private void SaveProductChanges() {
 
-        productToEdit.setTitle(ProductName.getText().toString());
-        productToEdit.setDescription(ProductDescription.toString());
-        productToEdit.setPrice(Double.valueOf(ProductPrice.getText().toString()));
+        productToEdit.setTitle(productName.getText().toString());
+        productToEdit.setDescription(productDescription.toString());
+        productToEdit.setPrice(Double.valueOf(productPrice.getText().toString()));
         // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
 
         Model.instance.updateProduct(productToEdit, new Model.UpdateProductListener() {
