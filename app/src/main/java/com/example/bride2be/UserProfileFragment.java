@@ -87,10 +87,10 @@ public class UserProfileFragment extends Fragment {
         EditProfileBtn.setOnClickListener(v -> EditUserProfile());
         AddNewProductBtn.setOnClickListener(v -> addNewProduct());
         loggedInUser = Model.instance.getLoggedInUser();
-//        if(loggedInUser == null)
-//        {
-//            setVisitorMode();
-//        }
+        if(loggedInUser == null)
+        {
+            setVisitorMode();
+        }
         return view;
     }
 
