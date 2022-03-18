@@ -86,12 +86,12 @@ public class AddNewProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_new_product, container, false);
-//        if(Model.instance.getLoggedInUser() == null)
-//        {
-//            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
-//            fragmentTransaction.commit();
-//        }
+        if(Model.instance.getLoggedInUser() == null)
+        {
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+            fragmentTransaction.commit();
+        }
         productName = view.findViewById(R.id.ProductNameNewProductET);
         productPrice = view.findViewById(R.id.ProductPriceNewProductET);
         userLocation = view.findViewById(R.id.UserLocationNewProductTV);
@@ -109,7 +109,7 @@ public class AddNewProductFragment extends Fragment {
                 uploadImageFromGallery();
             }
         });
-        loadImageFromStorage("1647632732968.jpg", productImage);
+
         return view;
     }
 
@@ -182,11 +182,6 @@ public class AddNewProductFragment extends Fragment {
             Toast.makeText(getActivity() ,"No image selected.", Toast.LENGTH_SHORT).show();
         }
         return filePath;
-    }
-
-    private void loadImageFromStorage(String path, ImageView imageView)
-    {
-        Model.instance.loadPictureFromStorage(path, imageView);
     }
 
     private boolean isProductValid()

@@ -1,5 +1,7 @@
 package com.example.bride2be;
 
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,10 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.Product;
@@ -34,6 +38,7 @@ public class EditProductFragment extends Fragment {
     Button deleteEditProductButton;
     ImageView ProductImage;
     Product productToEdit;
+    Uri imageUri;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -102,7 +107,7 @@ public class EditProductFragment extends Fragment {
         productPrice.setText(String.valueOf(productToEdit.getPrice()));
         // TODO: USER LOCATION
         productDescription.setText(productToEdit.getDescription());
-        // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
+        // TODO: call loadImageFromStorage();
 
         return view;
     }
@@ -119,17 +124,28 @@ public class EditProductFragment extends Fragment {
 
     private void SaveProductChanges() {
 
-        productToEdit.setTitle(productName.getText().toString());
-        productToEdit.setDescription(productDescription.toString());
-        productToEdit.setPrice(Double.valueOf(productPrice.getText().toString()));
-        // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
+        if(isProductValid())
+        {
+            String picturePath = uploadImageToStorage();
+            if(!picturePath.equals(""))
+            {
+                Product currentProduct = new Product(productName.getText().toString(), productDescription.getText().toString(),
+                        Double.valueOf(productPrice.getText().toString()), picturePath, Model.instance.getLoggedInUser().getId());
+                Model.instance.updateProduct(currentProduct, new Model.UpdateProductListener() {
+                    @Override
+                    public void onComplete() {
+                        Log.d("TAG", "Updated product: '" + productName.getText().toString() + "' was updated.");
 
-        Model.instance.updateProduct(productToEdit, new Model.UpdateProductListener() {
-            @Override
-            public void onComplete() {
-                Log.d("TAG", "Product with id: " + productToEdit.getId() + " was updated.");
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
+                        fragmentTransaction.commit();
+                    }
+                });
             }
-        });
+        }
+        else {
+            Toast.makeText(getContext(), "Product is not valid.", Toast.LENGTH_SHORT);
+        }
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
@@ -152,6 +168,35 @@ public class EditProductFragment extends Fragment {
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
         fragmentTransaction.commit();
 
+    }
+
+    private String uploadImageToStorage()
+    {
+        String filePath = "";
+        if(imageUri != null) {
+            filePath = Model.instance.uploadPictureInStorage(getFileExtension(imageUri), imageUri);
+        }
+        else {
+            Toast.makeText(getActivity() ,"No image selected.", Toast.LENGTH_SHORT).show();
+        }
+        return filePath;
+    }
+
+    private void loadImageFromStorage(String path, ImageView imageView)
+    {
+        Model.instance.loadPictureFromStorage(path, imageView);
+    }
+
+    private String getFileExtension(Uri uri)
+    {
+        ContentResolver cr = getActivity().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(uri));
+    }
+
+    private boolean isProductValid() {
+        // TODO: add validation to product fields
+        return true;
     }
 
 }
