@@ -1,5 +1,8 @@
 package com.example.bride2be;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,6 +32,7 @@ import java.util.zip.Inflater;
  */
 public class SignUpFragment extends Fragment {
 
+    View view;
     EditText firstNameET;
     EditText lastNameET;
     EditText emailAddressET;
@@ -82,7 +86,7 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         emailAddressET = view.findViewById(R.id.signUpFrg_emailET);
         phoneNumberET = view.findViewById(R.id.signUpFrg_phoneNumberET);
         citySpinner = view.findViewById(R.id.signUpFrg_cityET);
@@ -107,12 +111,7 @@ public class SignUpFragment extends Fragment {
         user.setId(""+id);
         if(checkNewUserInputs(user))
         {
-            Model.instance.addUser(user, new Model.AddUserListener(){
-                @Override
-                public void onComplete() {
-                    Model.instance.setLoggedInUser(user);
-                }
-            });
+            Model.instance.addUser(user, () -> Model.instance.setLoggedInUser(user));
             Log.d("TAG", "User with email: " + user.getEmail() + " was added to database.");
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
@@ -125,36 +124,86 @@ public class SignUpFragment extends Fragment {
         }
     }
 
-    private boolean checkNewUserInputs(User user)
-    {
+    private boolean checkNewUserInputs(User user) {
+        Context context = view.getContext();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Click ok to exit and try again")
+                .setCancelable(false)
+                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+
         if (GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), user.getEmail()) != null){
             Log.d("TAG", "A user with this email already exists.");
+            alertDialogBuilder.setTitle("A user with this email already exists");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
             return false;
         }
         if (!GeneralUtils.isEmailValid(user.getEmail())){
             Log.d("TAG", "Email address is not valid.");
+            alertDialogBuilder.setTitle("Email address is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
             return false;
         }
         if (!GeneralUtils.isFirstNameValid(user.getFirstName())){
             Log.d("TAG", "First name is not valid.");
+            alertDialogBuilder.setTitle("First name is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
             return false;
         }
         if (!GeneralUtils.isLastNameValid(user.getLastName())){
             Log.d("TAG", "Last name is not valid.");
+            alertDialogBuilder.setTitle("Last name is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
             return false;
         }
         if(!GeneralUtils.isPhoneValid(user.getPhoneNumber())){
             Log.d("TAG", "Phone number is not valid.");
+            alertDialogBuilder.setTitle("Phone number is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
             return false;
         }
         if(!GeneralUtils.isPasswordValid(user.getPhoneNumber())){
             Log.d("TAG", "Password is not valid.");
+            alertDialogBuilder.setTitle("Password is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
             return false;
         }
 
         if(citySpinner.getSelectedItem() == null)
         {
             Log.d("TAG", "City was not chosen.");
+            alertDialogBuilder.setTitle("City was not chosen");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
         }
 
         return true;
