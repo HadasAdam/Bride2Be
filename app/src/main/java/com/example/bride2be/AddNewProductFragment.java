@@ -124,21 +124,19 @@ public class AddNewProductFragment extends Fragment {
     private void AddNewProduct() {
 
         String picturePath = Model.instance.savePictureInStorage(ProductImage.getDrawingCache(), Model.instance.getLoggedInUser().getId());
+        // check if title, description and price are ok first
+        if (GeneralUtils.isTitle(ProductName.getText().toString()) && GeneralUtils.isDescription(ProductDescription.getText().toString())
+                && GeneralUtils.isPrice(ProductPrice.getText().toString())) {
 
-        Product currentProduct = new Product(ProductName.getText().toString(), ProductDescription.getText().toString(),
+            Product currentProduct = new Product(ProductName.getText().toString(), ProductDescription.getText().toString(),
                 Double.valueOf(ProductPrice.getText().toString()), picturePath, Model.instance.getLoggedInUser().getId());
 
+            Model.instance.addProduct(currentProduct, () -> Log.d("TAG", "New product: '" + ProductName.getText().toString() + "' was saved with picture in path: " + picturePath));
 
-        Model.instance.addProduct(currentProduct, new Model.AddProductListener() {
-            @Override
-            public void onComplete() {
-                Log.d("TAG", "New product: '" + ProductName.getText().toString() + "' was saved with picture in path: " + picturePath);
-            }
-        });
-
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-        fragmentTransaction.commit();
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
+            fragmentTransaction.commit();
+        }
     }
 
     private void uploadImageFromGallery()

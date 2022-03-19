@@ -79,4 +79,23 @@ public class GeneralUtils {
         return phoneNumber.matches("[0-9]{10}");
     }
 
+    public static boolean isTitle(String productTitle) {
+        return productTitle.length() >= 4 && productTitle.length() <= 12;
+    }
+
+    public static boolean isDescription(String productDescription) {
+        return productDescription.matches("[A-Z][a-z]{1,14}") && productDescription.length() >= 4 && productDescription.length() <= 50;
+    }
+
+    public static boolean isPrice(String productPrice) {
+        try {
+            Double.parseDouble(productPrice);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+
+
 }
