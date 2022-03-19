@@ -91,8 +91,7 @@ public class EditProductFragment extends Fragment {
         SaveEditProduct.setOnClickListener(v -> SaveProductChanges());
         DeleteEditProduct.setOnClickListener(v -> DeleteProduct());
 
-        if(!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
-        {
+        if(!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId())) {
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
             fragmentTransaction.commit();
@@ -108,38 +107,36 @@ public class EditProductFragment extends Fragment {
     }
 
     private void AbortEditProduct() { // cancel changes and get back to profile
-        //cancel
-
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
         fragmentTransaction.commit();
-
-
     }
 
     private void SaveProductChanges() {
+        // check if title, description and price are ok first
+        if (GeneralUtils.isTitle(ProductName.getText().toString()) && GeneralUtils.isDescription(ProductDescription.getText().toString())
+                && GeneralUtils.isPrice(ProductPrice.getText().toString())) {
 
-        productToEdit.setTitle(ProductName.getText().toString());
-        productToEdit.setDescription(ProductDescription.toString());
-        productToEdit.setPrice(Double.valueOf(ProductPrice.getText().toString()));
-        // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
+            productToEdit.setTitle(ProductName.getText().toString());
+            productToEdit.setDescription(ProductDescription.toString());
+            productToEdit.setPrice(Double.valueOf(ProductPrice.getText().toString()));
+            // TODO: LINK BETWEEN PICTURE AND PRODUCT (Picture should be saved in storage, not DB)
 
-        Model.instance.updateProduct(productToEdit, new Model.UpdateProductListener() {
-            @Override
-            public void onComplete() {
-                Log.d("TAG", "Product with id: " + productToEdit.getId() + " was updated.");
-            }
-        });
+            Model.instance.updateProduct(productToEdit, new Model.UpdateProductListener() {
+                @Override
+                public void onComplete() {
+                    Log.d("TAG", "Product with id: " + productToEdit.getId() + " was updated.");
+                }
+            });
 
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-        fragmentTransaction.commit();
-
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
+            fragmentTransaction.commit();
+        }
     }
 
     private void DeleteProduct() {
-        if(productToEdit != null)
-        {
+        if(productToEdit != null) {
             Model.instance.deleteProduct(productToEdit, new Model.DeleteProductListener() {
                 @Override
                 public void onComplete() {
@@ -147,11 +144,9 @@ public class EditProductFragment extends Fragment {
                 }
             });
         }
-
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
         fragmentTransaction.commit();
-
     }
 
 }
