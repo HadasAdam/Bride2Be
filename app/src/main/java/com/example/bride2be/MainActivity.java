@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity  {
         mapButton.setVisibility(View.GONE);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.mainactivity_fragment_container, addNewProductFragment);
+        transaction.add(R.id.mainactivity_fragment_container, signUpFragment);
         transaction.commit();
     }
 

@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Entity
 public class Product implements Serializable {
-    final public static String COLLECTION_NAME = "products";
+    final public static String COLLECTION_NAME = "Products";
     @PrimaryKey
     @NonNull
     private String id;
