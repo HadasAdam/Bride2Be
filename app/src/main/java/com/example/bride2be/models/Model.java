@@ -3,7 +3,8 @@ package com.example.bride2be.models;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import com.google.common.util.concurrent.SettableFuture;
+import com.example.bride2be.models.localDB.ProductModelSql;
+import com.example.bride2be.models.localDB.UserModelSql;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,11 +14,12 @@ public class Model {
 
     public static final Model instance = new Model();
     private ModelFirebase modelFirebase = new ModelFirebase();
-    private ModelSQL modelSQL = new ModelSQL();
     private List<Product> productList = new LinkedList<Product>();
     private List<User> userList = new LinkedList<>();
     private ArrayList<City> cities = new ArrayList<>();
     private User loggedInUser = null;
+    private UserModelSql userModelSql = new UserModelSql();
+    private ProductModelSql productModelSql = new ProductModelSql();
 
     private Model(){
         initializeCities();
