@@ -18,12 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.example.bride2be.models.City;
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +31,7 @@ import java.util.zip.Inflater;
  */
 public class SignUpFragment extends Fragment {
 
+    static final String TAG = "SignUpFragment";
     View view;
     EditText firstNameET;
     EditText lastNameET;
@@ -104,25 +104,51 @@ public class SignUpFragment extends Fragment {
     public void onClickSubmitButton()
     {
         submitBtn.setEnabled(false);
-        User user = new User(firstNameET.getText().toString(), lastNameET.getText().toString(),
+        User newUser = new User(firstNameET.getText().toString(), lastNameET.getText().toString(),
                 emailAddressET.getText().toString(), phoneNumberET.getText().toString(), GeneralUtils.md5(passwordET.getText().toString()),
                 "Israel", citySpinner.getSelectedItem().toString(), "none");
-        if(checkNewUserInputs(user))
-        {
-            Model.instance.addUser(user, () -> Model.instance.setLoggedInUser(user));
-            Log.d("TAG", "User with email: " + user.getEmail() + " was added to database.");
-            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-            fragmentTransaction.commit();
+
+        if(checkNewUserInputs(newUser)) {
+            checkIfEmailIsAlreadyTaken(newUser);
         }
-        else
-        {
+        else {
             submitBtn.setEnabled(true);
-            Log.d("TAG", "Unable to add user with email: " + user.getEmail() + " to database.");
+            Log.d("TAG", "Unable to add user with email: " + newUser.getEmail() + " to database.");
         }
     }
 
-    private boolean checkNewUserInputs(User user) {
+    private void checkIfEmailIsAlreadyTaken(User newUser) {
+        Model.instance.getAllUsers(new Model.GetAllUsersListener() {
+            @Override
+            public void onComplete(List<User> users) {
+                boolean found = false;
+                for (User user : users) {
+                    if (user != null && user.getEmail().equals(newUser.getEmail())) {
+                        found = true;
+                    }
+                }
+                if(found){
+                    AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
+                    Log.d(TAG, "A user with this email already exists.");
+                    alertDialogBuilder.setTitle("A user with this email already exists");
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                }
+                else {
+                    Model.instance.addUser(newUser, () -> {});
+                    Log.d(TAG, "User with email: " + newUser.getEmail() + " was added to database.");
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+                    fragmentTransaction.commit();
+                }
+            }
+        });
+    }
+
+    private AlertDialog.Builder getAlertDialogBuilder()
+    {
         Context context = view.getContext();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
@@ -137,17 +163,13 @@ public class SignUpFragment extends Fragment {
                         dialog.cancel();
                     }
                 });
+        return alertDialogBuilder;
+    }
 
+    private boolean checkNewUserInputs(User user) {
 
-        if (GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), user.getEmail()) != null){
-            Log.d("TAG", "A user with this email already exists.");
-            alertDialogBuilder.setTitle("A user with this email already exists");
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            // show it
-            alertDialog.show();
-            return false;
-        }
+        AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
+
         if (!GeneralUtils.isEmailValid(user.getEmail())){
             Log.d("TAG", "Email address is not valid.");
             alertDialogBuilder.setTitle("Email address is not valid");

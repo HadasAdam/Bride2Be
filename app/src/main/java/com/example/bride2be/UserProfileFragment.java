@@ -15,6 +15,7 @@ import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,11 +88,55 @@ public class UserProfileFragment extends Fragment {
         EditProfileBtn.setOnClickListener(v -> EditUserProfile());
         AddNewProductBtn.setOnClickListener(v -> addNewProduct());
         loggedInUser = Model.instance.getLoggedInUser();
-        if(loggedInUser == null)
-        {
-            setVisitorMode();
-        }
+
+        String userId = this.getArguments().getString("userToOpenProfile");
+        authenticate(userId);
+
         return view;
+    }
+
+    private void authenticate(String userId){
+        if (userId != null)
+        {
+            if(loggedInUser == null || !loggedInUser.getId().equals(userId))
+            {
+                Model.instance.getUser(userId, new Model.GetUserListener() {
+                    @Override
+                    public void onComplete(User user) {
+                        initializeFields(user);
+
+                    }
+                });
+                setVisitorMode();
+            }
+
+            if(loggedInUser.getId().equals(userId))
+            {
+                initializeFields(loggedInUser);
+            }
+        }
+
+        else
+        {
+            if(loggedInUser != null)
+            {
+                initializeFields(loggedInUser);
+            }
+            else {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
+                fragmentTransaction.commit();
+            }
+        }
+    }
+
+    private void initializeFields(User user)
+    {
+        String userName = user.getFirstName() + " " + user.getLastName();
+        UserName.setText(userName);
+        UserEmail.setText(user.getEmail());
+        UserPhoneNumber.setText(user.getPhoneNumber());
+        UserAddress.setText(user.getCity());
     }
 
     private void setVisitorMode()

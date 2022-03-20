@@ -1,17 +1,18 @@
 package com.example.bride2be;
 
-import android.graphics.Picture;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.room.PrimaryKey;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.bride2be.models.Model;
+import com.example.bride2be.models.Product;
+import com.example.bride2be.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,10 +21,8 @@ import android.widget.Button;
  */
 public class ProductDetailsFragment extends Fragment {
 
-    Button moveToMyProfilebtn;
-
-
-
+    Button moveToMyProfileBtn;
+    Product product;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -60,18 +59,30 @@ public class ProductDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_product_details, container, false);
-        moveToMyProfilebtn = view.findViewById(R.id.ProductDetailsMyProfileButton);
-
-        moveToMyProfilebtn.setOnClickListener(v -> setMoveToMyProfile());
+        moveToMyProfileBtn = view.findViewById(R.id.ProductDetailsMyProfileButton);
+        moveToMyProfileBtn.setOnClickListener(v -> sendParametersAndNavigateToUserProfile());
         return  view;
     }
 
-    private void setMoveToMyProfile() { // go to edit profile screen
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-        fragmentTransaction.commit();
+    private void sendParametersAndNavigateToUserProfile()
+    {
+        Bundle bundle = new Bundle();
+
+        Model.instance.getProduct(product.getId(), new Model.GetProductListener() {
+            @Override
+            public void onComplete(Product product) {
+                bundle.putString("userToOpenProfile", product.getUploaderId());
+
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                UserProfileFragment userProfileFragment = new UserProfileFragment();
+
+                userProfileFragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.mainactivity_fragment_container, userProfileFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
     }
 }

@@ -30,7 +30,7 @@ public class Model {
         for(long i = 0L; i < 10L; i++){
             User user = new User("Johnny", "Levis",
                     "johnny" + i + "@gmail.com", "0502233412",
-                    "0832c1202da8d382318e329a7c133ea0", "Israel", cities.get(3).getName(),
+                    "202cb962ac59075b964b07152d234b70", "Israel", cities.get(3).getName(),
                     "Moshe Dayan 23");
             userList.add(user);
         }
@@ -98,11 +98,9 @@ public class Model {
         return productList;
     }
 
-    public List<User> getAllUsers(){
-        return userList;
-    }
-
-
+//    public List<User> getAllUsers(){
+//        return userList;
+//    }
 
     public interface GetAllProductsListener {
         void onComplete(List<Product> products);
@@ -117,7 +115,7 @@ public class Model {
     }
 
     public interface GetProductListener {
-        void onComplete();
+        void onComplete(Product product);
     }
 
     public interface DeleteProductListener extends AddProductListener{
@@ -164,7 +162,7 @@ public class Model {
     }
 
     public interface GetUserListener {
-        void onComplete();
+        void onComplete(User user);
     }
 
     public interface DeleteUserListener extends AddUserListener{
@@ -195,5 +193,4 @@ public class Model {
     {
         modelFirebase.deleteUser(user, listener);
     }
-
 }
