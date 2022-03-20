@@ -3,6 +3,7 @@ package com.example.bride2be;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,10 @@ import android.widget.Toast;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +31,7 @@ import com.example.bride2be.models.User;
  */
 public class LoginFragment extends Fragment {
 
+    static final String TAG = "LoginFragment";
     EditText emailET;
     EditText passwordET;
     Button submitButton;
@@ -90,36 +96,20 @@ public class LoginFragment extends Fragment {
     public void onClickSubmitButton() {
         String emailAddress = emailET.getText().toString();
         String password = passwordET.getText().toString();
-        if (checkLoginCredentials(emailAddress, password)) {
-            Model.instance.setLoggedInUser(userWantsToLogIn);
-            Log.d("TAG", "User with email: " + emailAddress + " was found in database.");
-            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-            fragmentTransaction.commit();
-        } else {
-            Log.d("TAG", "User with email: " + emailAddress +
-                    " was not found in database or put a wrong password.");
+        checkLoginCredentials(emailAddress, password);
+    }
 
-            Context context = view.getContext();
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-            // set title
-            alertDialogBuilder.setTitle("Wrong Email or Password. Please try to login again");
-            // set dialog message
-            alertDialogBuilder
-                    .setMessage("Click ok to exit and try again")
-                    .setCancelable(false)
-                    .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                            // if this button is clicked, just close
-                            // the dialog box and do nothing
-                            dialog.cancel();
-                        }
-                    });
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            // show it
-            alertDialog.show();
-        }
+    private void sendParametersAndNavigateToUserProfile(User user)
+    {
+        Bundle bundle = new Bundle();
+        bundle.putString("userToOpenProfile", user.getId());
+
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        UserProfileFragment userProfileFragment = new UserProfileFragment();
+
+        userProfileFragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.mainactivity_fragment_container, userProfileFragment);
+        fragmentTransaction.commit();
     }
 
     public void onSignUpButton() {
@@ -128,8 +118,48 @@ public class LoginFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-    private boolean checkLoginCredentials(String emailAddress, String givenPassword) {
-        userWantsToLogIn = GeneralUtils.findUserByEmail(Model.instance.getAllUsers(), emailAddress);
-        return (userWantsToLogIn != null && userWantsToLogIn.getPasswordHash().equals(GeneralUtils.md5(givenPassword)));
+    private void checkLoginCredentials(String emailAddress, String givenPassword) {
+        Model.instance.getAllUsers(new Model.GetAllUsersListener() {
+            @Override
+            public void onComplete(List<User> users) {
+                boolean found = false;
+                for (User user : users) {
+                    if (user != null && user.getEmail().equals(emailAddress) && user.getPasswordHash().equals(GeneralUtils.md5(givenPassword))) {
+                        found = true;
+                        userWantsToLogIn = user;
+                        break;
+                    }
+                }
+                if(found){
+                    Log.d(TAG, "User with email: " + emailAddress + " was found in database.");
+                    Model.instance.setLoggedInUser(userWantsToLogIn);
+                    sendParametersAndNavigateToUserProfile(userWantsToLogIn);
+                }
+                else {
+                    Log.d(TAG, "User with email: " + emailAddress +
+                            " was not found in database or put a wrong password.");
+
+                    Context context = view.getContext();
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    // set title
+                    alertDialogBuilder.setTitle("Wrong Email or Password. Please try to login again");
+                    // set dialog message
+                    alertDialogBuilder
+                            .setMessage("Click ok to exit and try again")
+                            .setCancelable(false)
+                            .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    // if this button is clicked, just close
+                                    // the dialog box and do nothing
+                                    dialog.cancel();
+                                }
+                            });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                }
+            }
+        });
     }
 }

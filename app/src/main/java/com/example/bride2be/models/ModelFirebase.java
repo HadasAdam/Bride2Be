@@ -142,7 +142,7 @@ public class ModelFirebase {
                                 user = task.getResult().toObject(User.class);
                             }
                         }
-                        listener.onComplete();
+                        listener.onComplete(user);
                     }
                 });
     }
@@ -219,7 +219,7 @@ public class ModelFirebase {
                                 product = task.getResult().toObject(Product.class);
                             }
                         }
-                        listener.onComplete();
+                        listener.onComplete(product);
                     }
                 });
     }

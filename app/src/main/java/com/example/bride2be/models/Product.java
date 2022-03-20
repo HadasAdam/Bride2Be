@@ -1,6 +1,5 @@
 package com.example.bride2be.models;
 
-import android.graphics.Picture;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

@@ -37,24 +37,6 @@ public class GeneralUtils {
         return "";
     }
 
-    public static User findUserByEmail(List<User> userList, final String givenEmail) {
-        final User[] userWithGivenEmail = new User[1];
-        userWithGivenEmail[0] = null;
-        Model.instance.getAllUsers(new Model.GetAllUsersListener() {
-            @Override
-            public void onComplete(List<User> users) {
-                for(User user: userList) {
-                    if (user.getEmail().equals(givenEmail)) {
-                        Log.d("TAG", "found a user with this mail: " + givenEmail);
-                        userWithGivenEmail[0] = user;
-                        break;
-                    }
-                }
-            }
-        });
-        return userWithGivenEmail[0];
-    }
-
     public static boolean isEmailValid(String enteredEmail) {
         String EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
