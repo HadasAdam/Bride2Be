@@ -119,12 +119,7 @@ public class EditProfileFragment extends Fragment {
         // TODO: userToEdit.setCity();
         userToEdit.setStreet(UserStreet.getText().toString());
 
-        Model.instance.updateUser(userToEdit, new Model.UpdateUserListener() {
-            @Override
-            public void onComplete() {
-                Log.d("TAG","User with id: " + userToEdit.getId() + " was updated.");
-            }
-        });
+        Model.instance.updateUser(userToEdit, () -> Log.d("TAG","User with id: " + userToEdit.getId() + " was updated."));
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
