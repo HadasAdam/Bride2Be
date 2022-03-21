@@ -109,46 +109,44 @@ public class LoginFragment extends Fragment {
     }
 
     private void checkLoginCredentials(String emailAddress, String givenPassword) {
-        Model.instance.getAllUsers(new Model.GetAllUsersListener() {
-            @Override
-            public void onComplete(List<User> users) {
-                boolean found = false;
-                for (User user : users) {
-                    if (user != null && user.getEmail().equals(emailAddress) && user.getPasswordHash().equals(GeneralUtils.md5(givenPassword))) {
-                        found = true;
-                        userWantsToLogIn = user;
-                        break;
-                    }
+        Model.instance.getAllUsers(users -> {
+            boolean found = false;
+            for (User user : users) {
+                Log.d(TAG, "User : " + user.getEmail());
+                if (user != null && user.getEmail().equals(emailAddress) && user.getPasswordHash().equals(GeneralUtils.md5(givenPassword))) {
+                    found = true;
+                    userWantsToLogIn = user;
+                    break;
                 }
-                if(found){
-                    Log.d(TAG, "User with email: " + emailAddress + " was found in database.");
-                    Model.instance.setLoggedInUser(userWantsToLogIn);
-                    sendParametersAndNavigateToUserProfile(userWantsToLogIn);
-                }
-                else {
-                    Log.d(TAG, "User with email: " + emailAddress +
-                            " was not found in database or put a wrong password.");
+            }
+            if(found){
+                Log.d(TAG, "User with email: " + emailAddress + " was found in database.");
+                Model.instance.setLoggedInUser(userWantsToLogIn);
+                sendParametersAndNavigateToUserProfile(userWantsToLogIn);
+            }
+            else {
+                Log.d(TAG, "User with email: " + emailAddress +
+                        " was not found in database or put a wrong password.");
 
-                    Context context = view.getContext();
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                    // set title
-                    alertDialogBuilder.setTitle("Wrong Email or Password. Please try to login again");
-                    // set dialog message
-                    alertDialogBuilder
-                            .setMessage("Click ok to exit and try again")
-                            .setCancelable(false)
-                            .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
-                                    // if this button is clicked, just close
-                                    // the dialog box and do nothing
-                                    dialog.cancel();
-                                }
-                            });
-                    // create alert dialog
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    // show it
-                    alertDialog.show();
-                }
+                Context context = view.getContext();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                // set title
+                alertDialogBuilder.setTitle("Wrong Email or Password. Please try to login again");
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("Click ok to exit and try again")
+                        .setCancelable(false)
+                        .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
             }
         });
     }
