@@ -130,8 +130,14 @@ public class AddNewProductFragment extends Fragment {
                 Model.instance.addProduct(currentProduct, new Model.AddProductListener() {
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "New product: '" + productName.getText().toString() + "' was saved with picture in path: " + picturePath);
-                        Navigation.findNavController(view).navigate(R.id.action_addNewProductFragment_to_userProfileFragment2);
+                        Log.d(TAG, "Picture of product was saved in path: " + picturePath);
+                        Model.instance.addProduct(currentProduct, new Model.AddProductListener() {
+                            @Override
+                            public void onComplete() {
+                                Log.d(TAG, "New product created: '" + productName.getText().toString());
+                                Navigation.findNavController(view).navigate(R.id.action_addNewProductFragment_to_userProfileFragment2);
+                            }
+                        });
                     }
                 });
             }

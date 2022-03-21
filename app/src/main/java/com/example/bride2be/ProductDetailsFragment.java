@@ -3,7 +3,6 @@ package com.example.bride2be;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
@@ -14,7 +13,6 @@ import android.widget.Button;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.Product;
-import com.example.bride2be.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,7 +74,6 @@ public class ProductDetailsFragment extends Fragment {
         Model.instance.getProduct(product.getId(), new Model.GetProductListener() {
             @Override
             public void onComplete(Product product) {
-
                 NavDirections action = (NavDirections)LoginFragmentDirections.actionLoginFragment2ToUserProfileFragment2(product.getUploaderId());
                 Navigation.findNavController(view).navigate(action);
             }
