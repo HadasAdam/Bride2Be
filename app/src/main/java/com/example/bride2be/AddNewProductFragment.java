@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,8 @@ import com.squareup.picasso.Picasso;
 public class AddNewProductFragment extends Fragment {
 
     private static final int PICK_IMAGE = 1;
+    private static final String TAG = "AddNewProductFragment";
+
     TextView userLocation;
     EditText productName;
     EditText productPrice;
@@ -42,6 +45,7 @@ public class AddNewProductFragment extends Fragment {
     Button saveNewProductButton;
     ImageView productImage;
     Uri imageUri;
+    View view;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,12 +89,10 @@ public class AddNewProductFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_new_product, container, false);
+        view = inflater.inflate(R.layout.fragment_add_new_product, container, false);
         if(Model.instance.getLoggedInUser() == null)
         {
-            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
-            fragmentTransaction.commit();
+            Navigation.findNavController(view).navigate(R.id.action_addNewProductFragment_to_loginFragment2);
         }
         productName = view.findViewById(R.id.ProductNameNewProductET);
         productPrice = view.findViewById(R.id.ProductPriceNewProductET);
@@ -114,11 +116,7 @@ public class AddNewProductFragment extends Fragment {
     }
 
     private void AbortNewProduct() {
-
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-        fragmentTransaction.commit();
-
+        Navigation.findNavController(view).navigate(R.id.action_addNewProductFragment_to_userProfileFragment2);
     }
 
     private void AddNewProduct() {
@@ -132,11 +130,8 @@ public class AddNewProductFragment extends Fragment {
                 Model.instance.addProduct(currentProduct, new Model.AddProductListener() {
                     @Override
                     public void onComplete() {
-                        Log.d("TAG", "New product: '" + productName.getText().toString() + "' was saved with picture in path: " + picturePath);
-
-                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-                        fragmentTransaction.commit();
+                        Log.d(TAG, "New product: '" + productName.getText().toString() + "' was saved with picture in path: " + picturePath);
+                        Navigation.findNavController(view).navigate(R.id.action_addNewProductFragment_to_userProfileFragment2);
                     }
                 });
             }

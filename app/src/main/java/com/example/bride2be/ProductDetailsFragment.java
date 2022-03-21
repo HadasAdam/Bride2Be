@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ public class ProductDetailsFragment extends Fragment {
 
     Button moveToMyProfileBtn;
     Product product;
+    View view;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -60,10 +63,10 @@ public class ProductDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_product_details, container, false);
+        view = inflater.inflate(R.layout.fragment_product_details, container, false);
         moveToMyProfileBtn = view.findViewById(R.id.ProductDetailsMyProfileButton);
         moveToMyProfileBtn.setOnClickListener(v -> sendParametersAndNavigateToUserProfile());
-        return  view;
+        return view;
     }
 
     private void sendParametersAndNavigateToUserProfile()
@@ -73,14 +76,9 @@ public class ProductDetailsFragment extends Fragment {
         Model.instance.getProduct(product.getId(), new Model.GetProductListener() {
             @Override
             public void onComplete(Product product) {
-                bundle.putString("userToOpenProfile", product.getUploaderId());
 
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                UserProfileFragment userProfileFragment = new UserProfileFragment();
-
-                userProfileFragment.setArguments(bundle);
-                fragmentTransaction.replace(R.id.mainactivity_fragment_container, userProfileFragment);
-                fragmentTransaction.commit();
+                NavDirections action = (NavDirections)LoginFragmentDirections.actionLoginFragment2ToUserProfileFragment2(product.getUploaderId());
+                Navigation.findNavController(view).navigate(action);
             }
         });
 

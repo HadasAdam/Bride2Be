@@ -7,22 +7,14 @@
     android:background="@color/dirtyWhite"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/mainactivity_fragment_container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/dirtyWhite"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:defaultNavHost="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="openMapActivity"
-            android:text="Button" />
-    </FrameLayout>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_graph" />
 </androidx.constraintlayout.widget.ConstraintLayout>
