@@ -64,7 +64,15 @@
         android:id="@+id/productDetailsFragment"
         android:name="com.example.bride2be.ProductDetailsFragment"
         android:label="fragment_product_details"
-        tools:layout="@layout/fragment_product_details" />
+        tools:layout="@layout/fragment_product_details" >
+        <argument
+            android:name="productIdToOpen"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_productDetailsFragment_to_productsListFragment"
+            app:destination="@id/productsListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addNewProductFragment"
         android:name="com.example.bride2be.AddNewProductFragment"
@@ -88,6 +96,10 @@
         <action
             android:id="@+id/action_editProductFragment_to_loginFragment2"
             app:destination="@id/loginFragment2" />
+        <argument
+            android:name="productIdToOpen"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/productsListFragment"

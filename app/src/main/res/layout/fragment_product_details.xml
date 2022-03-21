@@ -8,9 +8,10 @@
 
 
     <ImageView
-        android:id="@+id/ProductDetailsIV"
+        android:id="@+id/ProductDetails_ProductDetailsIV"
         android:layout_width="320dp"
         android:layout_height="220dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/border"
         android:src="@android:drawable/picture_frame"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +21,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/ProductDetails_linearLayout"
         android:layout_width="320dp"
         android:layout_height="65dp"
         android:layout_marginStart="16dp"
@@ -28,10 +29,10 @@
         android:background="@color/lightTurquoise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ProductDetailsIV">
+        app:layout_constraintTop_toBottomOf="@+id/ProductDetails_ProductDetailsIV">
 
-        <EditText
-            android:id="@+id/ProductNameDetailsET"
+        <TextView
+            android:id="@+id/ProductDetails_ProductNameDetailsET"
             android:layout_width="74dp"
             android:layout_height="32dp"
             android:layout_marginStart="8dp"
@@ -39,14 +40,13 @@
             android:background="@drawable/border"
             android:ems="10"
             android:gravity="center"
-            android:inputType="textPersonName"
             android:text="Flip Flops"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/UserLocationDetailsTV"
+            android:id="@+id/ProductDetails_UserLocationDetailsTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -55,10 +55,10 @@
             android:text="Yavne"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ProductNameDetailsET" />
+            app:layout_constraintTop_toBottomOf="@+id/ProductDetails_ProductNameDetailsET" />
 
-        <EditText
-            android:id="@+id/ProductPriceDetailsET"
+        <TextView
+            android:id="@+id/ProductDetails_ProductPriceDetailsET"
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:layout_marginTop="8dp"
@@ -68,12 +68,12 @@
             android:gravity="center"
             android:inputType="numberDecimal"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/textView16"
+            app:layout_constraintEnd_toStartOf="@+id/ProductDetails_textView16"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="100" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/ProductDetails_textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -86,7 +86,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/ProductDetails_textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Product description:"
@@ -96,10 +96,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.203"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/ProductDetails_linearLayout" />
 
     <EditText
-        android:id="@+id/ProductDescriptionDetailsET"
+        android:id="@+id/ProductDetails_ProductDescriptionDetailsET"
         android:layout_width="298dp"
         android:layout_height="67dp"
         android:background="@drawable/border"
@@ -109,10 +109,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintTop_toBottomOf="@+id/ProductDetails_textView17" />
 
     <TextView
-        android:id="@+id/ProductDetailsEmailAdrress"
+        android:id="@+id/ProductDetails_ProductDetailsEmailAdrress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -122,25 +122,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/ProductDetails_textView18" />
 
     <TextView
-        android:id="@+id/ProductDetailsPhone"
+        android:id="@+id/ProductDetails_ProductDetailsPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="phone"
         android:text="0504059933"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/ProductDetailsMyProfileButton"
+        app:layout_constraintBottom_toTopOf="@+id/ProductDetails_ProductDetailsMyProfileButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ProductDetailsEmailAdrress"
+        app:layout_constraintTop_toBottomOf="@+id/ProductDetails_ProductDetailsEmailAdrress"
         app:layout_constraintVertical_bias="0.485" />
 
     <Button
-        android:id="@+id/ProductDetailsMyProfileButton"
+        android:id="@+id/ProductDetails_ProductDetailsMyProfileButton"
         android:layout_width="162dp"
         android:layout_height="33dp"
         android:background="#fff"
@@ -151,20 +151,20 @@
         app:backgroundTint="@color/lightTurquoise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ProductDetailsPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/ProductDetails_ProductDetailsPhone" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/ProductDetails_textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contact me: "
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/ProductDetailsEmailAdrress"
+        app:layout_constraintBottom_toTopOf="@+id/ProductDetails_ProductDetailsEmailAdrress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.451"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ProductDescriptionDetailsET"
+        app:layout_constraintTop_toBottomOf="@+id/ProductDetails_ProductDescriptionDetailsET"
         app:layout_constraintVertical_bias="0.81" />
 </androidx.constraintlayout.widget.ConstraintLayout>
