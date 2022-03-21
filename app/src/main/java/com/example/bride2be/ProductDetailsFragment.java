@@ -10,9 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.Product;
+import com.example.bride2be.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,9 +24,17 @@ import com.example.bride2be.models.Product;
  */
 public class ProductDetailsFragment extends Fragment {
 
+    private final String TAG = "ProductDetailsFragment";
+
     Button moveToMyProfileBtn;
     Product product;
     View view;
+    ImageView productImageIV;
+    TextView productTitleTV;
+    TextView productDescriptionTV;
+    TextView userCityTV;
+    TextView userPhoneTV;
+    TextView userEmailTV;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -62,14 +73,40 @@ public class ProductDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_product_details, container, false);
-        moveToMyProfileBtn = view.findViewById(R.id.ProductDetailsMyProfileButton);
+        productImageIV = view.findViewById(R.id.ProductDetails_ProductDetailsIV);
+        productTitleTV = view.findViewById(R.id.ProductDetails_ProductNameDetailsET);
+        productDescriptionTV = view.findViewById(R.id.ProductDetails_ProductDescriptionDetailsET);
+        userCityTV = view.findViewById(R.id.ProductDetails_UserLocationDetailsTV);
+        userEmailTV = view.findViewById(R.id.ProductDetails_ProductDetailsEmailAdrress);
+        userPhoneTV = view.findViewById(R.id.ProductDetails_ProductDetailsPhone);
+
+        moveToMyProfileBtn = view.findViewById(R.id.ProductDetails_ProductDetailsMyProfileButton);
         moveToMyProfileBtn.setOnClickListener(v -> sendParametersAndNavigateToUserProfile());
+        String productId = this.getArguments().getString("productIdToOpen");
+        if(productId != null)
+        {
+            Model.instance.getProduct(productId, new Model.GetProductListener() {
+                @Override
+                public void onComplete(Product product) {
+                    Model.instance.loadPictureFromStorage(product.getPicture(), productImageIV);
+                    initializeProductFields(product);
+                    Model.instance.getUser(product.getUploaderId(), new Model.GetUserListener() {
+                        @Override
+                        public void onComplete(User user) {
+                            initializeUserFields(user);
+                        }
+                    });
+                }
+            });
+        }
+        else{
+            Navigation.findNavController(view).navigate(R.id.action_productDetailsFragment_to_productsListFragment);
+        }
         return view;
     }
 
     private void sendParametersAndNavigateToUserProfile()
     {
-        Bundle bundle = new Bundle();
 
         Model.instance.getProduct(product.getId(), new Model.GetProductListener() {
             @Override
@@ -79,5 +116,18 @@ public class ProductDetailsFragment extends Fragment {
             }
         });
 
+    }
+
+    private void initializeProductFields(Product product)
+    {
+        productTitleTV.setText(product.getTitle());
+        productDescriptionTV.setText(product.getDescription());
+    }
+
+    private void initializeUserFields(User user)
+    {
+        userCityTV.setText(user.getCity());
+        userEmailTV.setText(user.getEmail());
+        userPhoneTV.setText(user.getPhoneNumber());
     }
 }
