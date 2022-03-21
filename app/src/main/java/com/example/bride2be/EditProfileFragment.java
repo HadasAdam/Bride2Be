@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,8 @@ public class EditProfileFragment extends Fragment {
     Button CancelEditProfile;
     Button SaveEditProfile;
     User userToEdit = Model.instance.getLoggedInUser();
+
+    View view;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,7 +80,7 @@ public class EditProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
+        view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         UserFirstName = view.findViewById(R.id.UserNameEditProfileTV);
         UserEmail = view.findViewById(R.id.EmailEditProfileET); // TODO: FIRST NAME AND LAST NAME SEPARATELY!
         UserPhoneNumber = view.findViewById(R.id.PhoneNumEditProfileET);
@@ -89,9 +92,7 @@ public class EditProfileFragment extends Fragment {
         SaveEditProfile.setOnClickListener(v -> SaveChangesInProfile());
         if(userToEdit == null)
         {
-            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
-            fragmentTransaction.commit();
+            Navigation.findNavController(view).navigate(R.id.action_editProfileFragment_to_loginFragment2);
         }
 
         UserFirstName.setText(userToEdit.getFirstName());
@@ -104,10 +105,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void AbortProfileEdit() {
-
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-        fragmentTransaction.commit();
+        Navigation.findNavController(view).navigate(R.id.action_editProfileFragment_to_userProfileFragment2);
     }
 
     private void SaveChangesInProfile() {
@@ -126,9 +124,7 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-        fragmentTransaction.commit();
+        Navigation.findNavController(view).navigate(R.id.action_editProfileFragment_to_userProfileFragment2);
     }
 
     private void initializeCitySpinner()

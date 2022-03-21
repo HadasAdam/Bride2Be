@@ -3,11 +3,13 @@ package com.example.bride2be;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,13 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.User;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -86,7 +85,7 @@ public class LoginFragment extends Fragment {
         submitButton = view.findViewById(R.id.login_frg_submit_button);
         emailET = view.findViewById(R.id.login_frg_email_et);
         passwordET = view.findViewById(R.id.login_frg_password_et);
-        signUpButton.setOnClickListener(v -> onSignUpButton());
+        signUpButton.setOnClickListener(v -> onClickSignUpButton());
         submitButton.setOnClickListener(v -> onClickSubmitButton());
         userWantsToLogIn = null;
         Model.instance.logOut();
@@ -101,21 +100,12 @@ public class LoginFragment extends Fragment {
 
     private void sendParametersAndNavigateToUserProfile(User user)
     {
-        Bundle bundle = new Bundle();
-        bundle.putString("userToOpenProfile", user.getId());
-
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        UserProfileFragment userProfileFragment = new UserProfileFragment();
-
-        userProfileFragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, userProfileFragment);
-        fragmentTransaction.commit();
+        NavDirections action = (NavDirections)LoginFragmentDirections.actionLoginFragment2ToUserProfileFragment2(user.getId());
+        Navigation.findNavController(view).navigate(action);
     }
 
-    public void onSignUpButton() {
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new SignUpFragment());
-        fragmentTransaction.commit();
+    public void onClickSignUpButton() {
+        Navigation.findNavController(view).navigate(R.id.action_loginFragment2_to_signUpFragment2);
     }
 
     private void checkLoginCredentials(String emailAddress, String givenPassword) {

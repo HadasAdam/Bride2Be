@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class UserProfileFragment extends Fragment {
     Button EditProfileBtn;
     Button AddNewProductBtn;
     User loggedInUser;
+    View view;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -76,7 +78,7 @@ public class UserProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+        view = inflater.inflate(R.layout.fragment_user_profile, container, false);
         UserName = view.findViewById(R.id.UserNameProfileTV);
         UserEmail = view.findViewById(R.id.UserEmailProfileTV);
         UserPhoneNumber = view.findViewById(R.id.UserPhoneNumProfileTV);
@@ -89,7 +91,7 @@ public class UserProfileFragment extends Fragment {
         AddNewProductBtn.setOnClickListener(v -> addNewProduct());
         loggedInUser = Model.instance.getLoggedInUser();
 
-        String userId = this.getArguments().getString("userToOpenProfile");
+        String userId = this.getArguments().getString("userIdToOpenProfile");
         authenticate(userId);
 
         return view;
@@ -122,11 +124,6 @@ public class UserProfileFragment extends Fragment {
             {
                 initializeFields(loggedInUser);
             }
-            else {
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
-                fragmentTransaction.commit();
-            }
         }
     }
 
@@ -148,28 +145,20 @@ public class UserProfileFragment extends Fragment {
 
     private void UserLogOut() {
         Model.instance.logOut();
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
-        fragmentTransaction.commit();
+        Navigation.findNavController(view).navigate(R.id.action_userProfileFragment2_to_loginFragment2);
     }
 
     private void EditUserProfile() {
-        if(loggedInUser != null)
-        {
-            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new EditProfileFragment());
-            fragmentTransaction.commit();
+        if(loggedInUser != null) {
+            Navigation.findNavController(view).navigate(R.id.action_userProfileFragment2_to_editProfileFragment);
         }
-        else
-        {
+        else {
             setVisitorMode();
         }
     }
 
-    private void addNewProduct() { // add new product by the user
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new AddNewProductFragment());
-        fragmentTransaction.commit();
+    private void addNewProduct() {
+        Navigation.findNavController(view).navigate(R.id.action_userProfileFragment2_to_addNewProductFragment);
     }
 
 }

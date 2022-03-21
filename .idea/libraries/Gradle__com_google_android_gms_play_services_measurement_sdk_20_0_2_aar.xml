@@ -4,9 +4,12 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/14d1d06a230697989a218ce04e369b29/transformed/jetified-play-services-measurement-sdk-20.0.2/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7a1aeb68d3afa14fd53cf01f8943436d/transformed/jetified-play-services-measurement-sdk-20.0.2/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2af93f2075e081fc2c3f486cfea0b120/transformed/jetified-play-services-measurement-sdk-20.0.2/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/4500dafa44ec640059ebc43769f78439/transformed/jetified-play-services-measurement-sdk-20.0.2/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4500dafa44ec640059ebc43769f78439/transformed/jetified-play-services-measurement-sdk-20.0.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4500dafa44ec640059ebc43769f78439/transformed/jetified-play-services-measurement-sdk-20.0.2/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e7b417c4b9469d195683dff94c943c88/transformed/jetified-play-services-measurement-sdk-20.0.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fd2949d071a0afce5fca0c3bf551a790/transformed/jetified-play-services-measurement-sdk-20.0.2/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/4f4b4e1e68984ae8fdf7c64ff192d3f9/transformed/jetified-play-services-measurement-sdk-20.0.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4f4b4e1e68984ae8fdf7c64ff192d3f9/transformed/jetified-play-services-measurement-sdk-20.0.2/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4f4b4e1e68984ae8fdf7c64ff192d3f9/transformed/jetified-play-services-measurement-sdk-20.0.2/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-measurement-sdk/20.0.2/ace98f39b262c59be4be4d52b871d1ba5dfff723/play-services-measurement-sdk-20.0.2-javadoc.jar!/" />

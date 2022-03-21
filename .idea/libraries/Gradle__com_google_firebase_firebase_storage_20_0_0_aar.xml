@@ -1,9 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-storage:20.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2a026f41144fbb1ae4fd139d2517d70c/transformed/jetified-firebase-storage-20.0.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2a026f41144fbb1ae4fd139d2517d70c/transformed/jetified-firebase-storage-20.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2a026f41144fbb1ae4fd139d2517d70c/transformed/jetified-firebase-storage-20.0.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/46f128690229f1d910c3958891692bd5/transformed/jetified-firebase-storage-20.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/61aac8517342b2b7433fa9ba40a3c9e3/transformed/jetified-firebase-storage-20.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/36d371484d417d767d53557e40662084/transformed/jetified-firebase-storage-20.0.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/36d371484d417d767d53557e40662084/transformed/jetified-firebase-storage-20.0.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/36d371484d417d767d53557e40662084/transformed/jetified-firebase-storage-20.0.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-storage/20.0.0/239b2d5bd0105d8920ba3d472ab0f437c1fc388a/firebase-storage-20.0.0-javadoc.jar!/" />

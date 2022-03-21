@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,8 @@ public class EditProductFragment extends Fragment {
     ImageView ProductImage;
     Product productToEdit;
     Uri imageUri;
+
+    View view;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -82,7 +85,7 @@ public class EditProductFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_product, container, false);
+        view = inflater.inflate(R.layout.fragment_edit_product, container, false);
         productName = view.findViewById(R.id.ProductNameEditProductET);
         productPrice = view.findViewById(R.id.ProductPriceEditProductET);
         userLocation = view.findViewById(R.id.UserLocationEditProductTV);
@@ -98,9 +101,7 @@ public class EditProductFragment extends Fragment {
 
         if(!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
         {
-            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
-            fragmentTransaction.commit();
+            Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_loginFragment2);
         }
 
         productName.setText(productToEdit.getTitle());
@@ -114,12 +115,7 @@ public class EditProductFragment extends Fragment {
 
     private void AbortEditProduct() { // cancel changes and get back to profile
         //cancel
-
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-        fragmentTransaction.commit();
-
-
+        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_userProfileFragment2);
     }
 
     private void SaveProductChanges() {
@@ -135,10 +131,7 @@ public class EditProductFragment extends Fragment {
                     @Override
                     public void onComplete() {
                         Log.d("TAG", "Updated product: '" + productName.getText().toString() + "' was updated.");
-
-                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-                        fragmentTransaction.commit();
+                        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_userProfileFragment2);
                     }
                 });
             }
@@ -146,11 +139,7 @@ public class EditProductFragment extends Fragment {
         else {
             Toast.makeText(getContext(), "Product is not valid.", Toast.LENGTH_SHORT);
         }
-
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-        fragmentTransaction.commit();
-
+        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_userProfileFragment2);
     }
 
     private void DeleteProduct() {
@@ -164,10 +153,7 @@ public class EditProductFragment extends Fragment {
             });
         }
 
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainactivity_fragment_container, new UserProfileFragment());
-        fragmentTransaction.commit();
-
+        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_userProfileFragment2);
     }
 
     private String uploadImageToStorage()

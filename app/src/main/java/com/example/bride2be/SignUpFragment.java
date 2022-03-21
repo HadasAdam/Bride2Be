@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -139,9 +140,7 @@ public class SignUpFragment extends Fragment {
                 else {
                     Model.instance.addUser(newUser, () -> {});
                     Log.d(TAG, "User with email: " + newUser.getEmail() + " was added to database.");
-                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.mainactivity_fragment_container, new LoginFragment());
-                    fragmentTransaction.commit();
+                    Navigation.findNavController(view).navigate(R.id.action_signUpFragment2_to_loginFragment2);
                 }
             }
         });
