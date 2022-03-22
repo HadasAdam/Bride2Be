@@ -3,6 +3,7 @@ package com.example.bride2be.models;
 import android.net.Uri;
 import android.widget.ImageView;
 
+import com.example.bride2be.models.localDB.AppLocalDb;
 import com.example.bride2be.models.localDB.ProductModelSql;
 import com.example.bride2be.models.localDB.UserModelSql;
 

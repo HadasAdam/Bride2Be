@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.example.bride2be.models.localDB.AppLocalDb;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -91,6 +92,8 @@ public class ModelFirebase {
                     }
                     listener.onComplete(list);
                 });
+
+//        AppLocalDb.getInstance().userDao().getAllUsers(); // get all users from localdb
     }
 
     public void addUser(User user, Model.AddUserListener listener) {
@@ -121,6 +124,8 @@ public class ModelFirebase {
                         Log.w("TAG", "Error adding user", e);
                     }
                 });
+
+//        AppLocalDb.getInstance().userDao().insertAll(user); // add user to localdb
     }
 
     public void updateUser(User user, Model.UpdateUserListener listener) {
