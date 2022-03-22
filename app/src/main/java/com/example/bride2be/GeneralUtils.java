@@ -62,7 +62,7 @@ public class GeneralUtils {
     }
 
     public static boolean isProductNameValid(String name) {
-        return name.matches( "[A-Za-z]{1,14}" );
+        return name.matches( "[A-Za-z]{1,20}" );
     }
 
     public static boolean isProductPriceValid(String price) {
