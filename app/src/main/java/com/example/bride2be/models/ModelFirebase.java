@@ -238,4 +238,24 @@ public class ModelFirebase {
                     }
                 });
     }
+
+    /**************************************   FILTERS   **************************************/
+
+    public void getProductsByUserId(String userId, Model.GetProductsByUserIdListener listener) {
+        db.collection(Product.COLLECTION_NAME)
+                .whereEqualTo("uploaderId", userId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    List<Product> list = new LinkedList<Product>();
+                    if (task.isSuccessful()){
+                        for (QueryDocumentSnapshot doc : task.getResult()){
+                            Product product = Product.create(doc.getData());
+                            if (product != null){
+                                list.add(product);
+                            }
+                        }
+                    }
+                    listener.onComplete(list);
+                });
+    }
 }
