@@ -212,8 +212,8 @@ public class EditProductFragment extends Fragment {
         AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
 
         if (!GeneralUtils.isProductNameValid(productName.getText().toString())){
-            Log.d(TAG, "Product name is not valid, Product name must be a character");
-            alertDialogBuilder.setTitle("Product name is not valid, Product name must be a character");
+            Log.d(TAG, "Product must be between 1 and 20 letters.");
+            alertDialogBuilder.setTitle("Product must be between 1 and 20 letters.");
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
             // show it

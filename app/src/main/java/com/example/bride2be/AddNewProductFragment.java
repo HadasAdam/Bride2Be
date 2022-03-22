@@ -127,6 +127,7 @@ public class AddNewProductFragment extends Fragment {
     }
 
     private void AddNewProduct() {
+        saveNewProductButton.setEnabled(false);
         if(isProductValid())
         {
             String picturePath = uploadImageToStorage();
@@ -142,14 +143,16 @@ public class AddNewProductFragment extends Fragment {
                             @Override
                             public void onComplete() {
                                 Log.d(TAG, "New product created: '" + productName.getText().toString());
-                                Navigation.findNavController(view).navigate(R.id.action_addNewProductFragment_to_userProfileFragment2);
                             }
                         });
                     }
                 });
+                saveNewProductButton.setEnabled(true);
+                Navigation.findNavController(view).navigate(R.id.action_addNewProductFragment_to_userProfileFragment2);
             }
         }
         else {
+            saveNewProductButton.setEnabled(true);
             Toast.makeText(getContext(), "Product is not valid.", Toast.LENGTH_SHORT);
         }
     }
@@ -220,8 +223,8 @@ public class AddNewProductFragment extends Fragment {
         AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
 
         if (!GeneralUtils.isProductNameValid(productName.getText().toString())){
-            Log.d(TAG, "Product name is not valid, Product name must be a character");
-            alertDialogBuilder.setTitle("Product name is not valid, Product name must be a character");
+            Log.d(TAG, "Product must be between 1 and 20 letters.");
+            alertDialogBuilder.setTitle("Product must be between 1 and 20 letters.");
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
             // show it
