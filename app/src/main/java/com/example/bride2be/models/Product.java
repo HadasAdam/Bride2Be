@@ -106,7 +106,7 @@ public class Product implements Serializable {
     public static Product create(Map<String, Object> json) {
         String title = (String) json.get("title");
         String description = (String) json.get("description");
-        String price = (String) json.get("price");
+        String price = Double.toString((Double) json.get("price"));
         String picture = (String)json.get("picture");
         String uploaderId = (String)json.get("uploaderId");
 

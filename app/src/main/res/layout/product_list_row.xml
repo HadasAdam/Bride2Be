@@ -46,16 +46,6 @@
         app:layout_constraintTop_toBottomOf="@+id/productlistrow_image" />
 
     <TextView
-        android:id="@+id/productlistrow_City"
-        android:layout_width="151dp"
-        android:layout_height="24dp"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
-        app:layout_constraintStart_toStartOf="@+id/productlistrow_productName"
-        app:layout_constraintTop_toBottomOf="@+id/productlistrow_productName" />
-
-    <TextView
         android:id="@+id/productlistrow_price"
         android:layout_width="45dp"
         android:layout_height="27dp"

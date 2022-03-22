@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.example.bride2be.models.Model;
@@ -253,5 +254,4 @@ public class SignUpFragment extends Fragment {
             }
         });
     }
-
 }

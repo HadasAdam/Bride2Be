@@ -1,5 +1,4 @@
 package com.example.bride2be;
-
 import static android.app.Activity.RESULT_OK;
 
 import android.app.AlertDialog;

@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bride2be.R;
@@ -14,7 +15,6 @@ public class ProductViewHolder extends RecyclerView.ViewHolder
     public ProductAdapter.OnItemClickListener listener;
     TextView productNameTV;
     TextView productPriceTV;
-    TextView publisherCityTV;
     int position;
 
     public ProductViewHolder(@NonNull View itemView)
@@ -22,12 +22,13 @@ public class ProductViewHolder extends RecyclerView.ViewHolder
         super(itemView);
         productNameTV = itemView.findViewById(R.id.productlistrow_productName);
         productPriceTV = itemView.findViewById(R.id.productlistrow_price);
-        publisherCityTV = itemView.findViewById(R.id.productlistrow_City);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               //final int position = getAdapterPosition();
                 listener.onItemClick(position);
+
             }
         });
     }
@@ -35,8 +36,9 @@ public class ProductViewHolder extends RecyclerView.ViewHolder
     public void bindData(Product product, int position)
     {
         productNameTV.setText(product.getTitle());
-        productPriceTV.setText(product.getPrice().toString());
-        publisherCityTV.setText(product.getUploaderId());
+        productPriceTV.setText(String.valueOf(product.getPrice()));
         this.position = position;
     }
+
+
 }

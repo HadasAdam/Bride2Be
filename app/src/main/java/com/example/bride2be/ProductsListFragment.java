@@ -1,8 +1,12 @@
 package com.example.bride2be;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.ContentView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,12 +14,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.bride2be.adapters.ProductAdapter;
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.Product;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +37,8 @@ public class ProductsListFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    ArrayList <Product> productsArrayList;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -55,13 +66,21 @@ public class ProductsListFragment extends Fragment {
         return fragment;
     }
 
+   ProgressBar progressBar;
+   int count = 0;
+   Timer timer;
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -69,22 +88,45 @@ public class ProductsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_products_list, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.productlist_recycledview);
-        recyclerView.hasFixedSize();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        List<Product> productList = Model.instance.getAllProducts();
-        ProductAdapter adapter = new ProductAdapter(getLayoutInflater());
-        adapter.setData(productList);
-        recyclerView.setAdapter(adapter);
 
+       progressBar = view.findViewById(R.id.product_list_progressBar);
+        RecyclerView recyclerView = view.findViewById(R.id.productlist_recycledview);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        ProductAdapter adapter = new ProductAdapter(getLayoutInflater());
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(linearLayoutManager);
+        timer = new Timer();TimerTask timerTask = new TimerTask() {
+           @Override
+          //the timer is run but the data is not view
+           public void run() {
+               count++;
+               progressBar.setProgress(count);
+                if(count == 100)
+                {
+                 timer.cancel();
+                 Model.instance.getAllProducts(new Model.GetAllProductsListener() {
+                     @Override
+                     public void onComplete(List<Product> products) {
+                         adapter.setData(products);
+                         recyclerView.setAdapter(adapter);
+                         productsArrayList = new ArrayList<Product>(products);
+                     }
+                 });
+                }
+            }
+        };
+        timer.schedule(timerTask,0,100);
         adapter.setOnClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Log.d("TAG","row was clicked " + position);
+                String productId = productsArrayList.get(position).getId();
+                NavDirections action = (NavDirections)ProductsListFragmentDirections.actionProductsListFragmentToProductDetailsFragment(productId);
+                Navigation.findNavController(view).navigate(action);
             }
         });
+    return  view;
 
-        return view;
-    }
+}
+
+
 }
