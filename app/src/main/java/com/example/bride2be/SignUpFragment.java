@@ -102,8 +102,7 @@ public class SignUpFragment extends Fragment {
         return view;
     }
 
-    public void onClickSubmitButton()
-    {
+    public void onClickSubmitButton() {
         submitBtn.setEnabled(false);
         User newUser = new User(firstNameET.getText().toString(), lastNameET.getText().toString(),
                 emailAddressET.getText().toString(), phoneNumberET.getText().toString(), GeneralUtils.md5(passwordET.getText().toString()),
@@ -215,8 +214,7 @@ public class SignUpFragment extends Fragment {
             return false;
         }
 
-        if(citySpinner.getSelectedItem() == null)
-        {
+        if(citySpinner.getSelectedItem() == null) {
             Log.d("TAG", "City was not chosen.");
             alertDialogBuilder.setTitle("City was not chosen");
             // create alert dialog

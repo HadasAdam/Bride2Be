@@ -1,5 +1,8 @@
 package com.example.bride2be;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,6 +31,7 @@ import com.example.bride2be.models.User;
 public class EditProfileFragment extends Fragment {
 
     TextView UserFirstName;
+    TextView UserLastName;
     EditText UserEmail;
     EditText UserPhoneNumber;
     Spinner citySpinner; // TODO: SHOULD BE A SPINNER, NOT AN EDITTEXT
@@ -81,7 +85,8 @@ public class EditProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
-        UserFirstName = view.findViewById(R.id.UserNameEditProfileTV);
+        UserFirstName = view.findViewById(R.id.FirstNameEditProfileET);
+        UserLastName = view.findViewById(R.id.LastNameEditProfileET);
         UserEmail = view.findViewById(R.id.EmailEditProfileET); // TODO: FIRST NAME AND LAST NAME SEPARATELY!
         UserPhoneNumber = view.findViewById(R.id.PhoneNumEditProfileET);
         citySpinner = view.findViewById(R.id.editProfile_citySpinner);
@@ -90,12 +95,12 @@ public class EditProfileFragment extends Fragment {
         SaveEditProfile = view.findViewById(R.id.SaveEditProfileBtn);
         CancelEditProfile.setOnClickListener(v -> AbortProfileEdit());
         SaveEditProfile.setOnClickListener(v -> SaveChangesInProfile());
-        if(userToEdit == null)
-        {
+        if(userToEdit == null) {
             Navigation.findNavController(view).navigate(R.id.action_editProfileFragment_to_loginFragment2);
         }
 
         UserFirstName.setText(userToEdit.getFirstName());
+        UserLastName.setText(userToEdit.getLastName());
         UserEmail.setText(userToEdit.getEmail());
         UserPhoneNumber.setText(userToEdit.getPhoneNumber());
         UserStreet.setText(userToEdit.getStreet());
@@ -109,25 +114,23 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void SaveChangesInProfile() {
-
         userToEdit.setFirstName(UserFirstName.getText().toString());
-        // TODO: userToEdit.setLastName();
+        userToEdit.setLastName(UserLastName.getText().toString());
         userToEdit.setEmail(UserEmail.getText().toString());
         userToEdit.setPhoneNumber(UserPhoneNumber.getText().toString());
-        // TODO: userToEdit.setCity();
+        userToEdit.setCity(citySpinner.getSelectedItem().toString());
         userToEdit.setStreet(UserStreet.getText().toString());
 
-        Model.instance.updateUser(userToEdit, () -> Log.d("TAG","User with id: " + userToEdit.getId() + " was updated."));
-
-        Navigation.findNavController(view).navigate(R.id.action_editProfileFragment_to_userProfileFragment2);
+        if (checkEditUserInputs(userToEdit)){
+            Model.instance.updateUser(userToEdit, () -> Log.d("TAG","User with id: " + userToEdit.getId() + " was updated."));
+            Navigation.findNavController(view).navigate(R.id.action_editProfileFragment_to_userProfileFragment2);
+        }
     }
 
-    private void initializeCitySpinner()
-    {
+    private void initializeCitySpinner() {
         String[] cities = new String[Model.instance.getCities().size()];
 
-        for(int i = 0; i < Model.instance.getCities().size(); i++)
-        {
+        for(int i = 0; i < Model.instance.getCities().size(); i++) {
             cities[i] = Model.instance.getCities().get(i).getName();
         }
 
@@ -155,6 +158,67 @@ public class EditProfileFragment extends Fragment {
             }
         }
 
+    }
+
+    private AlertDialog.Builder getAlertDialogBuilder() {
+        Context context = view.getContext();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Click ok to exit and try again")
+                .setCancelable(false)
+                .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+        return alertDialogBuilder;
+    }
+
+    private boolean checkEditUserInputs(User user) {
+        AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
+
+        if (!GeneralUtils.isEmailValid(user.getEmail())) {
+            Log.d("TAG", "Email address is not valid.");
+            alertDialogBuilder.setTitle("Email address is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+        if (!GeneralUtils.isFirstNameValid(user.getFirstName())) {
+            Log.d("TAG", "First name is not valid.");
+            alertDialogBuilder.setTitle("First name is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+        if (!GeneralUtils.isLastNameValid(user.getLastName())) {
+            Log.d("TAG", "Last name is not valid.");
+            alertDialogBuilder.setTitle("Last name is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+        if (!GeneralUtils.isPhoneValid(user.getPhoneNumber())) {
+            Log.d("TAG", "Phone number is not valid.");
+            alertDialogBuilder.setTitle("Phone number is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
+        return true;
     }
 
 }
