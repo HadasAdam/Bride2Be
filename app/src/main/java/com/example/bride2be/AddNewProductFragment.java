@@ -216,7 +216,7 @@ public class AddNewProductFragment extends Fragment {
         AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
 
         if (!GeneralUtils.isProductNameValid(product.getTitle())){
-            Log.d("TAG", "Product name is not valid.");
+            Log.d("TAG", "Product name is not valid. Product name must be a character");
             alertDialogBuilder.setTitle("Product name is not valid");
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
@@ -226,18 +226,8 @@ public class AddNewProductFragment extends Fragment {
         }
 
         if (!GeneralUtils.isProductPriceValid(product.getPrice())){
-            Log.d("TAG", "Product price is not valid.");
+            Log.d("TAG", "Product price is not valid, Product Price must be a number.");
             alertDialogBuilder.setTitle("Product price is not valid");
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            // show it
-            alertDialog.show();
-            return false;
-        }
-
-        if (!GeneralUtils.isProductPictureValid(product.getPicture())){
-            Log.d("TAG", "Product picture is not valid.");
-            alertDialogBuilder.setTitle("Product picture is not valid");
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
             // show it

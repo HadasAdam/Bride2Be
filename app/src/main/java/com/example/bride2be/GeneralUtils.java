@@ -65,8 +65,8 @@ public class GeneralUtils {
         return name.matches( "[A-Z][a-z]{1,14}" );
     }
 
-    public static boolean isProductPriceValid(String price) {
-        return price.matches("[0-9]{10}");
+    public static boolean isProductPriceValid(Double price) {
+        return price>0;
     }
 
     public static boolean isProductPictureValid(String picture) {
