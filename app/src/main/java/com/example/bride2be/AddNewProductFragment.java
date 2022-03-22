@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.Product;
+import com.example.bride2be.models.User;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -45,6 +46,7 @@ public class AddNewProductFragment extends Fragment {
     Button saveNewProductButton;
     ImageView productImage;
     Uri imageUri;
+    User loggedInUser = Model.instance.getLoggedInUser();
     View view;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -90,7 +92,7 @@ public class AddNewProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_add_new_product, container, false);
-        if(Model.instance.getLoggedInUser() == null)
+        if(loggedInUser == null)
         {
             Navigation.findNavController(view).navigate(R.id.action_addNewProductFragment_to_loginFragment2);
         }
@@ -104,6 +106,8 @@ public class AddNewProductFragment extends Fragment {
         saveNewProductButton = view.findViewById(R.id.SaveNewProductBtn);
         cancelNewProductButton.setOnClickListener(v -> AbortNewProduct());
         saveNewProductButton.setOnClickListener(v -> AddNewProduct());
+
+        userLocation.setText(loggedInUser.getCity());
 
         choosePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +130,7 @@ public class AddNewProductFragment extends Fragment {
             if(!picturePath.equals(""))
             {
                 Product currentProduct = new Product(productName.getText().toString(), productDescription.getText().toString(),
-                        Double.valueOf(productPrice.getText().toString()), picturePath, Model.instance.getLoggedInUser().getId());
+                        Double.valueOf(productPrice.getText().toString()), picturePath, loggedInUser.getId());
                 Model.instance.addProduct(currentProduct, new Model.AddProductListener() {
                     @Override
                     public void onComplete() {
