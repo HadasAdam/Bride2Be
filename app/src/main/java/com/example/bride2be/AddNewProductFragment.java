@@ -2,7 +2,10 @@ package com.example.bride2be;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -185,9 +188,64 @@ public class AddNewProductFragment extends Fragment {
         return filePath;
     }
 
-    private boolean isProductValid()
+
+
+    private AlertDialog.Builder getAlertDialogBuilder() {
+
+        {
+            Context context = view.getContext();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Click ok to exit and try again")
+                    .setCancelable(false)
+                    .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+            return alertDialogBuilder;
+        }
+    }
+
+    private boolean isProductValid(Product product)
     {
-        //TODO: add validations to product fields
+        AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
+
+        if (!GeneralUtils.isProductNameValid(product.getTitle())){
+            Log.d("TAG", "Product name is not valid.");
+            alertDialogBuilder.setTitle("Product name is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
+        if (!GeneralUtils.isProductPriceValid(product.getPrice())){
+            Log.d("TAG", "Product price is not valid.");
+            alertDialogBuilder.setTitle("Product price is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
+        if (!GeneralUtils.isProductPictureValid(product.getPicture())){
+            Log.d("TAG", "Product picture is not valid.");
+            alertDialogBuilder.setTitle("Product picture is not valid");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
         return true;
     }
+
 }

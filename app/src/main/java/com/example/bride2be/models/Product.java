@@ -59,7 +59,7 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public String getPrice() {
         return price;
     }
 

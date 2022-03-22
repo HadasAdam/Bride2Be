@@ -61,4 +61,16 @@ public class GeneralUtils {
         return phoneNumber.matches("[0-9]{10}");
     }
 
+    public static boolean isProductNameValid(String name) {
+        return name.matches( "[A-Z][a-z]{1,14}" );
+    }
+
+    public static boolean isProductPriceValid(String price) {
+        return price.matches("[0-9]{10}");
+    }
+
+    public static boolean isProductPictureValid(String picture) {
+        return picture.matches( "[A-Z][a-z]{1,14}" );
+    }
+
 }
