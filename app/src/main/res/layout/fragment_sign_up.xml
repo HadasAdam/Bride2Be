@@ -13,6 +13,19 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="244dp">
 
+        <EditText
+            android:id="@+id/signUpFrg_street"
+            android:layout_width="380dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:ems="10"
+            android:hint="Exact Address"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.451"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -53,6 +66,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signUpFrg_firstNameET" />
 
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="81dp"
+            android:layout_height="23dp"
+            android:gravity="center"
+            android:text="Street"
+            android:textColor="@color/darkTurquoise"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signUpFrg_street" />
+
         <EditText
             android:id="@+id/signUpFrg_lastNameET"
             android:layout_width="180dp"
@@ -83,10 +109,10 @@
             android:id="@+id/signUpFrg_cityET"
             android:layout_width="380dp"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:hint="City"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -106,10 +132,10 @@
             android:id="@+id/signUpFrg_phoneNumberET"
             android:layout_width="380dp"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:ems="10"
-            android:inputType="phone"
             android:hint="Phone Number"
+            android:inputType="phone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
@@ -131,12 +157,12 @@
             android:id="@+id/signUpFrg_emailET"
             android:layout_width="380dp"
             android:layout_height="50dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.548"
+            app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -157,7 +183,7 @@
             android:id="@+id/signUpFrg_passwordET"
             android:layout_width="380dp"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
@@ -189,7 +215,7 @@
             app:backgroundTint="@color/darkTurquoise"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
