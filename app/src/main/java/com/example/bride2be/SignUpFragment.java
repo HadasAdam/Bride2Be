@@ -40,8 +40,8 @@ public class SignUpFragment extends Fragment {
     EditText phoneNumberET;
     Spinner citySpinner;
     EditText passwordET;
+    EditText streetET;
     Button submitBtn;
-    ArrayList<String> problemsInUserInfo = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -95,6 +95,7 @@ public class SignUpFragment extends Fragment {
         lastNameET = view.findViewById(R.id.signUpFrg_lastNameET);
         passwordET = view.findViewById(R.id.signUpFrg_passwordET);
         submitBtn = view.findViewById(R.id.signUpFrg_submitBTN);
+        streetET = view.findViewById(R.id.signUpFrg_street);
         submitBtn.setOnClickListener(v -> onClickSubmitButton());
         submitBtn.setEnabled(true);
         Model.instance.logOut();
@@ -107,7 +108,7 @@ public class SignUpFragment extends Fragment {
         submitBtn.setEnabled(false);
         User newUser = new User(firstNameET.getText().toString(), lastNameET.getText().toString(),
                 emailAddressET.getText().toString(), phoneNumberET.getText().toString(), GeneralUtils.md5(passwordET.getText().toString()),
-                "Israel", citySpinner.getSelectedItem().toString(), "none");
+                "Israel", citySpinner.getSelectedItem().toString(), streetET.getText().toString());
 
         if(checkNewUserInputs(newUser)) {
             checkIfEmailIsAlreadyTaken(newUser);
