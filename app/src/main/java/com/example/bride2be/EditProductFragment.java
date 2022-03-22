@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.Product;
+import com.example.bride2be.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -98,23 +99,44 @@ public class EditProductFragment extends Fragment {
         cancelEditProductButton.setOnClickListener(v -> AbortEditProduct());
         saveEditProductButton.setOnClickListener(v -> SaveProductChanges());
         deleteEditProductButton.setOnClickListener(v -> DeleteProduct());
+        String productId = this.getArguments().getString("productIdToOpen");
 
-        if(!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
+        if(productId != null)
+        {
+            Model.instance.getProduct(productId, new Model.GetProductListener() {
+                @Override
+                public void onComplete(Product product) {
+                    productToEdit = product;
+
+                    if (!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
+                    {
+                        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_loginFragment2);
+                    }
+                    else
+                    {
+                        Model.instance.getUser(productToEdit.getUploaderId(), new Model.GetUserListener() {
+                            @Override
+                            public void onComplete(User user) {
+                                productName.setText(productToEdit.getTitle());
+                                productPrice.setText(String.valueOf(productToEdit.getPrice()));
+                                userLocation.setText(user.getCity());
+                                productDescription.setText(productToEdit.getDescription());
+                                loadImageFromStorage(productToEdit.getPicture(), ProductImage);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        else
         {
             Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_loginFragment2);
         }
 
-        productName.setText(productToEdit.getTitle());
-        productPrice.setText(String.valueOf(productToEdit.getPrice()));
-        // TODO: USER LOCATION
-        productDescription.setText(productToEdit.getDescription());
-        // TODO: call loadImageFromStorage();
-
         return view;
     }
 
-    private void AbortEditProduct() { // cancel changes and get back to profile
-        //cancel
+    private void AbortEditProduct() {
         Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_userProfileFragment2);
     }
 

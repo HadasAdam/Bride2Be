@@ -111,7 +111,8 @@ public class ProductDetailsFragment extends Fragment {
         Model.instance.getProduct(product.getId(), new Model.GetProductListener() {
             @Override
             public void onComplete(Product product) {
-                NavDirections action = (NavDirections)LoginFragmentDirections.actionLoginFragment2ToUserProfileFragment2(product.getUploaderId());
+                NavDirections action = (NavDirections)ProductDetailsFragmentDirections
+                        .actionProductDetailsFragmentToUserProfileFragment2(product.getUploaderId());
                 Navigation.findNavController(view).navigate(action);
             }
         });
