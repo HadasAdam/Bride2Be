@@ -1,6 +1,9 @@
 package com.example.bride2be;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -29,6 +32,8 @@ import com.example.bride2be.models.User;
  * create an instance of this fragment.
  */
 public class EditProductFragment extends Fragment {
+
+    private static final String TAG = "EditProductFragment";
 
     TextView userLocation;
     EditText productName;
@@ -152,7 +157,7 @@ public class EditProductFragment extends Fragment {
                 Model.instance.updateProduct(currentProduct, new Model.UpdateProductListener() {
                     @Override
                     public void onComplete() {
-                        Log.d("TAG", "Updated product: '" + productName.getText().toString() + "' was updated.");
+                        Log.d(TAG, "Updated product: '" + productName.getText().toString() + "' was updated.");
                         Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_userProfileFragment2);
                     }
                 });
@@ -170,7 +175,7 @@ public class EditProductFragment extends Fragment {
             Model.instance.deleteProduct(productToEdit, new Model.DeleteProductListener() {
                 @Override
                 public void onComplete() {
-                    Log.d("TAG", "Product with id: " + productToEdit.getId() + " was deleted.");
+                    Log.d(TAG, "Product with id: " + productToEdit.getId() + " was deleted.");
                 }
             });
         }
@@ -202,9 +207,62 @@ public class EditProductFragment extends Fragment {
         return mime.getExtensionFromMimeType(cr.getType(uri));
     }
 
-    private boolean isProductValid() {
-        // TODO: add validation to product fields
+    private boolean isProductValid()
+    {
+        AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
+
+        if (!GeneralUtils.isProductNameValid(productName.getText().toString())){
+            Log.d(TAG, "Product name is not valid, Product name must be a character");
+            alertDialogBuilder.setTitle("Product name is not valid, Product name must be a character");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
+        if (!GeneralUtils.isProductPriceValid(productPrice.getText().toString())){
+            Log.d(TAG, "Product price is not valid, Product Price must be a number between 0 and 999.");
+            alertDialogBuilder.setTitle("Product price must be a number between 0 and 999.");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
+        if (imageUri == null){
+            Log.d(TAG, "No image was selected.");
+            alertDialogBuilder.setTitle("No image was selected.");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
         return true;
+    }
+
+    private AlertDialog.Builder getAlertDialogBuilder() {
+
+        {
+            Context context = view.getContext();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Click ok to exit and try again")
+                    .setCancelable(false)
+                    .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+            return alertDialogBuilder;
+        }
     }
 
 }
