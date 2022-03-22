@@ -195,4 +195,16 @@ public class Model {
     {
         modelFirebase.deleteUser(user, listener);
     }
+
+    /**************************************   FILTERS   **************************************/
+
+    public interface GetProductsByUserIdListener {
+        void onComplete(List<Product> products);
+    }
+
+    public void getProductsByUserId(String userId, final GetProductsByUserIdListener listener)
+    {
+        modelFirebase.getProductsByUserId(userId, listener);
+    }
+
 }
