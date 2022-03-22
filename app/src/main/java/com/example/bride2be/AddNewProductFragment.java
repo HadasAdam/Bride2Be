@@ -2,7 +2,10 @@ package com.example.bride2be;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -189,9 +192,63 @@ public class AddNewProductFragment extends Fragment {
         return filePath;
     }
 
+
+
+    private AlertDialog.Builder getAlertDialogBuilder() {
+
+        {
+            Context context = view.getContext();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Click ok to exit and try again")
+                    .setCancelable(false)
+                    .setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+            return alertDialogBuilder;
+        }
+    }
+
     private boolean isProductValid()
     {
-        //TODO: add validations to product fields
+        AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
+
+        if (!GeneralUtils.isProductNameValid(productName.getText().toString())){
+            Log.d(TAG, "Product name is not valid, Product name must be a character");
+            alertDialogBuilder.setTitle("Product name is not valid, Product name must be a character");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
+        if (!GeneralUtils.isProductPriceValid(productPrice.getText().toString())){
+            Log.d(TAG, "Product price is not valid, Product Price must be a number between 0 and 999.");
+            alertDialogBuilder.setTitle("Product price must be a number between 0 and 999.");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
+        if (imageUri == null){
+            Log.d(TAG, "No image was selected.");
+            alertDialogBuilder.setTitle("No image was selected.");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
         return true;
     }
 }
