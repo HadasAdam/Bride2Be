@@ -215,13 +215,13 @@ public class AddNewProductFragment extends Fragment {
         }
     }
 
-    private boolean isProductValid(Product product)
+    private boolean isProductValid()
     {
         AlertDialog.Builder alertDialogBuilder = getAlertDialogBuilder();
 
-        if (!GeneralUtils.isProductNameValid(product.getTitle())){
-            Log.d("TAG", "Product name is not valid. Product name must be a character");
-            alertDialogBuilder.setTitle("Product name is not valid");
+        if (!GeneralUtils.isProductNameValid(productName.getText().toString())){
+            Log.d(TAG, "Product name is not valid, Product name must be a character");
+            alertDialogBuilder.setTitle("Product name is not valid, Product name must be a character");
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
             // show it
@@ -229,9 +229,19 @@ public class AddNewProductFragment extends Fragment {
             return false;
         }
 
-        if (!GeneralUtils.isProductPriceValid(product.getPrice())){
-            Log.d("TAG", "Product price is not valid, Product Price must be a number.");
-            alertDialogBuilder.setTitle("Product price is not valid");
+        if (!GeneralUtils.isProductPriceValid(productPrice.getText().toString())){
+            Log.d(TAG, "Product price is not valid, Product Price must be a number between 0 and 999.");
+            alertDialogBuilder.setTitle("Product price must be a number between 0 and 999.");
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+            return false;
+        }
+
+        if (imageUri == null){
+            Log.d(TAG, "No image was selected.");
+            alertDialogBuilder.setTitle("No image was selected.");
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
             // show it
@@ -241,5 +251,4 @@ public class AddNewProductFragment extends Fragment {
 
         return true;
     }
-
 }

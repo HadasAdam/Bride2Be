@@ -50,11 +50,11 @@ public class GeneralUtils {
     }
 
     public static boolean isFirstNameValid(String firstName) {
-        return firstName.matches( "[A-Z][a-z]{1,14}" );
+        return firstName.matches( "[A-Za-z]{1,14}" );
     }
 
     public static boolean isLastNameValid(String lastName) {
-        return lastName.matches( "[A-Z][a-z]{1,14}" );
+        return lastName.matches( "[A-Za-z]{1,14}" );
     }
 
     public static boolean isPhoneValid(String phoneNumber) {
@@ -62,15 +62,22 @@ public class GeneralUtils {
     }
 
     public static boolean isProductNameValid(String name) {
-        return name.matches( "[A-Z][a-z]{1,14}" );
+        return name.matches( "[A-Za-z]{1,14}" );
     }
 
-    public static boolean isProductPriceValid(Double price) {
-        return price>0;
-    }
-
-    public static boolean isProductPictureValid(String picture) {
-        return picture.matches( "[A-Z][a-z]{1,14}" );
+    public static boolean isProductPriceValid(String price) {
+        try {
+            double numericPrice = Double.parseDouble(price);
+            if(numericPrice >= 0d && numericPrice <= 999d) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        } catch (NumberFormatException e)
+        {
+            return false;
+        }
     }
 
 }

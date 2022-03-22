@@ -49,16 +49,15 @@
 
         <EditText
             android:id="@+id/ProductNameNewProductET"
-            android:layout_width="84dp"
-            android:layout_height="30dp"
+            android:layout_width="122dp"
+            android:layout_height="26dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:hint="Product name"
-            android:background="@drawable/border"
+            android:background="@color/white"
             android:ems="10"
-            android:gravity="center"
+            android:gravity="left"
+            android:hint="Product name"
             android:inputType="textPersonName"
-            android:text="Flip Flops"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -78,40 +77,40 @@
 
         <TextView
             android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="26dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:text="ILS"
             android:hint="Prouct Id"
+            android:text="ILS"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/ProductPriceNewProductET"
-            android:layout_width="42dp"
-            android:layout_height="37dp"
+            android:layout_width="45dp"
+            android:layout_height="36dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/border"
+            android:layout_marginEnd="4dp"
+            android:background="@color/white"
             android:ems="10"
-            android:hint="new Product"
-            android:gravity="center"
+            android:gravity="left"
+            android:hint="Price"
             android:inputType="numberDecimal"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/textView10"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="100" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
         android:id="@+id/ProductDescriptionNewProductET"
         android:layout_width="300dp"
         android:layout_height="80dp"
-        android:background="@drawable/border"
+        android:background="@color/white"
         android:ems="10"
+        android:gravity="start|top|left"
         android:hint="Product Description"
-        android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
