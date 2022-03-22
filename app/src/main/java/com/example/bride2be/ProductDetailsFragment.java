@@ -88,7 +88,7 @@ public class ProductDetailsFragment extends Fragment {
             Model.instance.getProduct(productId, new Model.GetProductListener() {
                 @Override
                 public void onComplete(Product product) {
-                    Model.instance.loadPictureFromStorage(product.getPicture(), productImageIV);
+                    loadImageFromStorage(product.getPicture(), productImageIV);
                     initializeProductFields(product);
                     Model.instance.getUser(product.getUploaderId(), new Model.GetUserListener() {
                         @Override
@@ -102,6 +102,8 @@ public class ProductDetailsFragment extends Fragment {
         else{
             Navigation.findNavController(view).navigate(R.id.action_productDetailsFragment_to_productsListFragment);
         }
+
+
         return view;
     }
 
@@ -130,5 +132,9 @@ public class ProductDetailsFragment extends Fragment {
         userCityTV.setText(user.getCity());
         userEmailTV.setText(user.getEmail());
         userPhoneTV.setText(user.getPhoneNumber());
+    }
+    private void loadImageFromStorage(String path, ImageView imageView)
+    {
+        Model.instance.loadPictureFromStorage(path, imageView);
     }
 }

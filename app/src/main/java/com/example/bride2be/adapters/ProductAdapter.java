@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bride2be.ProductsListFragment;
 import com.example.bride2be.R;
 import com.example.bride2be.models.Product;
 
@@ -16,6 +17,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder>
 {
     List<Product> data;
     LayoutInflater inflater;
+
+
 
     public ProductAdapter(LayoutInflater inflater){
         this.inflater = inflater;
