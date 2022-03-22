@@ -29,14 +29,4 @@ public abstract class AppLocalDb extends RoomDatabase {
     static  private AppLocalDb db;
 }
 
-//public class AppLocalDb {
-
-
-//            =
-//            Room.databaseBuilder(Bride2BeApplication.context,
-//                    AppLocalDbRepository.class,
-//                    "dbBride2Be.db")
-//                    .fallbackToDestructiveMigration()
-//                    .build();
-//}
 
