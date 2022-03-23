@@ -28,7 +28,6 @@ public class User implements Serializable {
     private String country;
     private String city;
     private String street;
-    //private ArrayList<Product> wishlist = new ArrayList<>();
     Long updateDate = new Long(0);
 
     public User(String firstName, String lastName, String email, String phoneNumber,
@@ -118,14 +117,6 @@ public class User implements Serializable {
     public void setStreet(String street) {
         this.street = street;
     }
-
-//    public ArrayList<Product> getWishlist() {
-//        return wishlist;
-//    }
-//
-//    public void setWishlist(ArrayList<Product> wishlist) {
-//        this.wishlist = wishlist;
-//    }
 
     public Long getUpdateDate() {
         return updateDate;
