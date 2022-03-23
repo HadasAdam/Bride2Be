@@ -212,7 +212,7 @@ public class Model {
         void onComplete(List<Product> products);
     }
 
-    public void getProductsByCity(String city, final GetProductsByUserIdListener listener)
+    public void getProductsByCity(String city, final GetProductsByCityListener listener)
     {
         modelFirebase.getProductsByCity(city, listener);
     }

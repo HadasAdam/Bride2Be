@@ -33,6 +33,7 @@ public class MapFilterFragment extends Fragment {
     ProgressBar progressBar;
     int count = 0;
     Timer timer;
+    String city;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -95,7 +96,7 @@ public class MapFilterFragment extends Fragment {
                 if(count == 100)
                 {
                     timer.cancel();
-                    Model.instance.getAllProducts(new Model.GetAllProductsListener() {
+                    Model.instance.getProductsByCity(city, new Model.GetProductsByCityListener() {
                         @Override
                         public void onComplete(List<Product> products) {
                             adapter.setData(products);

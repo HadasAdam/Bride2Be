@@ -269,7 +269,7 @@ public class ModelFirebase {
                 });
     }
 
-    public void getProductsByCity(String city, Model.GetProductsByUserIdListener listener) {
+    public void getProductsByCity(String city, Model.GetProductsByCityListener listener) {
         db.collection(User.COLLECTION_NAME)
                 .whereEqualTo("city", city)
                 .get()
