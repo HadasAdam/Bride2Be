@@ -40,7 +40,6 @@
             android:background="@drawable/border"
             android:ems="10"
             android:gravity="left"
-            android:text="Flip Flops"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -71,8 +70,7 @@
             android:inputType="numberDecimal"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/ProductDetails_textView16"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="100" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/ProductDetails_textView16"
@@ -145,6 +143,7 @@
         android:id="@+id/ProductDetails_ProductDetailsMyProfileButton"
         android:layout_width="137dp"
         android:layout_height="37dp"
+        android:layout_marginTop="24dp"
         android:background="#fff"
         android:text="My Profile"
         android:textColor="@color/black"

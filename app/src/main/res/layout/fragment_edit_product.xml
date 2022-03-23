@@ -51,7 +51,6 @@
             android:ems="10"
             android:gravity="top|left"
             android:inputType="textPersonName"
-            android:text="Flip Flops"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -80,8 +79,7 @@
             android:inputType="numberDecimal"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/textView14"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="100" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView14"

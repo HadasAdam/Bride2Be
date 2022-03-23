@@ -44,7 +44,7 @@ public class UserProfileFragment extends Fragment {
     Button AddNewProductBtn;
     Button searchBtn;
     Button mapBtn;
-    User loggedInUser;
+    User loggedInUser = Model.instance.getLoggedInUser();
     ArrayList<Product> userProducts;
     View view;
     ProductAdapter adapter;
@@ -90,17 +90,6 @@ public class UserProfileFragment extends Fragment {
 
         String userId = this.getArguments().getString("userIdToOpenProfile");
 
-        adapter.setOnClickListener(new ProductAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                if(userId.equals(loggedInUser.getId()))
-                {
-                    String productId = userProducts.get(position).getId();
-                    NavDirections action = (NavDirections)UserProfileFragmentDirections.actionUserProfileFragment2ToEditProductFragment(productId);
-                    Navigation.findNavController(view).navigate(action);
-                }
-            }
-        });
         authenticate(userId);
         Model.instance.getProductsByUserId(loggedInUser.getId(), new Model.GetProductsByUserIdListener() {
             @Override
@@ -110,6 +99,17 @@ public class UserProfileFragment extends Fragment {
                     adapter.setData(products);
                     recyclerView.setAdapter(adapter);
                     userProducts = new ArrayList<Product>(products);
+                    adapter.setOnClickListener(new ProductAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            if ((userId != null && userId.equals(loggedInUser.getId())) || (userId == null && loggedInUser != null))
+                            {
+                                String productId = userProducts.get(position).getId();
+                                NavDirections action = (NavDirections)UserProfileFragmentDirections.actionUserProfileFragment2ToEditProductFragment(productId);
+                                Navigation.findNavController(view).navigate(action);
+                            }
+                        }
+                    });
                 }
             }
         });
