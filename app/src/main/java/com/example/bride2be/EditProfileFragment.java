@@ -34,41 +34,19 @@ public class EditProfileFragment extends Fragment {
     TextView UserLastName;
     EditText UserEmail;
     EditText UserPhoneNumber;
-    Spinner citySpinner; // TODO: SHOULD BE A SPINNER, NOT AN EDITTEXT
+    Spinner citySpinner;
     EditText UserStreet;
     Button CancelEditProfile;
     Button SaveEditProfile;
     User userToEdit = Model.instance.getLoggedInUser();
-
     View view;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public EditProfileFragment() { }
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public EditProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EditProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static EditProfileFragment newInstance(String param1, String param2) {
         EditProfileFragment fragment = new EditProfileFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,10 +54,6 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -87,7 +61,7 @@ public class EditProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         UserFirstName = view.findViewById(R.id.FirstNameEditProfileET);
         UserLastName = view.findViewById(R.id.LastNameEditProfileET);
-        UserEmail = view.findViewById(R.id.EmailEditProfileET); // TODO: FIRST NAME AND LAST NAME SEPARATELY!
+        UserEmail = view.findViewById(R.id.EmailEditProfileET);
         UserPhoneNumber = view.findViewById(R.id.PhoneNumEditProfileET);
         citySpinner = view.findViewById(R.id.editProfile_citySpinner);
         UserStreet = view.findViewById(R.id.StreetEditProfileET);
@@ -157,7 +131,6 @@ public class EditProfileFragment extends Fragment {
                 break;
             }
         }
-
     }
 
     private AlertDialog.Builder getAlertDialogBuilder() {
