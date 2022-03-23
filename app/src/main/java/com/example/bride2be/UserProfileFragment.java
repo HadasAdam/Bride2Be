@@ -47,6 +47,7 @@ public class UserProfileFragment extends Fragment {
     User loggedInUser;
     ArrayList<Product> userProducts;
     View view;
+    ProductAdapter adapter;
 
     public UserProfileFragment() { }
 
@@ -83,16 +84,23 @@ public class UserProfileFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.userProfile_productList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        ProductAdapter adapter = new ProductAdapter(getLayoutInflater());
+        adapter = new ProductAdapter(getLayoutInflater());
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        String userId = this.getArguments().getString("userIdToOpenProfile");
+
         adapter.setOnClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position) { }
+            public void onItemClick(int position) {
+                if(userId.equals(loggedInUser.getId()))
+                {
+                    String productId = userProducts.get(position).getId();
+                    NavDirections action = (NavDirections)UserProfileFragmentDirections.actionUserProfileFragment2ToEditProductFragment(productId);
+                    Navigation.findNavController(view).navigate(action);
+                }
+            }
         });
-
-        String userId = this.getArguments().getString("userIdToOpenProfile");
         authenticate(userId);
         Model.instance.getProductsByUserId(loggedInUser.getId(), new Model.GetProductsByUserIdListener() {
             @Override
