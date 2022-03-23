@@ -37,24 +37,13 @@ public class ProductDetailsFragment extends Fragment {
     TextView userPhoneTV;
     TextView userEmailTV;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
+    public ProductDetailsFragment() { }
 
 
-    private String mParam1;
-    private String mParam2;
-
-    public ProductDetailsFragment() {
-        // Required empty public constructor
-    }
-
-
-    //
     public static ProductDetailsFragment newInstance(String param1, String param2) {
         ProductDetailsFragment fragment = new ProductDetailsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,8 +52,6 @@ public class ProductDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
     }
@@ -100,8 +87,6 @@ public class ProductDetailsFragment extends Fragment {
                             public void onComplete(User user) {
                                 if(user != null)
                                 {
-                                    String shit = "found the uploader2: " + user.getId();
-                                    productDescriptionTV.setText(shit);
                                     initializeUserFields(user);
                                 }
                             }
