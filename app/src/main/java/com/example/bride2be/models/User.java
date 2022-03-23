@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Entity
 public class User implements Serializable {
-    final public static String COLLECTION_NAME = "Users";
+    final public static String COLLECTION_NAME = "Users_new";
     @PrimaryKey
     @NonNull
     private String id;
