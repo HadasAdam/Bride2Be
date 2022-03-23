@@ -2,6 +2,7 @@ package com.example.bride2be.models;
 
 import android.net.Uri;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -265,5 +267,33 @@ public class ModelFirebase {
                     }
                     listener.onComplete(list);
                 });
+    }
+
+    public void getProductsByCity(String city, Model.GetProductsByUserIdListener listener) {
+        db.collection(User.COLLECTION_NAME)
+                .whereEqualTo("city", city)
+                .get()
+                .addOnCompleteListener(task -> {
+                    ArrayList<User> userIdsInCity = new ArrayList<User>();
+                    if (task.isSuccessful()){
+                        ArrayList<Product> productsByCity = new ArrayList<>();
+                        for (QueryDocumentSnapshot doc : task.getResult()){
+                            User user = User.create(doc.getData());
+                            if (user != null){
+                                getProductsByUserId(user.getId(), new Model.GetProductsByUserIdListener() {
+                                    @Override
+                                    public void onComplete(List<Product> products) {
+                                        for(Product product : products)
+                                        {
+                                            productsByCity.add(product);
+                                        }
+                                        listener.onComplete(productsByCity);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+
     }
 }

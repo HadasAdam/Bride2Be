@@ -208,4 +208,13 @@ public class Model {
         modelFirebase.getProductsByUserId(userId, listener);
     }
 
+    public interface GetProductsByCityListener {
+        void onComplete(List<Product> products);
+    }
+
+    public void getProductsByCity(String city, final GetProductsByUserIdListener listener)
+    {
+        modelFirebase.getProductsByCity(city, listener);
+    }
+
 }
