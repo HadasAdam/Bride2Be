@@ -38,6 +38,12 @@
             android:name="userIdToOpenProfile"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_userProfileFragment2_to_productsListFragment"
+            app:destination="@id/productsListFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment2_to_mapFilterFragment"
+            app:destination="@id/mapFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment2"
@@ -116,4 +122,9 @@
             android:id="@+id/action_productsListFragment_to_loginFragment2"
             app:destination="@id/loginFragment2" />
     </fragment>
+    <fragment
+        android:id="@+id/mapFilterFragment"
+        android:name="com.example.bride2be.MapFilterFragment"
+        android:label="fragment_map_filter"
+        tools:layout="@layout/fragment_map_filter" />
 </navigation>

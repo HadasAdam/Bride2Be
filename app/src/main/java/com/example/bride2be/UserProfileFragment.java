@@ -1,5 +1,7 @@
 package com.example.bride2be;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -40,6 +42,8 @@ public class UserProfileFragment extends Fragment {
     Button LogoutBtn;
     Button EditProfileBtn;
     Button AddNewProductBtn;
+    Button searchBtn;
+    Button mapBtn;
     User loggedInUser;
     ArrayList<Product> userProducts;
     View view;
@@ -94,10 +98,14 @@ public class UserProfileFragment extends Fragment {
         LogoutBtn = view.findViewById(R.id.LogOutProfileBtn);
         EditProfileBtn = view.findViewById(R.id.EditProfileBtn);
         AddNewProductBtn = view.findViewById(R.id.AddNewProfileBtn);
+        searchBtn = view.findViewById(R.id.profile_search);
+        mapBtn = view.findViewById(R.id.profile_map);
         LogoutBtn.setOnClickListener(v -> UserLogOut());
         EditProfileBtn.setOnClickListener(v -> EditUserProfile());
         AddNewProductBtn.setOnClickListener(v -> addNewProduct());
         loggedInUser = Model.instance.getLoggedInUser();
+        searchBtn.setOnClickListener(v -> navigateToProductList());
+        mapBtn.setOnClickListener(v -> navigateToMap());
 
         RecyclerView recyclerView = view.findViewById(R.id.userProfile_productList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -125,6 +133,18 @@ public class UserProfileFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void navigateToProductList()
+    {
+        Navigation.findNavController(view).navigate(R.id.action_userProfileFragment2_to_productsListFragment);
+    }
+
+    private void navigateToMap()
+    {
+        Intent i = new Intent(getActivity(), MapsActivity.class);
+        startActivity(i);
+        ((Activity) getActivity()).overridePendingTransition(0, 0);
     }
 
     private void authenticate(String userId){
