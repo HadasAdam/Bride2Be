@@ -30,6 +30,8 @@ public class User implements Serializable {
     private String street;
     Long updateDate = new Long(0);
 
+    private User(){}
+
     public User(String firstName, String lastName, String email, String phoneNumber,
                 String passwordHash, String country, String city, String street){
         this.id = IdGenerator.instance.getUserId();

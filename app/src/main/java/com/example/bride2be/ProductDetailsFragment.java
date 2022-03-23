@@ -87,8 +87,6 @@ public class ProductDetailsFragment extends Fragment {
                             public void onComplete(User user) {
                                 if(user != null)
                                 {
-                                    String shit = "found the uploader2: " + user.getId();
-                                    productDescriptionTV.setText(shit);
                                     initializeUserFields(user);
                                 }
                             }
