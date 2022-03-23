@@ -24,6 +24,11 @@ public class Product implements Serializable {
     private Long updateDate;
 
 
+    public Product()
+    {
+        this.id = IdGenerator.instance.getProductId();
+    }
+
     public Product(String title, String description, Double price, String picture, String uploaderId){
         this.id = IdGenerator.instance.getProductId();
         this.title = title;
@@ -79,7 +84,7 @@ public class Product implements Serializable {
         return uploaderId;
     }
 
-    public void setUploader(String uploaderId) {
+    public void setUploaderId(String uploaderId) {
         this.uploaderId = uploaderId;
     }
 

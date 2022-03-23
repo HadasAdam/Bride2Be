@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,6 +38,7 @@ public class ModelFirebase {
                 .build();
         db.setFirestoreSettings(settings);
         storageReference = FirebaseStorage.getInstance().getReference(UPLOADS_FOLDER);
+        String f = "3";
     }
 
     /**************************************   STORAGE   **************************************/
@@ -66,7 +68,8 @@ public class ModelFirebase {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri imageUri = task.getResult();
-                    imageView.setImageURI(imageUri);
+                    Picasso.get().load(imageUri).fit().centerInside().into(imageView);
+
                     Log.d("TAG", "Succeeded to load image from storage.");
                 } else {
                     Log.d("TAG", "Failed to load image from storage.");
