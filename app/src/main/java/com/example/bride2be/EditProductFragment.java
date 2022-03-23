@@ -113,12 +113,12 @@ public class EditProductFragment extends Fragment {
                 public void onComplete(Product product) {
                     productToEdit = product;
 
-//                    if (!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
-//                    {
-//                        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_loginFragment2);
-//                    }
-//                    else
-//                    {
+                    if (!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
+                    {
+                        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_loginFragment2);
+                    }
+                    else
+                    {
                         Model.instance.getUser(productToEdit.getUploaderId(), new Model.GetUserListener() {
                             @Override
                             public void onComplete(User user) {
@@ -132,7 +132,7 @@ public class EditProductFragment extends Fragment {
                                 }
                             }
                         });
-                    //}
+                    }
                 }
             });
         }
