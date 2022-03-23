@@ -46,7 +46,9 @@ public class EditProductFragment extends Fragment {
     ImageView ProductImage;
     Product productToEdit;
     Uri imageUri;
+    User loggedInUser = Model.instance.getLoggedInUser();
     View view;
+
 
     public EditProductFragment() { }
 
@@ -66,6 +68,7 @@ public class EditProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_edit_product, container, false);
+        String productId = this.getArguments().getString("productIdToOpen");
         productName = view.findViewById(R.id.ProductNameEditProductET);
         productPrice = view.findViewById(R.id.ProductPriceEditProductET);
         userLocation = view.findViewById(R.id.UserLocationEditProductTV);
@@ -76,9 +79,8 @@ public class EditProductFragment extends Fragment {
         saveEditProductButton = view.findViewById(R.id.SaveEditProductBtn);
         deleteEditProductButton = view.findViewById(R.id.DeleteEditProductBtn);
         cancelEditProductButton.setOnClickListener(v -> AbortEditProduct());
-        saveEditProductButton.setOnClickListener(v -> SaveProductChanges());
+        saveEditProductButton.setOnClickListener(v -> SaveProductChanges(productId));
         deleteEditProductButton.setOnClickListener(v -> DeleteProduct());
-        String productId = this.getArguments().getString("productIdToOpen");
 
         if(productId != null)
         {
@@ -122,28 +124,61 @@ public class EditProductFragment extends Fragment {
         Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_userProfileFragment2);
     }
 
-    private void SaveProductChanges() {
+    private void SaveProductChanges(String productId) {
 
+        saveEditProductButton.setEnabled(false);
         if(isProductValid())
         {
             String picturePath = uploadImageToStorage();
-            if(!picturePath.equals(""))
+            if(picturePath.equals(""))
             {
-                Product currentProduct = new Product(productName.getText().toString(), productDescription.getText().toString(),
-                        Double.valueOf(productPrice.getText().toString()), picturePath, Model.instance.getLoggedInUser().getId());
-                Model.instance.updateProduct(currentProduct, new Model.UpdateProductListener() {
+                Model.instance.getProduct(productId, new Model.GetProductListener() {
                     @Override
-                    public void onComplete() {
-                        Log.d(TAG, "Updated product: '" + productName.getText().toString() + "' was updated.");
-                        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_userProfileFragment2);
+                    public void onComplete(Product product) {
+                        Product currentProduct = new Product(productName.getText().toString(), productDescription.getText().toString(),
+                                Double.valueOf(productPrice.getText().toString()), product.getPicture(), loggedInUser.getId());
+                        currentProduct.setId(productId);
+                        Model.instance.addProduct(currentProduct, new Model.AddProductListener() {
+                            @Override
+                            public void onComplete() {
+                                Log.d(TAG, "Picture of product was saved in path: " + picturePath);
+                                Model.instance.addProduct(currentProduct, new Model.AddProductListener() {
+                                    @Override
+                                    public void onComplete() {
+                                        Log.d(TAG, "product was updated: " + productName.getText().toString());
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
             }
+            else
+            {
+                Product currentProduct = new Product(productName.getText().toString(), productDescription.getText().toString(),
+                        Double.valueOf(productPrice.getText().toString()), picturePath, loggedInUser.getId());
+                currentProduct.setId(productId);
+                Model.instance.updateProduct(currentProduct, new Model.UpdateProductListener() {
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "Picture of product was saved in path: " + picturePath);
+                        Model.instance.updateProduct(currentProduct, new Model.UpdateProductListener() {
+                            @Override
+                            public void onComplete() {
+                                Log.d(TAG, "New product created: '" + productName.getText().toString());
+                            }
+                        });
+                    }
+                });
+            }
+            saveEditProductButton.setEnabled(true);
+            Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_userProfileFragment2);
+
         }
         else {
+            saveEditProductButton.setEnabled(true);
             Toast.makeText(getContext(), "Product is not valid.", Toast.LENGTH_SHORT);
         }
-        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_userProfileFragment2);
     }
 
     private void DeleteProduct() {
@@ -165,9 +200,6 @@ public class EditProductFragment extends Fragment {
         String filePath = "";
         if(imageUri != null) {
             filePath = Model.instance.uploadPictureInStorage(getFileExtension(imageUri), imageUri);
-        }
-        else {
-            Toast.makeText(getActivity() ,"No image selected.", Toast.LENGTH_SHORT).show();
         }
         return filePath;
     }
@@ -202,17 +234,6 @@ public class EditProductFragment extends Fragment {
             alertDialog.show();
             return false;
         }
-
-        if (imageUri == null){
-            Log.d(TAG, "No image was selected.");
-            alertDialogBuilder.setTitle("No image was selected.");
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            // show it
-            alertDialog.show();
-            return false;
-        }
-
         return true;
     }
 
