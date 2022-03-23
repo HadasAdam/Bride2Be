@@ -35,7 +35,7 @@
 
     <TextView
         android:id="@+id/productlistrow_productName"
-        android:layout_width="211dp"
+        android:layout_width="222dp"
         android:layout_height="29dp"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -47,22 +47,13 @@
 
     <TextView
         android:id="@+id/productlistrow_price"
-        android:layout_width="45dp"
-        android:layout_height="27dp"
+        android:layout_width="58dp"
+        android:layout_height="29dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/productrow_coin"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/productlistrow_productName"
-        app:layout_constraintTop_toBottomOf="@+id/productlistrow_image" />
-
-    <ImageView
-        android:id="@+id/productlistrow_whishlistsign"
-        android:layout_width="43dp"
-        android:layout_height="33dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/productrow_coin"
         app:layout_constraintTop_toBottomOf="@+id/productlistrow_image" />
 
     <TextView
@@ -72,8 +63,7 @@
         android:text="@string/ProductListFragment_coinILS"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/productlistrow_whishlistsign"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/productlistrow_price"
         app:layout_constraintTop_toBottomOf="@+id/productlistrow_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>
