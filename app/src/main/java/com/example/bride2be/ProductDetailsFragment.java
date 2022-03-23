@@ -28,7 +28,6 @@ public class ProductDetailsFragment extends Fragment {
     private final String TAG = "ProductDetailsFragment";
 
     Button moveToMyProfileBtn;
-    Product product;
     View view;
     ImageView productImageIV;
     TextView productTitleTV;
@@ -69,7 +68,6 @@ public class ProductDetailsFragment extends Fragment {
         userPhoneTV = view.findViewById(R.id.ProductDetails_ProductDetailsPhone);
 
         moveToMyProfileBtn = view.findViewById(R.id.ProductDetails_ProductDetailsMyProfileButton);
-        moveToMyProfileBtn.setOnClickListener(v -> sendParametersAndNavigateToUserProfile());
         String productId = this.getArguments().getString("productIdToOpen");
         if(productId != null)
         {
@@ -79,6 +77,7 @@ public class ProductDetailsFragment extends Fragment {
                     if (product != null && product.getPicture() != null) {
                         Model.instance.loadPictureFromStorage(product.getPicture(), productImageIV);
                         initializeProductFields(product);
+                        moveToMyProfileBtn.setOnClickListener(v -> sendParametersAndNavigateToUserProfile(product));
                     }
                     if(product != null && product.getUploaderId() != null)
                     {
@@ -106,7 +105,7 @@ public class ProductDetailsFragment extends Fragment {
         return view;
     }
 
-    private void sendParametersAndNavigateToUserProfile()
+    private void sendParametersAndNavigateToUserProfile(Product product)
     {
 
         Model.instance.getProduct(product.getId(), new Model.GetProductListener() {
