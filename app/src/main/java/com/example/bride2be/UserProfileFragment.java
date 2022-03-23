@@ -160,7 +160,7 @@ public class UserProfileFragment extends Fragment {
     private void initializeFields(User user)
     {
         String userName = user.getFirstName() + " " + user.getLastName();
-        String userAddress = user.getCity() + " " + user.getStreet();
+        String userAddress = user.getCity() + ", " + user.getStreet();
         UserName.setText(userName);
         UserEmail.setText(user.getEmail());
         UserPhoneNumber.setText(user.getPhoneNumber());
