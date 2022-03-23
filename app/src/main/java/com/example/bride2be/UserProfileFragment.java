@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +15,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.bride2be.adapters.ProductAdapter;
 import com.example.bride2be.models.Model;
+import com.example.bride2be.models.Product;
 import com.example.bride2be.models.User;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +41,7 @@ public class UserProfileFragment extends Fragment {
     Button EditProfileBtn;
     Button AddNewProductBtn;
     User loggedInUser;
+    ArrayList<Product> userProducts;
     View view;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -91,8 +99,30 @@ public class UserProfileFragment extends Fragment {
         AddNewProductBtn.setOnClickListener(v -> addNewProduct());
         loggedInUser = Model.instance.getLoggedInUser();
 
+        RecyclerView recyclerView = view.findViewById(R.id.userProfile_productList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        ProductAdapter adapter = new ProductAdapter(getLayoutInflater());
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        adapter.setOnClickListener(new ProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) { }
+        });
+
         String userId = this.getArguments().getString("userIdToOpenProfile");
         authenticate(userId);
+        Model.instance.getProductsByUserId(loggedInUser.getId(), new Model.GetProductsByUserIdListener() {
+            @Override
+            public void onComplete(List<Product> products) {
+                if(products != null)
+                {
+                    adapter.setData(products);
+                    recyclerView.setAdapter(adapter);
+                    userProducts = new ArrayList<Product>(products);
+                }
+            }
+        });
 
         return view;
     }

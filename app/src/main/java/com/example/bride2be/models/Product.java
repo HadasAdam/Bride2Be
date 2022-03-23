@@ -109,6 +109,7 @@ public class Product implements Serializable {
     }
 
     public static Product create(Map<String, Object> json) {
+        String id = (String) json.get("id");
         String title = (String) json.get("title");
         String description = (String) json.get("description");
         String price = Double.toString((Double) json.get("price"));
@@ -118,6 +119,7 @@ public class Product implements Serializable {
         int lastUpdate = DateTime.getDefaultInstance().getSeconds();
         Product product = new Product(title, description, Double.parseDouble(price), picture, uploaderId);
         product.setUpdateDate((long)lastUpdate);
+        product.setId(id);
         return product;
     }
 }

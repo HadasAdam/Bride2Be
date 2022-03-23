@@ -151,6 +151,7 @@ public class User implements Serializable {
     }
 
     public static User create(Map<String, Object> json) {
+        String id = (String) json.get("id");
         String firstName = (String) json.get("firstName");
         String lastName = (String) json.get("lastName");
         String email = (String)json.get("email");
@@ -163,6 +164,7 @@ public class User implements Serializable {
         int lastUpdate = DateTime.getDefaultInstance().getSeconds();
         User user = new User(firstName,lastName,email, phoneNumber, passwordHash, country,
                 city, street);
+        user.setId(id);
         user.setUpdateDate((long)lastUpdate);
         return user;
     }
