@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.bride2be.models.Model;
 import com.example.bride2be.models.Product;
 import com.example.bride2be.models.User;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,14 +89,27 @@ public class ProductDetailsFragment extends Fragment {
             Model.instance.getProduct(productId, new Model.GetProductListener() {
                 @Override
                 public void onComplete(Product product) {
-                    loadImageFromStorage(product.getPicture(), productImageIV);
-                    initializeProductFields(product);
-                    Model.instance.getUser(product.getUploaderId(), new Model.GetUserListener() {
-                        @Override
-                        public void onComplete(User user) {
-                            initializeUserFields(user);
-                        }
-                    });
+                    if (product != null && product.getPicture() != null) {
+                        Model.instance.loadPictureFromStorage(product.getPicture(), productImageIV);
+                        initializeProductFields(product);
+                    }
+                    if(product != null && product.getUploaderId() != null)
+                    {
+                        Model.instance.getUser(product.getUploaderId(), new Model.GetUserListener() {
+                            @Override
+                            public void onComplete(User user) {
+                                if(user != null)
+                                {
+                                    String shit = "found the uploader2: " + user.getId();
+                                    productDescriptionTV.setText(shit);
+                                    initializeUserFields(user);
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        Navigation.findNavController(view).navigate(R.id.action_productDetailsFragment_to_productsListFragment);
+                    }
                 }
             });
         }
@@ -132,9 +146,5 @@ public class ProductDetailsFragment extends Fragment {
         userCityTV.setText(user.getCity());
         userEmailTV.setText(user.getEmail());
         userPhoneTV.setText(user.getPhoneNumber());
-    }
-    private void loadImageFromStorage(String path, ImageView imageView)
-    {
-        Model.instance.loadPictureFromStorage(path, imageView);
     }
 }

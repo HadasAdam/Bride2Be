@@ -65,6 +65,8 @@ dependencies {
     implementation 'com.android.support:multidex:2.0.1' //enter the latest multidex version
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.picasso:picasso:2.6.0-SNAPSHOT'
     annotationProcessor 'androidx.room:room-compiler:2.4.2'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }

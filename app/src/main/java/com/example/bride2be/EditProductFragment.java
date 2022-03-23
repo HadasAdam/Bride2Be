@@ -113,23 +113,26 @@ public class EditProductFragment extends Fragment {
                 public void onComplete(Product product) {
                     productToEdit = product;
 
-                    if (!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
-                    {
-                        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_loginFragment2);
-                    }
-                    else
-                    {
+//                    if (!Model.instance.getLoggedInUser().getId().equals(productToEdit.getUploaderId()))
+//                    {
+//                        Navigation.findNavController(view).navigate(R.id.action_editProductFragment_to_loginFragment2);
+//                    }
+//                    else
+//                    {
                         Model.instance.getUser(productToEdit.getUploaderId(), new Model.GetUserListener() {
                             @Override
                             public void onComplete(User user) {
-                                productName.setText(productToEdit.getTitle());
-                                productPrice.setText(String.valueOf(productToEdit.getPrice()));
-                                userLocation.setText(user.getCity());
-                                productDescription.setText(productToEdit.getDescription());
-                                loadImageFromStorage(productToEdit.getPicture(), ProductImage);
+                                if(user != null)
+                                {
+                                    productName.setText(productToEdit.getTitle());
+                                    productPrice.setText(String.valueOf(productToEdit.getPrice()));
+                                    userLocation.setText(user.getCity());
+                                    productDescription.setText(productToEdit.getDescription());
+                                    Model.instance.loadPictureFromStorage(product.getPicture(), ProductImage);
+                                }
                             }
                         });
-                    }
+                    //}
                 }
             });
         }
@@ -193,11 +196,6 @@ public class EditProductFragment extends Fragment {
             Toast.makeText(getActivity() ,"No image selected.", Toast.LENGTH_SHORT).show();
         }
         return filePath;
-    }
-
-    private void loadImageFromStorage(String path, ImageView imageView)
-    {
-        Model.instance.loadPictureFromStorage(path, imageView);
     }
 
     private String getFileExtension(Uri uri)

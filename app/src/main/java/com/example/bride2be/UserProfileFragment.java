@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -34,7 +35,6 @@ public class UserProfileFragment extends Fragment {
     Button AddNewProductBtn;
     User loggedInUser;
     View view;
-
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -130,10 +130,11 @@ public class UserProfileFragment extends Fragment {
     private void initializeFields(User user)
     {
         String userName = user.getFirstName() + " " + user.getLastName();
+        String userAddress = user.getCity() + " " + user.getStreet();
         UserName.setText(userName);
         UserEmail.setText(user.getEmail());
         UserPhoneNumber.setText(user.getPhoneNumber());
-        UserAddress.setText(user.getCity());
+        UserAddress.setText(userAddress);
     }
 
     private void setVisitorMode()

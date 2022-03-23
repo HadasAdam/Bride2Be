@@ -171,7 +171,7 @@ public class AddNewProductFragment extends Fragment {
                 && data != null && data.getData() != null)
         {
             imageUri = data.getData();
-            Picasso.with(getActivity()).load(imageUri).into(productImage);
+            Picasso.get().load(imageUri).into(productImage);
         }
     }
 
